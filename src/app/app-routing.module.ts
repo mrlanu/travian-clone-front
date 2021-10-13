@@ -1,7 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {FieldsComponent} from "./village/fields/fields.component";
 
-const routes: Routes = [];
+const routes: Routes = [
+  {path: 'village', component: FieldsComponent}
+  /*{path: 'welcome-page', component: WelcomePageComponent},
+  {path: 'main', component: MainComponent, canActivateChild: [AuthGuard], children: [
+      {path: 'charts/income-vs-expenses', component: BarChartComponent},
+      {path: 'charts/spent-by-category', component: LineChartComponent},
+      {path: 'dashboard', component: DashboardComponent},
+      {path: 'debt-payoff-planner', component: DebtPayoffComponent},
+      {path: 'user-details', component: UserDetailsComponent},
+      /!*{path: 'charts', component: ChartsComponent},
+      {path: 'budgets', component: BudgetsComponent},
+      {path: 'accounts', component: AccountsComponent},
+      {path: 'categories', component: CategoriesComponent}*!/
+    ]}*/,
+  {path: '**', redirectTo: '/welcome-page'}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

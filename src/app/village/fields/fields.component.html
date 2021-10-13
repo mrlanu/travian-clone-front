@@ -1,0 +1,29 @@
+<div class="fields_container">
+  <div *ngFor="let field of village?.fields">
+    <a class="btn-field position-{{ field.position }}" [ngClass]="{'upgrade-available': field.ableToUpgrade,
+    'is-disabled': !field.ableToUpgrade}" (click)="onFieldClick(village.villageId, field)">
+      <div class="fa" [ngClass]="{'under-upgrade': field.underUpgrade}">{{ field.level }}</div>
+    </a>
+  </div>
+  <!--<a href="#" class="btn-field position-0">
+    <div class="fa">2</div>
+  </a>
+  <a href="#" class="btn-field position-0">
+    <div class="fa">2</div>
+  </a>
+  <a href="#" class="btn-field position-1">
+    <div class="fa">2</div>
+  </a>
+  <a href="#" class="btn-field upgrade-available position-2">
+    <div class="fa under-upgrade">2</div>
+  </a>
+  <a href="#" class="btn-field position-3">
+    <div class="fa">2</div>
+  </a>
+  <a href="#" class="btn-field position-4">
+    <div class="fa">2</div>
+  </a>-->
+</div>
+
+<countdown #cd1 [config]="conf" (event)="handleEvent($event.action)"></countdown>
+
