@@ -1,15 +1,3 @@
-export interface Warehouse {
-  goods: Map<string, number>;
-}
-
-export interface TaskModel {
-  taskId: string;
-  villageId: string;
-  position: number;
-  level: number;
-  timeLeft: number;
-}
-
 export interface Field {
   position: number;
   level: number;
@@ -20,23 +8,6 @@ export interface Field {
   ableToUpgrade: boolean;
   timeToNextLevel: number;
   resourcesToNextLevel: Map<string, number>;
-}
-
-export interface VillageDto {
-  villageId: string;
-  accountId: string;
-  x: number;
-  y: number;
-  culture: number;
-  population: number;
-  villageType: string;
-  warehouse: Warehouse;
-  fields: Field[];
-  tasks: TaskModel[];
-}
-
-export interface BuildingBase {
-
 }
 
 export interface VillageView {
@@ -66,8 +37,7 @@ export interface FieldView {
 export interface EventView {
   name: string;
   completeTime: Date;
-  timeLeft: string;
-  seconds: number
+  timeLeft: number;
 }
 
 export enum EResource {

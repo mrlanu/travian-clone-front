@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
-import {EResource, EUnits, Field, FieldView, VillageView} from "../../models/village-dto.model";
+import {EResource, EUnits, VillageView} from "../../models/village-dto.model";
 import {CountdownConfig} from "ngx-countdown";
 
 const CountdownTimeUnits: Array<[string, number]> = [
@@ -20,6 +20,8 @@ const CountdownTimeUnits: Array<[string, number]> = [
   styleUrls: ['./fields.component.css']
 })
 export class FieldsComponent implements OnInit, OnDestroy {
+
+  villageId: string = '616a0214b9fe0d7dcbdb4df2';
 
   village: VillageView =  {
     accountId: "",
@@ -49,7 +51,7 @@ export class FieldsComponent implements OnInit, OnDestroy {
         (village: VillageView) => {
           console.log(village);
           this.village = village;
-          const t = village.eventsList.reduce((a, b) => b.seconds, 0);
+          const t = village.eventsList.reduce((a, b) => b.timeLeft, 0);
           if (this.village.eventsList.length > 0){
             this.conf = {
               leftTime: t + 2,
@@ -70,21 +72,17 @@ export class FieldsComponent implements OnInit, OnDestroy {
             };
           }
         }));
-    this.villageService.getVillageById('61663aa0a734ac094a26dcc4');
+    this.villageService.getVillageById(this.villageId);
   }
 
   handleEvent(event: string) {
     if (event === 'done'){
-      this.villageService.getVillageById('61663aa0a734ac094a26dcc4');
+      this.villageService.getVillageById(this.villageId);
     }
   }
 
-  onFieldClick(villageId: string, field: FieldView) {
-    this.villageService.upgradeField(villageId, field.position).subscribe(
-      () => {
-        this.villageService.getVillageById('61663aa0a734ac094a26dcc4');
-      }
-    );
+  onFieldClick(villageId: string, fieldPosition: number) {
+    this.villageService.upgradeField(villageId, fieldPosition);
   }
 
   ngOnDestroy(): void {

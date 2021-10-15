@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Subject} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {VillageView} from "../models/village-dto.model";
-import {FieldUpgradeRequest} from "../models/field-upgrade-request.model";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +21,15 @@ export class VillageService {
 
   upgradeField(villageId: string, fieldPosition: number) {
     const url = `${this.baseUrl}/villages/${villageId}/fields/${fieldPosition}/upgrade`;
-    return this.httpClient.put<string>(url, {});
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      })
+    };
+    this.httpClient.put<string>(url, {}, httpOptions).subscribe(() => {
+      this.getVillageById(villageId);
+    })
   }
 
   getTime(sec: number) {
