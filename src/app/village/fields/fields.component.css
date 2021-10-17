@@ -1,10 +1,10 @@
 .fields_container {
   background-image: url("../../../assets/img/resourceField3.png");
-  position: absolute;
+  position: relative;
   width: 475px;
   height: 300px;
-  top: 50px;
-  left: 0;
+  /*top: 50px;
+  left: 0;*/
   background-size: cover;
 }
 

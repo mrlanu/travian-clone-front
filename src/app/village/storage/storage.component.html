@@ -1,0 +1,30 @@
+<div class="card m-2 shadow">
+  <div class="card-body" fxLayout fxLayoutAlign = "space-evenly center" >
+    <div style="text-align: center; background: lightgrey; padding: 0 1rem;" >
+      <div class="balance font-weight-bold">{{ warehouseCapacity }}</div>
+      <div class="text-uppercase balance-hint">warehouse</div>
+    </div>
+    <div style="text-align: center">
+      <a href="" style="text-decoration: none">
+        <div class="balance font-weight-bold">{{ storage.get('WOOD') }}</div>
+        <div class="text-uppercase balance-hint">wood</div>
+      </a>
+    </div>
+    <div style="text-align: center">
+      <div class="balance font-weight-bold">{{ storage.get('CLAY') }}</div>
+      <div class="text-uppercase balance-hint">clay</div>
+    </div>
+    <div style="text-align: center">
+      <div class="balance font-weight-bold">{{ storage.get('IRON') }}</div>
+      <div class="text-uppercase balance-hint">iron</div>
+    </div>
+    <div style="text-align: center; background: lightgrey; padding: 0 1rem;">
+      <div class="balance font-weight-bold">{{ granaryCapacity }}</div>
+      <div class="text-uppercase balance-hint">granary</div>
+    </div>
+    <div style="text-align: center">
+      <div class="balance font-weight-bold">{{ storage.get('CROP') }}</div>
+      <div class="text-uppercase balance-hint">crop</div>
+    </div>
+  </div>
+</div>

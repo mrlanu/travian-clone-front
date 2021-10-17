@@ -21,7 +21,9 @@ export interface VillageView {
   culture: number;
   fields: FieldView[];
   buildings: string;
-  storage: Map<EResource, number>;
+  storage: Map<string, number>;
+  warehouseCapacity: number;
+  granaryCapacity: number;
   homeLegion: Map<EUnits, number>;
   producePerHour: Map<EResource, number>;
   eventsList: EventView[];

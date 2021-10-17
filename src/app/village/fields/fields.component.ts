@@ -21,7 +21,7 @@ const CountdownTimeUnits: Array<[string, number]> = [
 })
 export class FieldsComponent implements OnInit, OnDestroy {
 
-  villageId: string = '616a0214b9fe0d7dcbdb4df2';
+  villageId: string = '616b72fe51559e5e6b8dd9f7';
 
   village: VillageView =  {
     accountId: "",
@@ -33,12 +33,14 @@ export class FieldsComponent implements OnInit, OnDestroy {
     name: "",
     population: 0,
     producePerHour: new Map<EResource, number>(),
-    storage: new Map<EResource, number>(),
+    storage: new Map<string, number>(),
+    warehouseCapacity: 0,
+    granaryCapacity: 0,
     villageId: "",
     villageType: "",
     x: 0,
     y: 0
-  }
+  };
 
   componentSubs: Subscription[] = [];
   conf: CountdownConfig = {leftTime: 0};

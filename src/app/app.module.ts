@@ -7,18 +7,22 @@ import { VillageComponent } from './village/village.component';
 import { FieldsComponent } from './village/fields/fields.component';
 import {HttpClientModule} from "@angular/common/http";
 import {CountdownModule} from "ngx-countdown";
+import { StorageComponent } from './village/storage/storage.component';
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
   declarations: [
     AppComponent,
     VillageComponent,
-    FieldsComponent
+    FieldsComponent,
+    StorageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    CountdownModule
+    CountdownModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
