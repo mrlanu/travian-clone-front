@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
-import {EResource, EUnits, VillageView} from "../../models/village-dto.model";
+import {EUnits, VillageView} from "../../models/village-dto.model";
 import {CountdownConfig} from "ngx-countdown";
 
 const CountdownTimeUnits: Array<[string, number]> = [
@@ -32,7 +32,7 @@ export class FieldsComponent implements OnInit, OnDestroy {
     homeLegion: new Map<EUnits, number>(),
     name: "",
     population: 0,
-    producePerHour: new Map<EResource, number>(),
+    producePerHour: new Map<string, number>(),
     storage: new Map<string, number>(),
     warehouseCapacity: 0,
     granaryCapacity: 0,
