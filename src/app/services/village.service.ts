@@ -9,14 +9,12 @@ import {VillageView} from "../models/village-dto.model";
 export class VillageService {
   baseUrl = 'http://localhost:8080/api';
   villageChanged = new Subject<VillageView>();
-  village: VillageView | undefined;
 
   constructor(private httpClient: HttpClient) { }
 
   getVillageById(villageId: string) {
     const url = `${this.baseUrl}/villages/${villageId}`;
     this.httpClient.get<VillageView>(url).subscribe(village => {
-      this.village = village;
       this.villageChanged.next(village);
     });
   }
