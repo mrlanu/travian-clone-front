@@ -9,13 +9,15 @@ import {HttpClientModule} from "@angular/common/http";
 import {CountdownModule} from "ngx-countdown";
 import { StorageComponent } from './village/storage/storage.component';
 import {FlexLayoutModule} from "@angular/flex-layout";
+import { ProducePerHourComponent } from './village/produce-per-hour/produce-per-hour.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     VillageComponent,
     FieldsComponent,
-    StorageComponent
+    StorageComponent,
+    ProducePerHourComponent
   ],
   imports: [
     BrowserModule,

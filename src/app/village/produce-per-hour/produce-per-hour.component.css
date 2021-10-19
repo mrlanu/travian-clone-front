@@ -1,0 +1,26 @@
+.r {
+  background-size: cover;
+  width: 16px;
+  height: 12px;
+  margin: auto 0.5rem auto 0;
+}
+
+i.r-wood {
+  background-image: url('../../../assets/img/lumber_tiny.png');
+}
+
+i.r-clay {
+  background-image: url('../../../assets/img/clay_tiny.png');
+}
+
+i.r-iron {
+  background-image: url('../../../assets/img/iron_tiny.png');
+}
+
+i.r-crop {
+  background-image: url('../../../assets/img/crop_small.png');
+}
+
+
+
+

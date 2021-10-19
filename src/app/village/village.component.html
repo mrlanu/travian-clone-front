@@ -1,14 +1,10 @@
-<!--<div fxLayout="column" fxLayoutAlign="center">
-  <app-fields></app-fields>
-  <div fxFlex>
-    <app-storage></app-storage>
-  </div>
-</div>-->
-
 <div fxLayout="column">
   <app-storage></app-storage>
   <app-fields></app-fields>
-  <div class="child"></div>
-  <div class="child"></div>
+  <app-produce-per-hour></app-produce-per-hour>
 </div>
 
+<div class="cont" fxLayout>
+  <div class="child" fxFlex>Child 1</div>
+  <div class="child">Child 2</div>
+</div>
