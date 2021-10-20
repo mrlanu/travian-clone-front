@@ -21,7 +21,7 @@ const CountdownTimeUnits: Array<[string, number]> = [
 })
 export class FieldsComponent implements OnInit, OnDestroy {
 
-  villageId: string = '616ce38ba237fb21e84887fb';
+  villageId: string = '616f843aa237fb21e8488803';
 
   village: VillageView =  {
     accountId: "",

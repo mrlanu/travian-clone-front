@@ -1,60 +1,63 @@
 <div class="card m-2 shadow">
-  <div class="card-body" fxLayout="row wrap" fxLayoutAlign = "space-evenly center" >
+  <div class="card-body" fxLayout="row wrap" fxLayoutAlign = "space-evenly center">
+    <div class="mb-2 mb-md-0" fxLayout="row wrap" fxLayoutAlign = "space-evenly center" fxLayoutGap="1rem">
+      <div class="warehouse mb-2 mb-md-0" fxLayout fxLayoutAlign="center center">
+        <i class="warehouse-img" style="margin-right: 0.5rem"></i>
+        <div>
+          <div class="balance font-weight-bold">{{ warehouseCapacity }}</div>
+          <div class="text-uppercase balance-hint">warehouse</div>
+        </div>
+      </div>
 
-    <div fxLayout fxLayoutAlign="center center" style="text-align: center; background: lightgrey; padding: 0 1rem;">
-      <i class="warehouse" style="margin-right: 0.5rem"></i>
-      <div>
-        <div class="balance font-weight-bold">{{ warehouseCapacity }}</div>
-        <div class="text-uppercase balance-hint">warehouse</div>
-      </div>
+      <a href="" fxLayout class="storage-bar-button mb-2 mb-md-0">
+        <i class="r r-wood"></i>
+        <div fxLayout="column" fxFlex>
+          <div class="balance font-weight-bold" fxFlexAlign="center">{{ wood }}</div>
+          <div class="">
+            <progressbar [max]="max" [value]="woodProgress"
+                         [type]="woodProgress >= 100 ? 'danger' : 'success'" style="max-height: 0.4rem;"></progressbar>
+          </div>
+        </div>
+      </a>
+      <a href="" fxLayout class="storage-bar-button mb-2 mb-md-0">
+        <i class="r r-clay"></i>
+        <div fxLayout="column" fxFlex>
+          <div class="balance font-weight-bold" fxFlexAlign="center">{{ clay }}</div>
+          <div class="">
+            <progressbar [max]="max" [value]="clayProgress"
+                         [type]="clayProgress >= 100 ? 'danger' : 'success'" style="max-height: 0.4rem;"></progressbar>
+          </div>
+        </div>
+      </a>
+      <a href="" fxLayout class="storage-bar-button mb-2 mb-md-0">
+        <i class="r r-iron"></i>
+        <div fxLayout="column" fxFlex>
+          <div class="balance font-weight-bold" fxFlexAlign="center">{{ iron }}</div>
+          <div class="">
+            <progressbar [max]="max" [value]="ironProgress"
+                         [type]="ironProgress >= 100 ? 'danger' : 'success'" style="max-height: 0.4rem;"></progressbar>
+          </div>
+        </div>
+      </a>
     </div>
-
-    <a href="" fxLayout class="storage-bar-button">
-      <i class="r r-wood"></i>
-      <div fxLayout="column" fxFlex>
-        <div class="balance font-weight-bold" fxFlexAlign="center">{{ wood }}</div>
-        <div class="">
-          <progressbar [max]="max" [value]="woodProgress"
-                       [type]="woodProgress >= 100 ? 'danger' : 'success'" style="max-height: 0.4rem;"></progressbar>
+    <div fxLayout="row wrap" fxLayoutAlign = "space-evenly center" fxLayoutGap="1rem">
+      <div class="warehouse" fxLayout fxLayoutAlign="center center">
+        <i class="granary" style="margin-right: 0.5rem"></i>
+        <div>
+          <div class="balance font-weight-bold">{{ granaryCapacity }}</div>
+          <div class="text-uppercase balance-hint">granary</div>
         </div>
       </div>
-    </a>
-    <a href="" fxLayout class="storage-bar-button">
-      <i class="r r-clay"></i>
-      <div fxLayout="column" fxFlex>
-        <div class="balance font-weight-bold" fxFlexAlign="center">{{ clay }}</div>
-        <div class="">
-          <progressbar [max]="max" [value]="clayProgress"
-                       [type]="clayProgress >= 100 ? 'danger' : 'success'" style="max-height: 0.4rem;"></progressbar>
+      <a href="" fxLayout class="storage-bar-button">
+        <i class="r r-crop"></i>
+        <div fxLayout="column" fxFlex>
+          <div class="balance font-weight-bold" fxFlexAlign="center">{{ crop }}</div>
+          <div class="">
+            <progressbar [max]="max" [value]="cropProgress"
+                         [type]="cropProgress >= 100 ? 'danger' : 'success'" style="max-height: 0.4rem;"></progressbar>
+          </div>
         </div>
-      </div>
-    </a>
-    <a href="" fxLayout class="storage-bar-button">
-      <i class="r r-iron"></i>
-      <div fxLayout="column" fxFlex>
-        <div class="balance font-weight-bold" fxFlexAlign="center">{{ iron }}</div>
-        <div class="">
-          <progressbar [max]="max" [value]="ironProgress"
-                       [type]="ironProgress >= 100 ? 'danger' : 'success'" style="max-height: 0.4rem;"></progressbar>
-        </div>
-      </div>
-    </a>
-    <div fxLayout fxLayoutAlign="center center" style="text-align: center; background: lightgrey; padding: 0 1rem;">
-      <i class="granary" style="margin-right: 0.5rem"></i>
-      <div>
-        <div class="balance font-weight-bold">{{ granaryCapacity }}</div>
-        <div class="text-uppercase balance-hint">granary</div>
-      </div>
+      </a>
     </div>
-    <a href="" fxLayout class="storage-bar-button">
-      <i class="r r-crop"></i>
-      <div fxLayout="column" fxFlex>
-        <div class="balance font-weight-bold" fxFlexAlign="center">{{ crop }}</div>
-        <div class="">
-          <progressbar [max]="max" [value]="cropProgress"
-                       [type]="cropProgress >= 100 ? 'danger' : 'success'" style="max-height: 0.4rem;"></progressbar>
-        </div>
-      </div>
-    </a>
   </div>
 </div>

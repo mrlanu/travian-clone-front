@@ -45,6 +45,13 @@
 }
 
 .warehouse {
+  text-align: center;
+  background: lightgrey;
+  padding: 0.1rem 1rem;
+  border-radius: 10px;
+}
+
+.warehouse-img {
   background-size: cover;
   width: 27px;
   height: 23px;
