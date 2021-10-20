@@ -9,3 +9,51 @@
 .balance-hint {
   font-size: 0.6rem;
 }
+
+.storage-bar-button {
+  text-decoration: none;
+  box-sizing: border-box;
+  min-width: 130px;
+  border: 1px solid lightgrey;
+  padding: 0.3rem;
+  border-radius: 10px;
+}
+
+.r {
+  background-size: cover;
+  width: 26px;
+  height: 18px;
+  margin: auto 0.5rem auto 0;
+}
+
+.r-wood {
+  background-image: url('../../../assets/img/lumber_small.png');
+}
+
+.r-clay {
+  background-image: url('../../../assets/img/clay_small.png');
+}
+
+.r-iron {
+  background-image: url('../../../assets/img/iron_small.png');
+}
+
+.r-crop {
+  width: 26px;
+  height: 24px;
+  background-image: url('../../../assets/img/crop_medium.png');
+}
+
+.warehouse {
+  background-size: cover;
+  width: 27px;
+  height: 23px;
+  background-image: url('../../../assets/img/warehouse_medium.png');
+}
+
+.granary {
+  background-size: cover;
+  width: 22px;
+  height: 23px;
+  background-image: url('../../../assets/img/granary_medium.png');
+}

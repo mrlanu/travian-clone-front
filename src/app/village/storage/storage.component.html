@@ -1,30 +1,60 @@
 <div class="card m-2 shadow">
-  <div class="card-body" fxLayout fxLayoutAlign = "space-evenly center" >
-    <div style="text-align: center; background: lightgrey; padding: 0 1rem;" >
-      <div class="balance font-weight-bold">{{ warehouseCapacity }}</div>
-      <div class="text-uppercase balance-hint">warehouse</div>
+  <div class="card-body" fxLayout="row wrap" fxLayoutAlign = "space-evenly center" >
+
+    <div fxLayout fxLayoutAlign="center center" style="text-align: center; background: lightgrey; padding: 0 1rem;">
+      <i class="warehouse" style="margin-right: 0.5rem"></i>
+      <div>
+        <div class="balance font-weight-bold">{{ warehouseCapacity }}</div>
+        <div class="text-uppercase balance-hint">warehouse</div>
+      </div>
     </div>
-    <div style="text-align: center">
-      <a href="" style="text-decoration: none">
-        <div class="balance font-weight-bold">{{ wood }}</div>
-        <div class="text-uppercase balance-hint">wood</div>
-      </a>
+
+    <a href="" fxLayout class="storage-bar-button">
+      <i class="r r-wood"></i>
+      <div fxLayout="column" fxFlex>
+        <div class="balance font-weight-bold" fxFlexAlign="center">{{ wood }}</div>
+        <div class="">
+          <progressbar [max]="max" [value]="woodProgress"
+                       [type]="woodProgress >= 100 ? 'danger' : 'success'" style="max-height: 0.4rem;"></progressbar>
+        </div>
+      </div>
+    </a>
+    <a href="" fxLayout class="storage-bar-button">
+      <i class="r r-clay"></i>
+      <div fxLayout="column" fxFlex>
+        <div class="balance font-weight-bold" fxFlexAlign="center">{{ clay }}</div>
+        <div class="">
+          <progressbar [max]="max" [value]="clayProgress"
+                       [type]="clayProgress >= 100 ? 'danger' : 'success'" style="max-height: 0.4rem;"></progressbar>
+        </div>
+      </div>
+    </a>
+    <a href="" fxLayout class="storage-bar-button">
+      <i class="r r-iron"></i>
+      <div fxLayout="column" fxFlex>
+        <div class="balance font-weight-bold" fxFlexAlign="center">{{ iron }}</div>
+        <div class="">
+          <progressbar [max]="max" [value]="ironProgress"
+                       [type]="ironProgress >= 100 ? 'danger' : 'success'" style="max-height: 0.4rem;"></progressbar>
+        </div>
+      </div>
+    </a>
+    <div fxLayout fxLayoutAlign="center center" style="text-align: center; background: lightgrey; padding: 0 1rem;">
+      <i class="granary" style="margin-right: 0.5rem"></i>
+      <div>
+        <div class="balance font-weight-bold">{{ granaryCapacity }}</div>
+        <div class="text-uppercase balance-hint">granary</div>
+      </div>
     </div>
-    <div style="text-align: center">
-      <div class="balance font-weight-bold">{{ clay }}</div>
-      <div class="text-uppercase balance-hint">clay</div>
-    </div>
-    <div style="text-align: center">
-      <div class="balance font-weight-bold">{{ iron }}</div>
-      <div class="text-uppercase balance-hint">iron</div>
-    </div>
-    <div style="text-align: center; background: lightgrey; padding: 0 1rem;">
-      <div class="balance font-weight-bold">{{ granaryCapacity }}</div>
-      <div class="text-uppercase balance-hint">granary</div>
-    </div>
-    <div style="text-align: center">
-      <div class="balance font-weight-bold">{{ crop }}</div>
-      <div class="text-uppercase balance-hint">crop</div>
-    </div>
+    <a href="" fxLayout class="storage-bar-button">
+      <i class="r r-crop"></i>
+      <div fxLayout="column" fxFlex>
+        <div class="balance font-weight-bold" fxFlexAlign="center">{{ crop }}</div>
+        <div class="">
+          <progressbar [max]="max" [value]="cropProgress"
+                       [type]="cropProgress >= 100 ? 'danger' : 'success'" style="max-height: 0.4rem;"></progressbar>
+        </div>
+      </div>
+    </a>
   </div>
 </div>

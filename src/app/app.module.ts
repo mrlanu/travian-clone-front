@@ -10,6 +10,8 @@ import {CountdownModule} from "ngx-countdown";
 import { StorageComponent } from './village/storage/storage.component';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { ProducePerHourComponent } from './village/produce-per-hour/produce-per-hour.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { ProducePerHourComponent } from './village/produce-per-hour/produce-per-
     AppRoutingModule,
     HttpClientModule,
     CountdownModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    BrowserAnimationsModule,
+    ProgressbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
