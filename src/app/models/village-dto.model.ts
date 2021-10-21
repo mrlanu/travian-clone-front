@@ -56,8 +56,13 @@ export class VillageView {
 export interface FieldView {
   position: number;
   level: number;
+  name: string;
+  production: number;
   underUpgrade: boolean;
   ableToUpgrade: boolean;
+  description: string;
+  timeToNextLevel: number;
+  resourcesToNextLevel: Map<string, number>;
 }
 
 export interface EventView {

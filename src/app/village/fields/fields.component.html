@@ -1,8 +1,10 @@
 <div class="fields_container">
   <div *ngFor="let field of village?.fields">
     <a class="btn-field position-{{ field.position }}" [ngClass]="{'upgrade-available': field.ableToUpgrade,
-    'is-disabled': !field.ableToUpgrade}" (click)="onFieldClick(village.villageId, field.position)">
+    'is-disabled': !field.ableToUpgrade}" (click)="onFieldClick(village.villageId, field)"
+       type="button" data-bs-toggle="modal" data-bs-target="#buildingConfirmModal">
       <div class="fa" [ngClass]="{'under-upgrade': field.underUpgrade}">{{ field.level }}</div>
     </a>
   </div>
 </div>
+<app-building-confirm [field]="selectedField" [villageId]="village.villageId"></app-building-confirm>

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
-import {EUnits, VillageView} from "../../models/village-dto.model";
+import {EUnits, FieldView, VillageView} from "../../models/village-dto.model";
 
 @Component({
   selector: 'app-fields',
@@ -10,7 +10,8 @@ import {EUnits, VillageView} from "../../models/village-dto.model";
 })
 export class FieldsComponent implements OnInit, OnDestroy {
 
-  villageId: string = '6170dd80f25fa96ea9dd943a';
+  villageId: string = '6171d04314d2e95d380c5463';
+  selectedField: FieldView | undefined;
 
   village: VillageView =  {
     accountId: "",
@@ -45,8 +46,13 @@ export class FieldsComponent implements OnInit, OnDestroy {
     this.villageService.getVillageById(this.villageId);
   }
 
-  onFieldClick(villageId: string, fieldPosition: number) {
-    this.villageService.upgradeField(villageId, fieldPosition);
+  onFieldClick(villageId: string, field: FieldView) {
+    let res = new Map<string, number>();
+    for(const [key, value] of Object.entries(field.resourcesToNextLevel)){
+      res.set(key, value);
+    }
+    field.resourcesToNextLevel = res;
+    this.selectedField = field;
   }
 
   ngOnDestroy(): void {

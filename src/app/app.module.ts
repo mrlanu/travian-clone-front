@@ -15,6 +15,8 @@ import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import { TaskListComponent } from './village/task-list/task-list.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LanuCountdownComponent } from './shared/lanu-countdown/lanu-countdown.component';
+import { BuildingConfirmComponent } from './modals/building-confirm/building-confirm.component';
+import {ModalModule} from "ngx-bootstrap/modal";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { LanuCountdownComponent } from './shared/lanu-countdown/lanu-countdown.c
     StorageComponent,
     ProducePerHourComponent,
     TaskListComponent,
-    LanuCountdownComponent
+    LanuCountdownComponent,
+    BuildingConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import { LanuCountdownComponent } from './shared/lanu-countdown/lanu-countdown.c
     FlexLayoutModule,
     BrowserAnimationsModule,
     ProgressbarModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ModalModule
   ],
   providers: [],
   bootstrap: [AppComponent]
