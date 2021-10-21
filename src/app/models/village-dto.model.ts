@@ -63,6 +63,7 @@ export interface FieldView {
 export interface EventView {
   id: string;
   name: string;
+  toLevel: number;
   completeTime: Date;
   timeLeft: number;
 }

@@ -10,6 +10,7 @@ import {map} from "rxjs/operators";
 export class VillageService {
   baseUrl = 'http://localhost:8080/api';
   villageChanged = new Subject<VillageView>();
+  currentVillage: VillageView | undefined;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -31,6 +32,7 @@ export class VillageService {
         v.warehouseCapacity, v.granaryCapacity, v.homeLegion, producePerHour, v.eventsList
       );
     })).subscribe(village => {
+      this.currentVillage = village;
       this.villageChanged.next(village);
     });
   }
@@ -46,5 +48,12 @@ export class VillageService {
     this.httpClient.put<string>(url, {}, httpOptions).subscribe(() => {
       this.getVillageById(villageId);
     })
+  }
+
+  deleteBuildingEvent(eventId: string){
+    const url = `${this.baseUrl}/villages/events/${eventId}`;
+    this.httpClient.delete<string>(url).subscribe(() => {
+      this.getVillageById(this.currentVillage?.villageId!);
+    });
   }
 }

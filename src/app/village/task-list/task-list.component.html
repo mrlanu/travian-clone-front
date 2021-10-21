@@ -1,4 +1,4 @@
-<div *ngIf="events.length > 0" class="card shadow" style="min-width: 200px; max-width: 400px">
+<div *ngIf="events.length > 0" class="card shadow" style="min-width: 200px; max-width: 500px">
   <div class="card-header">
     Buildings:
   </div>
@@ -8,7 +8,7 @@
         <fa-icon [icon]="faTimes" size="1x" [styles]="{'color': 'red', 'margin-right': '1rem'}"></fa-icon>
       </a>
       <div fxFlex>
-        {{ event.name }}
+        {{ event.name }} to level: {{ event.toLevel }}
       </div>
       <div fxLayout fxLayoutGap="1rem">
         <app-lanu-countdown [config]="{'timeLeft': event.timeLeft}" (countDone)="onCountDone()"></app-lanu-countdown>

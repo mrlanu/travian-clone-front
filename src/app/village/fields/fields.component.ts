@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
 import {EUnits, VillageView} from "../../models/village-dto.model";
-import {CountdownConfig} from "ngx-countdown";
 
 @Component({
   selector: 'app-fields',
@@ -11,7 +10,7 @@ import {CountdownConfig} from "ngx-countdown";
 })
 export class FieldsComponent implements OnInit, OnDestroy {
 
-  villageId: string = '6170cb3f70e0b23557cca97a';
+  villageId: string = '6170dd80f25fa96ea9dd943a';
 
   village: VillageView =  {
     accountId: "",

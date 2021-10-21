@@ -19,7 +19,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
   constructor(private villageService: VillageService) { }
 
   onEventDelete(id: string){
-    console.log('Event deleted: ', id)
+    this.villageService.deleteBuildingEvent(id);
   }
 
   ngOnInit(): void {
