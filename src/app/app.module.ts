@@ -12,6 +12,9 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import { ProducePerHourComponent } from './village/produce-per-hour/produce-per-hour.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ProgressbarModule} from "ngx-bootstrap/progressbar";
+import { TaskListComponent } from './village/task-list/task-list.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LanuCountdownComponent } from './shared/lanu-countdown/lanu-countdown.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,9 @@ import {ProgressbarModule} from "ngx-bootstrap/progressbar";
     VillageComponent,
     FieldsComponent,
     StorageComponent,
-    ProducePerHourComponent
+    ProducePerHourComponent,
+    TaskListComponent,
+    LanuCountdownComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,8 @@ import {ProgressbarModule} from "ngx-bootstrap/progressbar";
     CountdownModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
-    ProgressbarModule
+    ProgressbarModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

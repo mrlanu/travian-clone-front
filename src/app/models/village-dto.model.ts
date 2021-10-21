@@ -61,6 +61,7 @@ export interface FieldView {
 }
 
 export interface EventView {
+  id: string;
   name: string;
   completeTime: Date;
   timeLeft: number;
