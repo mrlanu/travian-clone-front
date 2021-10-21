@@ -11,9 +11,7 @@
         {{ event.name }}
       </div>
       <div fxLayout fxLayoutGap="1rem">
-        <div>
-          {{ timeLeftList[i].timeLeftStr }}
-        </div>
+        <app-lanu-countdown [config]="{'timeLeft': event.timeLeft}" (countDone)="onCountDone()"></app-lanu-countdown>
         <div>
           Done at: {{ event.completeTime | date: 'H:mm'}}
         </div>

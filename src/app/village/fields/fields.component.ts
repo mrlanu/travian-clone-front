@@ -1,18 +1,8 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
 import {EUnits, VillageView} from "../../models/village-dto.model";
 import {CountdownConfig} from "ngx-countdown";
-
-const CountdownTimeUnits: Array<[string, number]> = [
-  ['Y', 1000 * 60 * 60 * 24 * 365], // years
-  ['M', 1000 * 60 * 60 * 24 * 30], // months
-  ['D', 1000 * 60 * 60 * 24], // days
-  ['H', 1000 * 60 * 60], // hours
-  ['m', 1000 * 60], // minutes
-  ['s', 1000], // seconds
-  ['S', 1], // million seconds
-];
 
 @Component({
   selector: 'app-fields',
@@ -21,7 +11,7 @@ const CountdownTimeUnits: Array<[string, number]> = [
 })
 export class FieldsComponent implements OnInit, OnDestroy {
 
-  villageId: string = '61709f42fc379a6db6808ff0';
+  villageId: string = '6170cb3f70e0b23557cca97a';
 
   village: VillageView =  {
     accountId: "",
@@ -43,7 +33,6 @@ export class FieldsComponent implements OnInit, OnDestroy {
   };
 
   componentSubs: Subscription[] = [];
-  conf: CountdownConfig = {leftTime: 0};
 
   constructor(private villageService: VillageService) { }
 
@@ -53,34 +42,8 @@ export class FieldsComponent implements OnInit, OnDestroy {
         (village: VillageView) => {
           console.log(village);
           this.village = village;
-          const t = village.eventsList.reduce((a, b) => b.timeLeft, 0);
-          if (this.village.eventsList.length > 0){
-            this.conf = {
-              leftTime: t + 2,
-              formatDate: ({ date, formatStr }) => {
-                let duration = Number(date || 0);
-
-                return CountdownTimeUnits.reduce((current, [name, unit]) => {
-                  if (current.indexOf(name) !== -1) {
-                    const v = Math.floor(duration / unit);
-                    duration -= v * unit;
-                    return current.replace(new RegExp(`${name}+`, 'g'), (match: string) => {
-                      return v.toString().padStart(match.length, '0');
-                    });
-                  }
-                  return current;
-                }, formatStr);
-              },
-            };
-          }
         }));
     this.villageService.getVillageById(this.villageId);
-  }
-
-  handleEvent(event: string) {
-    if (event === 'done'){
-      this.villageService.getVillageById(this.villageId);
-    }
   }
 
   onFieldClick(villageId: string, fieldPosition: number) {
