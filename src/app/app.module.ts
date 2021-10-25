@@ -17,6 +17,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LanuCountdownComponent } from './shared/lanu-countdown/lanu-countdown.component';
 import { BuildingConfirmComponent } from './modals/building-confirm/building-confirm.component';
 import {ModalModule} from "ngx-bootstrap/modal";
+import { BuildingsComponent } from './village/buildings/buildings.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {ModalModule} from "ngx-bootstrap/modal";
     ProducePerHourComponent,
     TaskListComponent,
     LanuCountdownComponent,
-    BuildingConfirmComponent
+    BuildingConfirmComponent,
+    BuildingsComponent
   ],
   imports: [
     BrowserModule,

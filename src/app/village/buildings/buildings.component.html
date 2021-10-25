@@ -1,0 +1,9 @@
+<div class="cont">
+  <div *ngFor="let building of village?.buildings; let i=index;">
+   <div class="buildingSlot position-{{ building['position'] }}">
+     <a href="" [ngClass]="building['name'] == 'empty-spot' ? 'emptyBuildingSlot' : 'level colorLayer good'">
+       <div class="labelLayer" *ngIf="building['name'] != 'empty-spot'">{{ building['level'] }}</div></a>
+     <img src="../../../assets/img/x.gif" class="building {{ building['name'] }}" alt="">
+   </div>
+  </div>
+</div>

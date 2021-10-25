@@ -32,6 +32,7 @@ export class VillageService {
         v.warehouseCapacity, v.granaryCapacity, v.homeLegion, producePerHour, v.eventsList
       );
     })).subscribe(village => {
+      console.log(village.buildings[2]['buildingType']);
       this.currentVillage = village;
       this.villageChanged.next(village);
     });

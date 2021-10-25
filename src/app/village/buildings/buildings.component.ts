@@ -1,17 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from "rxjs";
+import {EUnits, VillageView} from "../../models/village-dto.model";
 import {VillageService} from "../../services/village.service";
-import {EUnits, FieldView, VillageView} from "../../models/village-dto.model";
+import {Subscription} from "rxjs";
 
 @Component({
-  selector: 'app-fields',
-  templateUrl: './fields.component.html',
-  styleUrls: ['./fields.component.css']
+  selector: 'app-buildings',
+  templateUrl: './buildings.component.html',
+  styleUrls: ['./buildings.component.css']
 })
-export class FieldsComponent implements OnInit, OnDestroy {
-
-  villageId: string = '61760086e4fb543d1c1a8099';
-  selectedField: FieldView | undefined;
+export class BuildingsComponent implements OnInit, OnDestroy {
 
   village: VillageView =  {
     accountId: "",
@@ -40,19 +37,8 @@ export class FieldsComponent implements OnInit, OnDestroy {
     this.componentSubs.push(
       this.villageService.villageChanged.subscribe(
         (village: VillageView) => {
-          console.log(village);
           this.village = village;
         }));
-    this.villageService.getVillageById(this.villageId);
-  }
-
-  onFieldClick(villageId: string, field: FieldView) {
-    let res = new Map<string, number>();
-    for(const [key, value] of Object.entries(field.resourcesToNextLevel)){
-      res.set(key, value);
-    }
-    field.resourcesToNextLevel = res;
-    this.selectedField = field;
   }
 
   ngOnDestroy(): void {
@@ -60,4 +46,5 @@ export class FieldsComponent implements OnInit, OnDestroy {
       sub.unsubscribe();
     });
   }
+
 }

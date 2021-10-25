@@ -46,7 +46,8 @@
 }
 
 .upgrade-available {
-  background: #C1E24C;
+  border: 1px solid #506d00;
+  background-image: linear-gradient(to top,#7da100,#c7e94f 100%);
 }
 
 .under-upgrade {
