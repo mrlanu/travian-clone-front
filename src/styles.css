@@ -2,6 +2,14 @@
 
 html, body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #f8f9fa!important;
+  background-color: #97A532!important;
   height: 100%;
+}
+
+body.buildingsV3 {
+  background-attachment: scroll;
+  background-position: left top,right top;
+  background-size: 50% 2000px,50% 2000px;
+  min-width: 1280px;
+  overflow-y: scroll;
 }

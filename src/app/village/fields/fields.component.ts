@@ -1,7 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
 import {EUnits, FieldView, VillageView} from "../../models/village-dto.model";
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-fields',
@@ -10,7 +12,9 @@ import {EUnits, FieldView, VillageView} from "../../models/village-dto.model";
 })
 export class FieldsComponent implements OnInit, OnDestroy {
 
-  villageId: string = '61760086e4fb543d1c1a8099';
+  @Output() buildClick: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  villageId: string = '6178ade7d493521f99e5c574';
   selectedField: FieldView | undefined;
 
   village: VillageView =  {
@@ -32,6 +36,8 @@ export class FieldsComponent implements OnInit, OnDestroy {
     y: 0
   };
 
+  faHome = faHome;
+
   componentSubs: Subscription[] = [];
 
   constructor(private villageService: VillageService) { }
@@ -44,6 +50,10 @@ export class FieldsComponent implements OnInit, OnDestroy {
           this.village = village;
         }));
     this.villageService.getVillageById(this.villageId);
+  }
+
+  onBuildingsClick(){
+    this.buildClick.next(true);
   }
 
   onFieldClick(villageId: string, field: FieldView) {

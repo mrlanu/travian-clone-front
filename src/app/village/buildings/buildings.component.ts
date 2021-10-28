@@ -10,7 +10,7 @@ import {Subscription} from "rxjs";
 })
 export class BuildingsComponent implements OnInit, OnDestroy {
 
-  village: VillageView =  {
+  village: VillageView | undefined =  {
     accountId: "",
     buildings: [],
     culture: 0,
@@ -39,6 +39,7 @@ export class BuildingsComponent implements OnInit, OnDestroy {
         (village: VillageView) => {
           this.village = village;
         }));
+    this.village = this.villageService.currentVillage;
   }
 
   ngOnDestroy(): void {

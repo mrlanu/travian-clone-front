@@ -1,14 +1,18 @@
-<div fxLayout="column">
-  <app-storage></app-storage>
-  <div fxLayout="column" fxLayoutAlign="center center">
-    <app-buildings></app-buildings>
-    <app-fields></app-fields>
+<div class="main-container"
+     gdColumns="1fr 3fr 1fr"
+     gdRows="100px 100% 100px"
+     gdAreas="brand main-nav settings | left-sidebar center right-sidebar | footer footer footer">
+  <div class="brand" gdArea="brand"></div>
+  <nav class="main-nav" gdArea="main-nav">
+    <app-storage></app-storage>
+  </nav>
+  <div class="settings" gdArea="settings"></div>
+  <div class="left-sidebar" gdArea="left-sidebar"></div>
+  <div class="center" gdArea="center">
+    <app-fields *ngIf="!isBuildings" (buildClick)="onBuildingsClick($event)"></app-fields>
+    <app-buildings *ngIf="isBuildings"></app-buildings>
   </div>
-  <app-produce-per-hour></app-produce-per-hour>
-  <app-task-list></app-task-list>
+  <div class="right-sidebar" gdArea="right-sidebar"></div>
+  <footer class="footer" gdArea="footer"></footer>
 </div>
 
-<div class="cont" fxLayout>
-  <div class="child" fxFlex>Child 1</div>
-  <div class="child">Child 2</div>
-</div>

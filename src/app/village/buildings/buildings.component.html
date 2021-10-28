@@ -1,4 +1,4 @@
-<div class="cont">
+<div class="cont" gdGridAlign="center center">
   <div *ngFor="let building of village?.buildings; let i=index;">
    <div class="buildingSlot position-{{ building['position'] }}">
      <a href="" [ngClass]="building['name'] == 'empty-spot' ? 'emptyBuildingSlot' : 'level colorLayer good'">

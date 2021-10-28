@@ -1,10 +1,25 @@
-<div class="fields_container">
-  <div *ngFor="let field of village?.fields">
-    <a class="btn-field position-{{ field.position }}" [ngClass]="{'upgrade-available': field.ableToUpgrade,
+<div class="fields-container mt-5"
+     gdColumns="2fr 1fr"
+     gdRows="auto auto auto"
+     gdAreas="fields . | fields prod | tasks ."
+     gdGap="1rem">
+  <div class="fields_container" gdArea="fields">
+    <button class="btn-buildings" (click)="onBuildingsClick()">
+      <fa-icon [icon]="faHome" size="2x" [styles]="{'color': 'white'}"></fa-icon>
+    </button>
+    <div *ngFor="let field of village?.fields">
+      <a class="btn-field position-{{ field.position }}" [ngClass]="{'upgrade-available': field.ableToUpgrade,
     'is-disabled': !field.ableToUpgrade}" (click)="onFieldClick(village.villageId, field)"
-       type="button" data-bs-toggle="modal" data-bs-target="#buildingConfirmModal">
-      <div class="fa" [ngClass]="{'under-upgrade': field.underUpgrade}">{{ field.level }}</div>
-    </a>
+         type="button" data-bs-toggle="modal" data-bs-target="#buildingConfirmModal">
+        <div class="fa" [ngClass]="{'under-upgrade': field.underUpgrade}">{{ field.level }}</div>
+      </a>
+    </div>
+  </div>
+  <div gdArea="prod">
+    <app-produce-per-hour></app-produce-per-hour>
+  </div>
+  <div gdArea="tasks">
+    <app-task-list></app-task-list>
   </div>
 </div>
 <app-building-confirm [field]="selectedField" [villageId]="village.villageId"></app-building-confirm>

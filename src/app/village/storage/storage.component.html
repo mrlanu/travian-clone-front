@@ -1,7 +1,7 @@
 <div class="card m-2 shadow">
-  <div class="card-body" fxLayout="row wrap" fxLayoutAlign = "space-evenly center">
-    <div class="mb-2 mb-md-0" fxLayout="row wrap" fxLayoutAlign = "space-evenly center" fxLayoutGap="1rem">
-      <div class="warehouse mb-2 mb-md-0" fxLayout fxLayoutAlign="center center">
+  <div class="card-body" fxLayout="row" fxLayoutAlign = "space-evenly center" fxLayoutGap="1rem">
+    <div class="mb-0" fxLayout="row" fxLayoutAlign = "space-evenly center" fxLayoutGap="0.5rem">
+      <div class="warehouse" fxLayout fxLayoutAlign="center center">
         <i class="warehouse-img" style="margin-right: 0.5rem"></i>
         <div>
           <div class="balance font-weight-bold">{{ warehouseCapacity }}</div>
@@ -9,7 +9,7 @@
         </div>
       </div>
 
-      <a href="" fxLayout class="storage-bar-button mb-2 mb-md-0">
+      <a href="" fxLayout class="storage-bar-button">
         <i class="r r-wood"></i>
         <div fxLayout="column" fxFlex>
           <div class="balance font-weight-bold" fxFlexAlign="center">{{ wood }}</div>
@@ -19,7 +19,7 @@
           </div>
         </div>
       </a>
-      <a href="" fxLayout class="storage-bar-button mb-2 mb-md-0">
+      <a href="" fxLayout class="storage-bar-button">
         <i class="r r-clay"></i>
         <div fxLayout="column" fxFlex>
           <div class="balance font-weight-bold" fxFlexAlign="center">{{ clay }}</div>
@@ -29,7 +29,7 @@
           </div>
         </div>
       </a>
-      <a href="" fxLayout class="storage-bar-button mb-2 mb-md-0">
+      <a href="" fxLayout class="storage-bar-button">
         <i class="r r-iron"></i>
         <div fxLayout="column" fxFlex>
           <div class="balance font-weight-bold" fxFlexAlign="center">{{ iron }}</div>
@@ -40,7 +40,7 @@
         </div>
       </a>
     </div>
-    <div fxLayout="row wrap" fxLayoutAlign = "space-evenly center" fxLayoutGap="1rem">
+    <div fxLayout="row" fxLayoutAlign = "space-evenly center" fxLayoutGap="0.5rem">
       <div class="warehouse" fxLayout fxLayoutAlign="center center">
         <i class="granary" style="margin-right: 0.5rem"></i>
         <div>
