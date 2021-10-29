@@ -1,10 +1,10 @@
 <div class="main-container"
-     gdColumns="1fr 3fr 1fr"
-     gdRows="100px 100% 100px"
-     gdAreas="brand main-nav settings | left-sidebar center right-sidebar | footer footer footer">
+     gdColumns="1fr 1fr 700px  1fr 1fr"
+     gdRows="auto 100% 100px"
+     gdAreas="brand main-nav main-nav main-nav settings | left-sidebar left-sidebar center right-sidebar right-sidebar | footer footer footer footer footer">
   <div class="brand" gdArea="brand"></div>
-  <nav class="main-nav" gdArea="main-nav">
-    <app-storage></app-storage>
+  <nav class="main-nav" gdArea="main-nav" gdGridAlign="center">
+    <app-header (btnClick)="onBuildingsClick($event)" (btnFieldsClick)="onBuildingsClick(false)"></app-header>
   </nav>
   <div class="settings" gdArea="settings"></div>
   <div class="left-sidebar" gdArea="left-sidebar"></div>

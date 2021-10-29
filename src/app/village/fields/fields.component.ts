@@ -14,7 +14,7 @@ export class FieldsComponent implements OnInit, OnDestroy {
 
   @Output() buildClick: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  villageId: string = '6178ade7d493521f99e5c574';
+  villageId: string = '6179f153d493521f99e5c57a';
   selectedField: FieldView | undefined;
 
   village: VillageView =  {

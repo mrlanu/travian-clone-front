@@ -18,6 +18,7 @@ import { LanuCountdownComponent } from './shared/lanu-countdown/lanu-countdown.c
 import { BuildingConfirmComponent } from './modals/building-confirm/building-confirm.component';
 import {ModalModule} from "ngx-bootstrap/modal";
 import { BuildingsComponent } from './village/buildings/buildings.component';
+import { HeaderComponent } from './village/header/header.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { BuildingsComponent } from './village/buildings/buildings.component';
     TaskListComponent,
     LanuCountdownComponent,
     BuildingConfirmComponent,
-    BuildingsComponent
+    BuildingsComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
