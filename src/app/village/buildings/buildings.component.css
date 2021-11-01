@@ -26,6 +26,16 @@ a {
   background-size: cover;
 }
 
+.granary {
+  background-image: url("../../../assets/img/granary.png");
+  background-size: cover;
+}
+
+.barrack {
+  background-image: url("../../../assets/img/barrack.png");
+  background-size: cover;
+}
+
 .buildingSlot {
   width: 80px;
   height: 80px;
@@ -53,33 +63,39 @@ a {
   border: 4px solid lightgreen;
 }
 
-.position-6 {
+.position-19 {
   left: 180px;
   top: 120px;
   z-index: 25;
 }
 
-.position-7 {
+.position-20 {
   left: 285px;
   top: 120px;
   z-index: 23;
 }
 
-.position-8 {
+.position-21 {
   left: 325px;
   top: 205px;
   z-index: 23;
 }
 
-.position-9 {
+.position-22 {
   left: 245px;
   top: 220px;
   z-index: 23;
 }
 
-.position-10 {
+.position-23 {
   left: 185px;
   top: 180px;
+  z-index: 23;
+}
+
+.position-24 {
+  left: 105px;
+  top: 140px;
   z-index: 23;
 }
 

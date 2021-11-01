@@ -19,6 +19,7 @@ import { BuildingConfirmComponent } from './modals/building-confirm/building-con
 import {ModalModule} from "ngx-bootstrap/modal";
 import { BuildingsComponent } from './village/buildings/buildings.component';
 import { HeaderComponent } from './village/header/header.component';
+import { BuildingDetailsComponent } from './village/building-details/building-details.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { HeaderComponent } from './village/header/header.component';
     LanuCountdownComponent,
     BuildingConfirmComponent,
     BuildingsComponent,
-    HeaderComponent
+    HeaderComponent,
+    BuildingDetailsComponent
   ],
   imports: [
     BrowserModule,
