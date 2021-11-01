@@ -14,7 +14,7 @@ export class FieldsComponent implements OnInit, OnDestroy {
 
   @Output() buildClick: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  villageId: string = '617f5db097af39015b99888b';
+  villageId: string = '618016eefac3034ad72ace94';
   selectedField: FieldView | undefined;
 
   village: VillageView =  {
@@ -46,8 +46,8 @@ export class FieldsComponent implements OnInit, OnDestroy {
     this.componentSubs.push(
       this.villageService.villageChanged.subscribe(
         (village: VillageView) => {
-          console.log(village);
           this.village = village;
+          console.log('Fields component - ', this.village);
         }));
     this.villageService.getVillageById(this.villageId);
   }

@@ -56,46 +56,139 @@ a {
   height: 1.5rem;
   border: 3px solid darkgreen;
   border-radius: 50%;
-  background-color: darkgreen;
+  background-color: #e8b174;
+  opacity: 50%;
 }
 
 .emptyBuildingSlot:hover {
-  border: 4px solid lightgreen;
+  border: 4px solid white;
+  opacity: 70%;
 }
 
 .position-19 {
-  left: 180px;
-  top: 120px;
-  z-index: 25;
+  left: 195px;
+  top: 60px;
+  z-index: 23;
 }
 
 .position-20 {
-  left: 285px;
-  top: 120px;
+  left: 280px;
+  top: 45px;
   z-index: 23;
 }
 
 .position-21 {
-  left: 325px;
-  top: 205px;
+  left: 360px;
+  top: 55px;
   z-index: 23;
 }
 
 .position-22 {
-  left: 245px;
-  top: 220px;
-  z-index: 23;
+  left: 120px;
+  top: 95px;
+  z-index: 25;
 }
 
 .position-23 {
+  left: 320px;
+  top: 90px;
+  z-index: 23;
+}
+
+.position-24 {
+  left: 420px;
+  top: 95px;
+  z-index: 23;
+}
+
+.position-25 {
+  left: 90px;
+  top: 140px;
+  z-index: 23;
+}
+
+.position-26 {
+  left: 180px;
+  top: 125px;
+  z-index: 23;
+}
+
+.position-27 {
+  left: 280px;
+  top: 130px;
+  z-index: 23;
+}
+
+.position-28 {
+  left: 450px;
+  top: 140px;
+  z-index: 23;
+}
+
+
+.position-29 {
+  left: 95px;
+  top: 190px;
+  z-index: 23;
+}
+
+.position-30 {
   left: 185px;
   top: 180px;
   z-index: 23;
 }
 
-.position-24 {
-  left: 105px;
-  top: 140px;
+.position-31 {
+  left: 355px;
+  top: 160px;
+  z-index: 23;
+}
+
+.position-32 {
+  left: 445px;
+  top: 190px;
+  z-index: 23;
+}
+
+.position-33 {
+  left: 110px;
+  top: 240px;
+  z-index: 23;
+}
+
+.position-34 {
+  left: 245px;
+  top: 220px;
+  z-index: 23;
+}
+
+.position-35 {
+  left: 330px;
+  top: 220px;
+  z-index: 23;
+}
+
+.position-36 {
+  left: 400px;
+  top: 240px;
+  z-index: 23;
+}
+
+.position-37 {
+  left: 185px;
+  top: 270px;
+  z-index: 23;
+}
+
+.position-38 {
+  left: 265px;
+  top: 280px;
+  z-index: 23;
+}
+
+.position-39 {
+  left: 340px;
+  top: 275px;
   z-index: 23;
 }
 

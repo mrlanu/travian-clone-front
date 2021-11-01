@@ -40,6 +40,7 @@ export class BuildingsComponent implements OnInit, OnDestroy {
           this.village = village;
         }));
     this.village = this.villageService.currentVillage;
+    console.log('Buildings component - ', this.village);
   }
 
   ngOnDestroy(): void {

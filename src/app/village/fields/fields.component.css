@@ -59,28 +59,93 @@
 }
 
 .position-1 {
+  top: 10px;
+  left: 150px;
+}
+
+.position-2 {
   top: 15px;
   left: 240px;
 }
 
-.position-2 {
-  top: 25px;
-  left: 330px;
-}
-
 .position-3 {
-  top: 80px;
-  left: 370px;
+  top: 30px;
+  left: 325px;
 }
 
 .position-4 {
-  top: 155px;
-  left: 380px;
+  top: 50px;
+  left: 100px;
 }
 
 .position-5 {
+  top: 65px;
+  left: 220px;
+}
+
+.position-6 {
+  top: 75px;
+  left: 275px;
+}
+
+.position-7 {
+  top: 65px;
+  left: 370px;
+}
+
+.position-8 {
+  top: 105px;
+  left: 40px;
+}
+
+.position-9 {
+  top: 105px;
+  left: 115px;
+}
+
+.position-10 {
+  top: 100px;
+  left: 335px;
+}
+
+.position-11 {
+  top: 100px;
+  left: 400px;
+}
+
+.position-12 {
+  top: 160px;
+  left: 40px;
+}
+
+.position-13 {
+  top: 150px;
+  left: 120px;
+}
+
+.position-14 {
+  top: 160px;
+  left: 380px;
+}
+
+.position-15 {
+  top: 230px;
+  left: 140px;
+}
+
+.position-16 {
+  top: 200px;
+  left: 260px;
+}
+
+.position-17 {
   top: 215px;
-  left: 320px;
+  left: 330px;
+}
+
+.position-18 {
+  top: 250px;
+  left: 240px;
 }
 
 .btn-buildings {

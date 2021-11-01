@@ -10,7 +10,7 @@ import {VillageService} from "../services/village.service";
 })
 export class VillageComponent implements OnInit, OnDestroy {
 
-  villageId: string = '6178ade7d493521f99e5c574';
+  villageId: string = '618016eefac3034ad72ace94';
   isBuildings = false;
 
   village: VillageView =  {
@@ -44,8 +44,8 @@ export class VillageComponent implements OnInit, OnDestroy {
     this.componentSubs.push(
       this.villageService.villageChanged.subscribe(
         (village: VillageView) => {
-          console.log(village);
           this.village = village;
+          console.log(village);
         }));
     this.villageService.getVillageById(this.villageId);
   }
