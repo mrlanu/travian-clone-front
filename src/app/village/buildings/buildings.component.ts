@@ -10,24 +10,7 @@ import {Subscription} from "rxjs";
 })
 export class BuildingsComponent implements OnInit, OnDestroy {
 
-  village: VillageView | undefined =  {
-    accountId: "",
-    buildings: [],
-    culture: 0,
-    eventsList: [],
-    fields: [],
-    homeLegion: new Map<EUnits, number>(),
-    name: "",
-    population: 0,
-    producePerHour: new Map<string, number>(),
-    storage: new Map<string, number>(),
-    warehouseCapacity: 0,
-    granaryCapacity: 0,
-    villageId: "",
-    villageType: "",
-    x: 0,
-    y: 0
-  };
+  village!: VillageView;
 
   componentSubs: Subscription[] = [];
 
@@ -39,8 +22,7 @@ export class BuildingsComponent implements OnInit, OnDestroy {
         (village: VillageView) => {
           this.village = village;
         }));
-    this.village = this.villageService.currentVillage;
-    console.log('Buildings component - ', this.village);
+    this.villageService.getVillageById();
   }
 
   ngOnDestroy(): void {

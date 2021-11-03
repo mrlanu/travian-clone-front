@@ -15,6 +15,7 @@ export class BuildingConfirmComponent implements OnInit {
   constructor(private villageService: VillageService) { }
 
   ngOnInit(): void {
+
   }
 
   onUpgradeClick() {

@@ -37,6 +37,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   onCountDone() {
-    this.villageService.getVillageById(this.village?.villageId!);
+    this.villageService.getVillageById();
   }
 }

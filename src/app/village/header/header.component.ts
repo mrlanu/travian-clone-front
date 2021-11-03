@@ -8,9 +8,6 @@ import { faSeedling, faHome, faGlobe, faChartLine, faBook, faEnvelope, faSmileWi
 })
 export class HeaderComponent implements OnInit {
 
-  @Output() btnClick: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() btnFieldsClick: EventEmitter<boolean> = new EventEmitter<boolean>();
-
   faSeedling = faSeedling;
   faHome = faHome;
   faGlobe = faGlobe;
@@ -27,13 +24,4 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  onBuildingsClick(){
-    this.btnClick.next(true);
-  }
-
-  onFieldsClick(){
-    this.btnFieldsClick.next(true);
-  }
-
 }

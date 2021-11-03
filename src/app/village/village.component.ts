@@ -13,25 +13,7 @@ export class VillageComponent implements OnInit, OnDestroy {
   villageId: string = '618016eefac3034ad72ace94';
   isBuildings = false;
 
-  village: VillageView =  {
-    accountId: "",
-    buildings: [],
-    culture: 0,
-    eventsList: [],
-    fields: [],
-    homeLegion: new Map<EUnits, number>(),
-    name: "",
-    population: 0,
-    producePerHour: new Map<string, number>(),
-    storage: new Map<string, number>(),
-    warehouseCapacity: 0,
-    granaryCapacity: 0,
-    villageId: "",
-    villageType: "",
-    x: 0,
-    y: 0
-  };
-
+  village: VillageView | undefined;
   componentSubs: Subscription[] = [];
 
   constructor(private villageService: VillageService) { }
@@ -47,7 +29,7 @@ export class VillageComponent implements OnInit, OnDestroy {
           this.village = village;
           console.log(village);
         }));
-    this.villageService.getVillageById(this.villageId);
+    this.villageService.getVillageById();
   }
 
   ngOnDestroy(): void {

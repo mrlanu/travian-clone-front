@@ -1,13 +1,48 @@
 <div class="card text-center" style="position: absolute; top: 50px; width: 100%">
-  <div class="card-header">
-    Featured
+  <div class="card-header" fxLayout fxLayoutAlign="space-between baseline">
+    <h5 class="modal-title" id="buildingConfirmModalLabel">{{ field?.name }} Level: {{ field?.level }}</h5>
+    <button type="button" class="btn-close" routerLink="/village/fields"></button>
   </div>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+  <div class="card-body" style="min-height: 500px">
+    <div>Production: {{ field?.production }}</div>
+    <div>
+      {{ field?.description }}
+    </div>
+    <div fxLayout fxLayoutAlign="center" fxLayoutGap="1rem">
+      <div fxLayout>
+        <i class="r r-wood"></i>
+        <div>
+          {{ field?.resourcesToNextLevel?.get('WOOD') }}
+        </div>
+      </div>
+      <div fxLayout>
+        <i class="r r-clay"></i>
+        <div>
+          {{ field?.resourcesToNextLevel?.get('CLAY') }}
+        </div>
+      </div>
+      <div fxLayout>
+        <i class="r r-iron"></i>
+        <div>
+          {{ field?.resourcesToNextLevel?.get('IRON') }}
+        </div>
+      </div>
+      <div fxLayout>
+        <i class="r r-crop"></i>
+        <div>
+          {{ field?.resourcesToNextLevel?.get('CROP') }}
+        </div>
+      </div>
+      <div fxLayout>
+        <i class="r r-clock"></i>
+        <div>
+          {{ formatTime(field?.timeToNextLevel!) }}
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="card-footer text-muted">
-    2 days ago
+  <div class="card-footer text-muted" fxLayout fxLayoutAlign="center">
+    <button type="button" class="btn btn-primary"
+            (click)="onUpgradeClick()">Upgrade to level {{ field?.level! + 1 }}</button>
   </div>
 </div>

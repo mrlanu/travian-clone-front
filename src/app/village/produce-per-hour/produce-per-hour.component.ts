@@ -10,6 +10,7 @@ import {VillageView} from "../../models/village-dto.model";
 })
 export class ProducePerHourComponent implements OnInit, OnDestroy {
 
+  village: VillageView | undefined;
   wood = 0;
   clay = 0;
   iron = 0;
@@ -22,11 +23,16 @@ export class ProducePerHourComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.componentSubs.push(this.villageService.villageChanged
       .subscribe((v: VillageView) => {
-        this.wood = v.producePerHour.get('WOOD')!;
-        this.clay = v.producePerHour.get('CLAY')!;
-        this.iron = v.producePerHour.get('IRON')!;
-        this.crop = v.producePerHour.get('CROP')!;
+        this.village = v;
+        this.assignResources();
       }));
+  }
+
+  private assignResources() {
+    this.wood = this.village?.producePerHour.get('WOOD')!;
+    this.clay = this.village?.producePerHour.get('CLAY')!;
+    this.iron = this.village?.producePerHour.get('IRON')!;
+    this.crop = this.village?.producePerHour.get('CROP')!;
   }
 
   ngOnDestroy() {

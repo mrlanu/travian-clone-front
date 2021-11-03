@@ -2,9 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {FieldsComponent} from "./village/fields/fields.component";
 import {VillageComponent} from "./village/village.component";
+import {BuildingsComponent} from "./village/buildings/buildings.component";
+import {BuildingDetailsComponent} from "./village/building-details/building-details.component";
 
 const routes: Routes = [
-  {path: 'village', component: VillageComponent}
+  {path: 'village', component: VillageComponent, children: [
+      {path: 'fields', component: FieldsComponent},
+      {path: 'buildings', component: BuildingsComponent},
+      {path: 'details/:village-id/:position', component: BuildingDetailsComponent},
+    ]}
   /*{path: 'welcome-page', component: WelcomePageComponent},
   {path: 'main', component: MainComponent, canActivateChild: [AuthGuard], children: [
       {path: 'charts/income-vs-expenses', component: BarChartComponent},

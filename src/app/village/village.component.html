@@ -4,14 +4,15 @@
      gdAreas="brand main-nav main-nav main-nav settings | left-sidebar left-sidebar center right-sidebar right-sidebar | footer footer footer footer footer">
   <div class="brand" gdArea="brand"></div>
   <nav class="main-nav" gdArea="main-nav" gdGridAlign="center">
-    <app-header (btnClick)="onBuildingsClick($event)" (btnFieldsClick)="onBuildingsClick(false)"></app-header>
+    <app-header></app-header>
   </nav>
   <div class="settings" gdArea="settings"></div>
   <div class="left-sidebar" gdArea="left-sidebar"></div>
   <div class="center" gdArea="center">
-    <app-fields *ngIf="!isBuildings" (buildClick)="onBuildingsClick($event)"></app-fields>
+    <router-outlet></router-outlet>
+    <!--<app-fields *ngIf="!isBuildings" (buildClick)="onBuildingsClick($event)"></app-fields>
     <app-buildings *ngIf="isBuildings"></app-buildings>
-    <!--<app-building-details></app-building-details>-->
+    <app-building-details></app-building-details>-->
   </div>
   <div class="right-sidebar" gdArea="right-sidebar"></div>
   <footer class="footer" gdArea="footer"></footer>

@@ -11,6 +11,12 @@
   margin: auto;
 }
 
-.header-buttons:hover {
-  background: #C7BC61;
+.header-buttons:hover:not(.header-active) {
+  border: 7px solid darkgreen;
+}
+
+.header-active {
+  background: #e8db86;
+  border: 4px solid darkgreen;
+  cursor: auto;
 }

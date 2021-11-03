@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Subject} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {VillageView} from "../models/village-dto.model";
+import {EUnits, VillageView} from "../models/village-dto.model";
 import {map} from "rxjs/operators";
 
 @Injectable({
@@ -9,13 +9,32 @@ import {map} from "rxjs/operators";
 })
 export class VillageService {
   baseUrl = 'http://localhost:8080/api';
+  villageId = '618016eefac3034ad72ace94';
+
   villageChanged = new Subject<VillageView>();
-  currentVillage: VillageView | undefined;
+  /*currentVillage: VillageView = {
+    accountId: "",
+    buildings: [],
+    culture: 0,
+    eventsList: [],
+    fields: [],
+    homeLegion: new Map<EUnits, number>(),
+    name: "",
+    population: 0,
+    producePerHour: new Map<string, number>(),
+    storage: new Map<string, number>(),
+    warehouseCapacity: 0,
+    granaryCapacity: 0,
+    villageId: "",
+    villageType: "",
+    x: 0,
+    y: 0
+  };*/
 
   constructor(private httpClient: HttpClient) { }
 
-  getVillageById(villageId: string) {
-    const url = `${this.baseUrl}/villages/${villageId}`;
+  getVillageById() {
+    const url = `${this.baseUrl}/villages/${this.villageId}`;
     this.httpClient.get<VillageView>(url).pipe(map(v => {
       let producePerHour = new Map<string, number>();
       let storage = new Map<string, number>();
@@ -33,7 +52,7 @@ export class VillageService {
       );
     })).subscribe(village => {
       console.log(village.buildings[2]['name']);
-      this.currentVillage = village;
+      /*this.currentVillage = village;*/
       this.villageChanged.next(village);
     });
   }
@@ -47,14 +66,14 @@ export class VillageService {
       })
     };
     this.httpClient.put<string>(url, {}, httpOptions).subscribe(() => {
-      this.getVillageById(villageId);
+      this.getVillageById();
     })
   }
 
   deleteBuildingEvent(eventId: string){
     const url = `${this.baseUrl}/villages/events/${eventId}`;
     this.httpClient.delete<string>(url).subscribe(() => {
-      this.getVillageById(this.currentVillage?.villageId!);
+      this.getVillageById();
     });
   }
 }

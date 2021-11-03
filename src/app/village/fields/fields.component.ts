@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
-import {EUnits, FieldView, VillageView} from "../../models/village-dto.model";
+import {FieldView, VillageView} from "../../models/village-dto.model";
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -14,28 +14,9 @@ export class FieldsComponent implements OnInit, OnDestroy {
 
   @Output() buildClick: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  villageId: string = '618016eefac3034ad72ace94';
-  selectedField: FieldView | undefined;
+  selectedField!: FieldView;
 
-  village: VillageView =  {
-    accountId: "",
-    buildings: [],
-    culture: 0,
-    eventsList: [],
-    fields: [],
-    homeLegion: new Map<EUnits, number>(),
-    name: "",
-    population: 0,
-    producePerHour: new Map<string, number>(),
-    storage: new Map<string, number>(),
-    warehouseCapacity: 0,
-    granaryCapacity: 0,
-    villageId: "",
-    villageType: "",
-    x: 0,
-    y: 0
-  };
-
+  village!: VillageView;
   faHome = faHome;
 
   componentSubs: Subscription[] = [];
@@ -47,13 +28,8 @@ export class FieldsComponent implements OnInit, OnDestroy {
       this.villageService.villageChanged.subscribe(
         (village: VillageView) => {
           this.village = village;
-          console.log('Fields component - ', this.village);
         }));
-    this.villageService.getVillageById(this.villageId);
-  }
-
-  onBuildingsClick(){
-    this.buildClick.next(true);
+    this.villageService.getVillageById();
   }
 
   onFieldClick(villageId: string, field: FieldView) {
