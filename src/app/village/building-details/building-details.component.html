@@ -1,13 +1,15 @@
 <div class="card text-center" style="position: absolute; top: 50px; width: 100%">
   <div class="card-header" fxLayout fxLayoutAlign="space-between baseline">
-    <h5 class="modal-title" id="buildingConfirmModalLabel">{{ field?.name }} Level: {{ field?.level }}</h5>
+    <h5 class="modal-title" id="buildingConfirmModalLabel">{{ field?.name | uppercase }} Level: {{ field?.level }}</h5>
     <button type="button" class="btn-close" routerLink="/villages/{{ village?.villageId }}/fields"></button>
   </div>
   <div class="card-body" style="min-height: 500px">
     <div>Production: {{ field?.production }}</div>
+    <hr>
     <div>
       {{ field?.description }}
     </div>
+    <hr>
     <div fxLayout fxLayoutAlign="center" fxLayoutGap="1rem">
       <div fxLayout>
         <i class="r r-wood"></i>

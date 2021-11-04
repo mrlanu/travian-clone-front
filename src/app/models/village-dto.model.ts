@@ -60,6 +60,7 @@ export interface FieldView {
   production: number;
   underUpgrade: boolean;
   ableToUpgrade: boolean;
+  maxLevel: number;
   description: string;
   timeToNextLevel: number;
   resourcesToNextLevel: Map<string, number>;
