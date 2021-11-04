@@ -4,12 +4,12 @@
      gdAreas="hero fields buildings map stat war mail quest gold logo | hero res res res res res res res res logo">
   <div gdArea="hero" style="border: 1px solid darkgreen">Hero is under construction</div>
   <div class="btn-container" gdArea="fields">
-    <button class="header-buttons" routerLink="/village/fields" routerLinkActive="header-active" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Fields">
+    <button class="header-buttons" [routerLink]="['fields']" routerLinkActive="header-active" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Fields">
       <fa-icon [icon]="faSeedling" size="3x" [styles]="faStyle"></fa-icon>
     </button>
   </div>
   <div class="btn-container" gdArea="buildings">
-    <button class="header-buttons" routerLink="/village/buildings" routerLinkActive="header-active" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Buildings">
+    <button class="header-buttons" [routerLink]="['buildings']" routerLinkActive="header-active" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Buildings">
       <fa-icon [icon]="faHome" size="3x" [styles]="faStyle"></fa-icon>
     </button>
   </div>

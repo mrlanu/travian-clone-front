@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EUnits, VillageView} from "../models/village-dto.model";
 import {Subscription} from "rxjs";
 import {VillageService} from "../services/village.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-village',
@@ -10,26 +11,22 @@ import {VillageService} from "../services/village.service";
 })
 export class VillageComponent implements OnInit, OnDestroy {
 
-  villageId: string = '618016eefac3034ad72ace94';
   isBuildings = false;
 
   village: VillageView | undefined;
   componentSubs: Subscription[] = [];
 
-  constructor(private villageService: VillageService) { }
-
-  onBuildingsClick(e: boolean){
-    this.isBuildings = e;
-  }
+  constructor(private villageService: VillageService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    console.log('From village - ', this.route.snapshot.params);
     this.componentSubs.push(
       this.villageService.villageChanged.subscribe(
         (village: VillageView) => {
           this.village = village;
           console.log(village);
         }));
-    this.villageService.getVillageById();
+    this.villageService.getVillageById(this.route.snapshot.params['village-id']);
   }
 
   ngOnDestroy(): void {

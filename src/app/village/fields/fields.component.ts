@@ -3,6 +3,7 @@ import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
 import {FieldView, VillageView} from "../../models/village-dto.model";
 import { faHome } from '@fortawesome/free-solid-svg-icons';
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -21,7 +22,7 @@ export class FieldsComponent implements OnInit, OnDestroy {
 
   componentSubs: Subscription[] = [];
 
-  constructor(private villageService: VillageService) { }
+  constructor(private villageService: VillageService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.componentSubs.push(
@@ -29,7 +30,7 @@ export class FieldsComponent implements OnInit, OnDestroy {
         (village: VillageView) => {
           this.village = village;
         }));
-    this.villageService.getVillageById();
+    this.villageService.getVillageById(this.route.parent?.snapshot.params['village-id']);
   }
 
   onFieldClick(villageId: string, field: FieldView) {

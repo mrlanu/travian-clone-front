@@ -6,10 +6,10 @@ import {BuildingsComponent} from "./village/buildings/buildings.component";
 import {BuildingDetailsComponent} from "./village/building-details/building-details.component";
 
 const routes: Routes = [
-  {path: 'village', component: VillageComponent, children: [
+  {path: 'villages/:village-id', component: VillageComponent, children: [
       {path: 'fields', component: FieldsComponent},
-      {path: 'buildings', component: BuildingsComponent},
-      {path: 'details/:village-id/:position', component: BuildingDetailsComponent},
+      {path: 'fields/:position', component: BuildingDetailsComponent},
+      {path: 'buildings', component: BuildingsComponent}
     ]}
   /*{path: 'welcome-page', component: WelcomePageComponent},
   {path: 'main', component: MainComponent, canActivateChild: [AuthGuard], children: [

@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EUnits, VillageView} from "../../models/village-dto.model";
 import {VillageService} from "../../services/village.service";
 import {Subscription} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-buildings',
@@ -14,7 +15,7 @@ export class BuildingsComponent implements OnInit, OnDestroy {
 
   componentSubs: Subscription[] = [];
 
-  constructor(private villageService: VillageService) { }
+  constructor(private villageService: VillageService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.componentSubs.push(
@@ -22,7 +23,7 @@ export class BuildingsComponent implements OnInit, OnDestroy {
         (village: VillageView) => {
           this.village = village;
         }));
-    this.villageService.getVillageById();
+    this.villageService.getVillageById(this.route.parent?.snapshot.params['village-id']);
   }
 
   ngOnDestroy(): void {

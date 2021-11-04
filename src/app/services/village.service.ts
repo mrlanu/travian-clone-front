@@ -33,8 +33,9 @@ export class VillageService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getVillageById() {
-    const url = `${this.baseUrl}/villages/${this.villageId}`;
+  getVillageById(villageId: string) {
+    this.villageId = villageId;
+    const url = `${this.baseUrl}/villages/${villageId}`;
     this.httpClient.get<VillageView>(url).pipe(map(v => {
       let producePerHour = new Map<string, number>();
       let storage = new Map<string, number>();
@@ -66,14 +67,14 @@ export class VillageService {
       })
     };
     this.httpClient.put<string>(url, {}, httpOptions).subscribe(() => {
-      this.getVillageById();
-    })
+
+    });
   }
 
   deleteBuildingEvent(eventId: string){
     const url = `${this.baseUrl}/villages/events/${eventId}`;
     this.httpClient.delete<string>(url).subscribe(() => {
-      this.getVillageById();
+      this.getVillageById(this.villageId);
     });
   }
 }

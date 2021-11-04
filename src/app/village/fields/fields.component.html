@@ -4,12 +4,12 @@
      gdAreas="fields . | fields prod | tasks ."
      gdGap="1rem">
   <div class="fields_container" gdArea="fields">
-    <button class="btn-buildings" routerLink="/village/buildings" >
+    <button class="btn-buildings" routerLink="../buildings" >
       <fa-icon [icon]="faHome" size="2x" [styles]="{'color': 'white'}"></fa-icon>
     </button>
     <div *ngFor="let field of village?.fields">
-      <a class="btn-field position-{{ field.position }}" [ngClass]="{'upgrade-available': field.ableToUpgrade,
-    'is-disabled': !field.ableToUpgrade}" routerLink="/village/details/{{ village.villageId }}/{{ field.position }}"
+      <a class="btn-field position-{{ field.position }}" [ngClass]="{'upgrade-available': field.ableToUpgrade && village.eventsList.length <= 1,
+    'is-disabled': !field.ableToUpgrade || village.eventsList.length >= 2}" routerLink="/villages/{{ village.villageId }}/fields/{{ field.position }}"
          type="button">
         <div class="fa" [ngClass]="{'under-upgrade': field.underUpgrade}">{{ field.level }}</div>
       </a>

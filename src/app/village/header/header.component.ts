@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { faSeedling, faHome, faGlobe, faChartLine, faBook, faEnvelope, faSmileWink } from "@fortawesome/free-solid-svg-icons";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -20,8 +21,9 @@ export class HeaderComponent implements OnInit {
     'color': 'darkgreen'
   };
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    console.log('Header - ', this.route.snapshot.params);
   }
 }

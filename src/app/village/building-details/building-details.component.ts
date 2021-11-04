@@ -32,7 +32,7 @@ export class BuildingDetailsComponent implements OnInit, OnDestroy {
           }
           this.field!.resourcesToNextLevel = res;
         }));
-    this.villageService.getVillageById();
+    this.villageService.getVillageById(this.route.parent?.snapshot.params['village-id']);
   }
 
   public formatTime(timeSeconds: number): string {
@@ -56,8 +56,9 @@ export class BuildingDetailsComponent implements OnInit, OnDestroy {
   }
 
   onUpgradeClick(){
-    this.villageService.upgradeField(this.route.snapshot.params['village-id'], this.field.position!);
-    this.router.navigate(['/village', 'fields']);
+    let villageId = this.route.parent?.snapshot.params['village-id'];
+    this.villageService.upgradeField(villageId, this.field.position!);
+    this.router.navigate(['/villages', villageId, 'fields']);
   }
 
   ngOnDestroy(): void {

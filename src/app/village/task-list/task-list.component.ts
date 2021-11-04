@@ -14,7 +14,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
   events: EventView[] = [];
   componentSubs: Subscription[] = [];
   faTimes = faTimes;
-  village: VillageView | undefined;
+  village!: VillageView;
 
   constructor(private villageService: VillageService) { }
 
@@ -37,6 +37,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   onCountDone() {
-    this.villageService.getVillageById();
+    this.villageService.getVillageById(this.village?.villageId);
   }
 }
