@@ -4,8 +4,10 @@ import {FieldsComponent} from "./village/fields/fields.component";
 import {VillageComponent} from "./village/village.component";
 import {BuildingsComponent} from "./village/buildings/buildings.component";
 import {BuildingDetailsComponent} from "./village/building-details/building-details.component";
+import {WelcomePageComponent} from "./welcome-page/welcome-page.component";
 
 const routes: Routes = [
+  {path: 'welcome-page', component: WelcomePageComponent},
   {path: 'villages/:village-id', component: VillageComponent, children: [
       {path: 'fields', component: FieldsComponent},
       {path: 'fields/:position', component: BuildingDetailsComponent},

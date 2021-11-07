@@ -1,0 +1,14 @@
+<main class="background" fxLayout="row wrap" fxLayoutAlign="space-evenly center">
+  <section fxLayout="column" fxFlex="50" fxFlex.lt-lg="50" fxHide.lt-md>
+    <div class="slogan">
+      Let's game begin...
+    </div>
+    <div class="resume">
+      ...
+    </div>
+  </section>
+  <div class="" fxFlex="30" fxFlex.lt-lg="40" fxFlex.lt-md="80" fxFlex.lt-sm="95">
+    <app-login *ngIf="isLogin"></app-login>
+    <app-signup *ngIf="!isLogin"></app-signup>
+  </div>
+</main>

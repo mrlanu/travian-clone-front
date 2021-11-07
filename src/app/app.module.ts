@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { VillageComponent } from './village/village.component';
 import { FieldsComponent } from './village/fields/fields.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {CountdownModule} from "ngx-countdown";
 import { StorageComponent } from './village/storage/storage.component';
 import {FlexLayoutModule} from "@angular/flex-layout";
@@ -20,6 +20,11 @@ import {ModalModule} from "ngx-bootstrap/modal";
 import { BuildingsComponent } from './village/buildings/buildings.component';
 import { HeaderComponent } from './village/header/header.component';
 import { BuildingDetailsComponent } from './village/building-details/building-details.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import {LoginComponent} from "./auth/login/login.component";
+import {AuthInterceptor} from "./auth/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -33,7 +38,10 @@ import { BuildingDetailsComponent } from './village/building-details/building-de
     BuildingConfirmComponent,
     BuildingsComponent,
     HeaderComponent,
-    BuildingDetailsComponent
+    BuildingDetailsComponent,
+    SignupComponent,
+    LoginComponent,
+    WelcomePageComponent
   ],
   imports: [
     BrowserModule,
@@ -44,9 +52,10 @@ import { BuildingDetailsComponent } from './village/building-details/building-de
     BrowserAnimationsModule,
     ProgressbarModule,
     FontAwesomeModule,
-    ModalModule
+    ModalModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

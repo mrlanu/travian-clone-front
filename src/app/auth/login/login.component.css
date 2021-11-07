@@ -1,0 +1,26 @@
+a {
+  text-decoration: none;
+  color: #ff6e06;
+}
+
+.register {
+  color: dodgerblue;
+}
+
+.register a:hover, .register a:active {
+  color: gray;
+}
+
+.form-back {
+  border-radius: 15px;
+  padding: 30px;
+  background: whitesmoke;
+  opacity: 0.8;
+}
+
+.text-center div {
+  font-size: 2rem;
+  color: #467BFF;
+  text-shadow: #999999 2px 2px 3px;
+
+}
