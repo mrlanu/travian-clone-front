@@ -1,11 +1,19 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
 import {Subject} from 'rxjs';
-import {UserInfo} from './user-info.model';
 import {UiService} from '../services/ui.service';
-import {AuthData} from "./auth-data.model";
+import {User} from "./user.model";
+import {map, tap} from "rxjs/operators";
+import {AuthRequest} from "./auth-request.model";
+
+interface AuthResponse{
+  email: string;
+  token: string;
+  expirationDate: Date;
+  userId: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -13,40 +21,33 @@ import {AuthData} from "./auth-data.model";
 export class AuthService {
 
   baseUrl = environment.baseUrl;
-  userChange = new Subject<UserInfo>();
+  currentUser: User | null = null;
   private isAuthenticated = false;
-  loggedUser: UserInfo | undefined;
+  private tokenTimer: any;
 
   constructor(private router: Router,
               private httpClient: HttpClient,
               private uiService: UiService) {}
 
-  static saveToken(token: string, userId: string) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('user-id', userId);
-    console.log('Obtained Access token - ', token);
-  }
-
-  registerUser(authData: AuthData) {
+  registerUser(authData: AuthRequest) {
+    this.uiService.isLoadingChanged.next(true);
     this.httpClient.post(this.baseUrl + '/api/auth/signup', authData).subscribe(user => {
-      console.log('User - ', user);
       this.uiService.isLoadingChanged.next(false);
-      // this.uiService.openSnackBar('Register successfully, please Login', null, 5000);
-      this.uiService.isLoginChanged.next(true);
+      this.router.navigate(['/welcome-page', 'login']);
     }, err => {
-      // this.uiService.openSnackBar(err.error.message, null, 5000);
       this.uiService.isLoadingChanged.next(false);
     });
   }
 
-  getToken(authData: AuthData) {
-    this.httpClient.post(this.baseUrl + '/api/auth/login', authData, {observe: 'response'})
-      .subscribe(response => {
-        console.log('Success');
-        const token = response.headers.get('token')!;
-        const userId = response.headers.get('user-id')!;
-        AuthService.saveToken(token, userId);
-        this.authSuccessfully();
+  login(authData: AuthRequest) {
+    this.uiService.isLoadingChanged.next(true);
+    this.httpClient.post<AuthResponse>(this.baseUrl + '/api/auth/login', authData)
+      .pipe(map(res => {
+        console.log('Res - ', res);
+      return  new User(res.token, new Date(res.expirationDate), res.email, res.userId);
+    })).subscribe(user => {
+        AuthService.storeUser(user);
+        this.authSuccessfully(user);
       }, err => {
         //this.uiService.openSnackBar('Invalid username or password', null, 5000);
         console.log('Error');
@@ -54,43 +55,57 @@ export class AuthService {
       });
   }
 
-  login(authData: AuthData) {
-    this.getToken(authData);
+  autoLogin(){
+    const userData: {
+      email: string;
+      _token: string;
+      expirationDate: string;
+      userId: string
+    } = JSON.parse(<string>localStorage.getItem('user'));
+    if (!userData){
+      return;
+    }
+    const user = new User(userData._token, new Date(userData.expirationDate), userData.email, userData.userId);
+
+    if (user.token){
+      this.authSuccessfully(user);
+    }
+  }
+
+  private authSuccessfully(user: User) {
+    this.uiService.isLoadingChanged.next(false);
+    this.isAuthenticated = true;
+    this.currentUser = user;
+    this.autoLogout(user.expirationDate.getTime() - new Date().getTime());
+    this.httpClient.get<string[]>(this.baseUrl + '/api/users/' + user.userId + '/villages')
+      .subscribe(villageList => {
+        this.router.navigate(['/villages', villageList[0], 'fields']);
+      });
+  }
+
+  private static storeUser(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   logout() {
     this.isAuthenticated = false;
+    this.currentUser = null;
     localStorage.clear();
-    this.router.navigate(['/welcome-page']);
+    if (this.tokenTimer){
+      clearTimeout(this.tokenTimer);
+    }
+    this.tokenTimer = null;
+    this.router.navigate(['/welcome-page', 'login']);
+  }
+
+  autoLogout(expirationDuration: number){
+    this.tokenTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
 
   isAuth() {
     return this.isAuthenticated;
   }
 
-  authSuccessfully() {
-    this.uiService.isLoadingChanged.next(false);
-    this.isAuthenticated = true;
-
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-
-    this.httpClient.get<string[]>(this.baseUrl + '/api/users/' + localStorage.getItem('user-id') + '/villages',
-      {headers: headers})
-      .subscribe(villageList => {
-        console.log('Response - ', villageList);
-        console.log('List - ', villageList);
-        this.router.navigate(['/villages', villageList[0], 'fields']);
-    });
-  }
-
-
-  getLoggedInUser() {
-    this.httpClient.get<UserInfo>(this.baseUrl + '/user')
-      .subscribe((user) => {
-        this.loggedUser = user;
-        environment.loggedUser = user;
-      this.userChange.next(user);
-    });
-  }
 }

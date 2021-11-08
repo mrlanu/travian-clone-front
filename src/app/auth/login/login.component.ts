@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {AuthService} from '../auth.service';
 import {UiService} from '../../services/ui.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   isLoading = false;
   componentSubs: Subscription[] = [];
 
-  constructor(private authService: AuthService, private uiService: UiService) { }
+  constructor(private authService: AuthService, private uiService: UiService, private router: Router) { }
 
   ngOnInit() {
     this.componentSubs.push(this.uiService.isLoadingChanged
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onRegister() {
-    this.uiService.isLoginChanged.next(false);
+    this.router.navigate(['/welcome-page','signup']);
   }
 
   onSubmit() {

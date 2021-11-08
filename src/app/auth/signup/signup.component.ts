@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {UiService} from "../../services/ui.service";
 import {AuthService} from "../auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signup',
@@ -18,7 +19,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   componentSubs: Subscription[] = [];
   isLoading = false;
 
-  constructor(private authService: AuthService, private uiService: UiService) { }
+  constructor(private authService: AuthService, private uiService: UiService, private router: Router) { }
 
   onSubmit() {
     this.isLoading = true;
@@ -35,7 +36,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   onLogin() {
-    this.uiService.isLoginChanged.next(true);
+    this.router.navigate(['/welcome-page','login']);
   }
 
   ngOnDestroy() {

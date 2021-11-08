@@ -5,10 +5,16 @@ import {VillageComponent} from "./village/village.component";
 import {BuildingsComponent} from "./village/buildings/buildings.component";
 import {BuildingDetailsComponent} from "./village/building-details/building-details.component";
 import {WelcomePageComponent} from "./welcome-page/welcome-page.component";
+import {SignupComponent} from "./auth/signup/signup.component";
+import {LoginComponent} from "./auth/login/login.component";
+import {AuthGuard} from "./auth/auth.guard";
 
 const routes: Routes = [
-  {path: 'welcome-page', component: WelcomePageComponent},
-  {path: 'villages/:village-id', component: VillageComponent, children: [
+  {path: 'welcome-page', component: WelcomePageComponent, children: [
+      {path: 'signup', component: SignupComponent},
+      {path: 'login', component: LoginComponent}
+    ]},
+  {path: 'villages/:village-id', component: VillageComponent, canActivate: [AuthGuard], children: [
       {path: 'fields', component: FieldsComponent},
       {path: 'fields/:position', component: BuildingDetailsComponent},
       {path: 'buildings', component: BuildingsComponent}
@@ -25,7 +31,7 @@ const routes: Routes = [
       {path: 'accounts', component: AccountsComponent},
       {path: 'categories', component: CategoriesComponent}*!/
     ]}*/,
-  {path: '**', redirectTo: '/welcome-page'}
+  {path: '**', redirectTo: '/welcome-page/login'}
 ];
 
 @NgModule({

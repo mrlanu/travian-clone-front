@@ -1,25 +1,26 @@
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {environment} from '../../environments/environment';
+import {AuthService} from "./auth.service";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+
+  constructor(private authService: AuthService) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     // requesting signup
-    if (req.url.endsWith('signup')) {
+    if (!this.authService.currentUser) {
       return next.handle(req);
     }
 
-    // requesting any other resources
-    if (req.headers.keys().length === 0) {
-      const newReq = req.clone({
-        headers: req.headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'))
-      });
-      return next.handle(newReq);
-    }
+    const newReq = req.clone({
+      headers: req.headers.append('Authorization', 'Bearer ' + this.authService.currentUser?.token)
+    });
 
-    // requesting login(/token/oauth)
-    return next.handle(req);
+    console.log('Request - ', newReq);
+    return next.handle(newReq);
   }
 }
