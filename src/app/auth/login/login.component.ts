@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {AuthService} from '../auth.service';
-import {UiService} from '../../services/ui.service';
 import {Router} from "@angular/router";
 
 @Component({
@@ -21,10 +20,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   isLoading = false;
   componentSubs: Subscription[] = [];
 
-  constructor(private authService: AuthService, private uiService: UiService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    this.componentSubs.push(this.uiService.isLoadingChanged
+    this.componentSubs.push(this.authService.isLoadingChanged
       .subscribe(result => {
         this.isLoading = result;
       }));

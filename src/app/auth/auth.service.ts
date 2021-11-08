@@ -3,9 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
 import {Subject} from 'rxjs';
-import {UiService} from '../services/ui.service';
 import {User} from "./user.model";
-import {map, tap} from "rxjs/operators";
+import {map} from "rxjs/operators";
 import {AuthRequest} from "./auth-request.model";
 
 interface AuthResponse{
@@ -22,36 +21,33 @@ export class AuthService {
 
   baseUrl = environment.baseUrl;
   currentUser: User | null = null;
-  private isAuthenticated = false;
   private tokenTimer: any;
+  isLoadingChanged = new Subject<boolean>();
 
-  constructor(private router: Router,
-              private httpClient: HttpClient,
-              private uiService: UiService) {}
+  constructor(private router: Router, private httpClient: HttpClient) {}
 
   registerUser(authData: AuthRequest) {
-    this.uiService.isLoadingChanged.next(true);
+    this.isLoadingChanged.next(true);
     this.httpClient.post(this.baseUrl + '/api/auth/signup', authData).subscribe(user => {
-      this.uiService.isLoadingChanged.next(false);
+      this.isLoadingChanged.next(false);
       this.router.navigate(['/welcome-page', 'login']);
     }, err => {
-      this.uiService.isLoadingChanged.next(false);
+      this.isLoadingChanged.next(false);
     });
   }
 
   login(authData: AuthRequest) {
-    this.uiService.isLoadingChanged.next(true);
+    this.isLoadingChanged.next(true);
     this.httpClient.post<AuthResponse>(this.baseUrl + '/api/auth/login', authData)
       .pipe(map(res => {
         console.log('Res - ', res);
       return  new User(res.token, new Date(res.expirationDate), res.email, res.userId);
     })).subscribe(user => {
-        AuthService.storeUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
         this.authSuccessfully(user);
       }, err => {
-        //this.uiService.openSnackBar('Invalid username or password', null, 5000);
         console.log('Error');
-        this.uiService.isLoadingChanged.next(false);
+        this.isLoadingChanged.next(false);
       });
   }
 
@@ -72,23 +68,7 @@ export class AuthService {
     }
   }
 
-  private authSuccessfully(user: User) {
-    this.uiService.isLoadingChanged.next(false);
-    this.isAuthenticated = true;
-    this.currentUser = user;
-    this.autoLogout(user.expirationDate.getTime() - new Date().getTime());
-    this.httpClient.get<string[]>(this.baseUrl + '/api/users/' + user.userId + '/villages')
-      .subscribe(villageList => {
-        this.router.navigate(['/villages', villageList[0], 'fields']);
-      });
-  }
-
-  private static storeUser(user: User) {
-    localStorage.setItem('user', JSON.stringify(user));
-  }
-
   logout() {
-    this.isAuthenticated = false;
     this.currentUser = null;
     localStorage.clear();
     if (this.tokenTimer){
@@ -104,8 +84,13 @@ export class AuthService {
     }, expirationDuration);
   }
 
-  isAuth() {
-    return this.isAuthenticated;
+  private authSuccessfully(user: User) {
+    this.isLoadingChanged.next(false);
+    this.currentUser = user;
+    this.autoLogout(user.expirationDate.getTime() - new Date().getTime());
+    this.httpClient.get<string[]>(this.baseUrl + '/api/users/' + user.userId + '/villages')
+      .subscribe(villageList => {
+        this.router.navigate(['/villages', villageList[0], 'fields']);
+      });
   }
-
 }
