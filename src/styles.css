@@ -13,3 +13,6 @@ body.buildingsV3 {
   min-width: 1280px;
   overflow-y: scroll;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

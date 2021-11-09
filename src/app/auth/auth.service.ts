@@ -6,6 +6,8 @@ import {Subject} from 'rxjs';
 import {User} from "./user.model";
 import {map} from "rxjs/operators";
 import {AuthRequest} from "./auth-request.model";
+import {UiService} from "../services/ui.service";
+import {ShortVillageInfo} from "../models/village-dto.model";
 
 interface AuthResponse{
   email: string;
@@ -24,29 +26,29 @@ export class AuthService {
   private tokenTimer: any;
   isLoadingChanged = new Subject<boolean>();
 
-  constructor(private router: Router, private httpClient: HttpClient) {}
+  constructor(private router: Router, private httpClient: HttpClient, private uiService: UiService) {}
 
   registerUser(authData: AuthRequest) {
     this.isLoadingChanged.next(true);
-    this.httpClient.post(this.baseUrl + '/api/auth/signup', authData).subscribe(user => {
+    this.httpClient.post(this.baseUrl + '/auth/signup', authData).subscribe(user => {
       this.isLoadingChanged.next(false);
       this.router.navigate(['/welcome-page', 'login']);
     }, err => {
+      this.uiService.showSnackbar(err.error.message, null, 4000);
       this.isLoadingChanged.next(false);
     });
   }
 
   login(authData: AuthRequest) {
     this.isLoadingChanged.next(true);
-    this.httpClient.post<AuthResponse>(this.baseUrl + '/api/auth/login', authData)
+    this.httpClient.post<AuthResponse>(this.baseUrl + '/auth/login', authData)
       .pipe(map(res => {
-        console.log('Res - ', res);
       return  new User(res.token, new Date(res.expirationDate), res.email, res.userId);
     })).subscribe(user => {
         localStorage.setItem('user', JSON.stringify(user));
         this.authSuccessfully(user);
       }, err => {
-        console.log('Error');
+      this.uiService.showSnackbar('Wrong email or password', null, 4000);
         this.isLoadingChanged.next(false);
       });
   }
@@ -88,9 +90,10 @@ export class AuthService {
     this.isLoadingChanged.next(false);
     this.currentUser = user;
     this.autoLogout(user.expirationDate.getTime() - new Date().getTime());
-    this.httpClient.get<string[]>(this.baseUrl + '/api/users/' + user.userId + '/villages')
+    this.httpClient.get<ShortVillageInfo[]>(this.baseUrl + '/users/' + user.userId + '/villages')
       .subscribe(villageList => {
-        this.router.navigate(['/villages', villageList[0], 'fields']);
+        console.log(villageList);
+        this.router.navigate(['/villages', villageList[0].villageId, 'fields']);
       });
   }
 }

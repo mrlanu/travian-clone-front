@@ -3,6 +3,7 @@ import {FieldView, VillageView} from "../../models/village-dto.model";
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {UiService} from "../../services/ui.service";
 
 @Component({
   selector: 'app-building-details',
@@ -16,7 +17,8 @@ export class BuildingDetailsComponent implements OnInit, OnDestroy {
 
   componentSubs: Subscription[] = [];
 
-  constructor(private villageService: VillageService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private villageService: VillageService, private route: ActivatedRoute,
+              private router: Router, private uiService: UiService) { }
 
   ngOnInit(): void {
     this.componentSubs.push(
@@ -57,8 +59,12 @@ export class BuildingDetailsComponent implements OnInit, OnDestroy {
 
   onUpgradeClick(){
     let villageId = this.route.parent?.snapshot.params['village-id'];
-    this.villageService.upgradeField(villageId, this.field.position!);
-    this.router.navigate(['/villages', villageId, 'fields']);
+    this.villageService.upgradeField(villageId, this.field.position!).subscribe(resp => {
+      this.router.navigate(['/villages', villageId, 'fields']);
+    }, error => {
+      this.uiService.showSnackbar('Error occurred', null, 4000);
+      this.router.navigate(['/villages', villageId, 'fields']);
+    });
   }
 
   ngOnDestroy(): void {

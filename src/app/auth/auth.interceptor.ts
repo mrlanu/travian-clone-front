@@ -20,7 +20,6 @@ export class AuthInterceptor implements HttpInterceptor {
       headers: req.headers.append('Authorization', 'Bearer ' + this.authService.currentUser?.token)
     });
 
-    console.log('Request - ', newReq);
     return next.handle(newReq);
   }
 }

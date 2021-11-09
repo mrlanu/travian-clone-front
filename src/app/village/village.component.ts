@@ -11,22 +11,17 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class VillageComponent implements OnInit, OnDestroy {
 
-  isBuildings = false;
-
   village: VillageView | undefined;
   componentSubs: Subscription[] = [];
 
   constructor(private villageService: VillageService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    console.log('From village - ', this.route.snapshot.params);
     this.componentSubs.push(
       this.villageService.villageChanged.subscribe(
         (village: VillageView) => {
           this.village = village;
-          console.log(village);
         }));
-    this.villageService.getVillageById(this.route.snapshot.params['village-id']);
   }
 
   ngOnDestroy(): void {

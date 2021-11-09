@@ -53,6 +53,13 @@ export class VillageView {
   }
 }
 
+export interface ShortVillageInfo{
+  villageId: string;
+  name: string;
+  x: number;
+  y: number;
+}
+
 export interface FieldView {
   position: number;
   level: number;

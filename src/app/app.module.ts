@@ -25,6 +25,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import {LoginComponent} from "./auth/login/login.component";
 import {AuthInterceptor} from "./auth/auth.interceptor";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import {AuthInterceptor} from "./auth/auth.interceptor";
     ProgressbarModule,
     FontAwesomeModule,
     ModalModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]

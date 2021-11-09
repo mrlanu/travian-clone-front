@@ -26,7 +26,6 @@ export class HeaderComponent implements OnInit {
   constructor(private route: ActivatedRoute, private authService: AuthService) { }
 
   ngOnInit(): void {
-    console.log('Header - ', this.route.snapshot.params);
   }
 
   onLogout(){
