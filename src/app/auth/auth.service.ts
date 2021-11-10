@@ -8,6 +8,7 @@ import {map} from "rxjs/operators";
 import {AuthRequest} from "./auth-request.model";
 import {UiService} from "../services/ui.service";
 import {ShortVillageInfo} from "../models/village-dto.model";
+import {VillageService} from "../services/village.service";
 
 interface AuthResponse{
   email: string;
@@ -25,9 +26,13 @@ export class AuthService {
   baseUrl = environment.baseUrl;
   currentUser: User | null = null;
   private tokenTimer: any;
+  userChanged = new Subject<User>();
   isLoadingChanged = new Subject<boolean>();
 
-  constructor(private router: Router, private httpClient: HttpClient, private uiService: UiService) {}
+  constructor(private router: Router,
+              private httpClient: HttpClient,
+              private villageService: VillageService,
+              private uiService: UiService) {}
 
   registerUser(authData: AuthRequest) {
     this.isLoadingChanged.next(true);
@@ -47,6 +52,8 @@ export class AuthService {
       return  new User(res.token, new Date(res.expirationDate), res.email, res.username, res.userId);
     })).subscribe(user => {
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('user-id', user.userId);
+        this.isLoadingChanged.next(false);
         this.authSuccessfully(user);
       }, err => {
       this.uiService.showSnackbar('Wrong email or password', null, 4000);
@@ -74,7 +81,8 @@ export class AuthService {
 
   logout() {
     this.currentUser = null;
-    localStorage.clear();
+    localStorage.removeItem('user');
+    localStorage.removeItem('user-id');
     if (this.tokenTimer){
       clearTimeout(this.tokenTimer);
     }
@@ -89,13 +97,8 @@ export class AuthService {
   }
 
   private authSuccessfully(user: User) {
-    this.isLoadingChanged.next(false);
     this.currentUser = user;
     this.autoLogout(user.expirationDate.getTime() - new Date().getTime());
-    this.httpClient.get<ShortVillageInfo[]>(this.baseUrl + '/users/' + user.userId + '/villages')
-      .subscribe(villageList => {
-        console.log(villageList);
-        this.router.navigate(['/villages', villageList[0].villageId, 'fields']);
-      });
+    this.userChanged.next(user);
   }
 }

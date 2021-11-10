@@ -37,28 +37,13 @@ export class ActiveVillageComponent implements OnInit {
           this.village = village;
           this.ngTest = village.name;
         }));
-    this.getActiveUser();
   }
 
   onEditName(){
-    this.componentSubs.push(this.villageService.updateVillageName(this.ngTest).subscribe(name => {
+    this.componentSubs.push(this.villageService.updateVillageName(this.ngTest)
+      .subscribe(name => {
       this.ngTest = name;
     }));
-  }
-
-  getActiveUser(){
-    const userData: {
-      email: string;
-      username: string;
-      _token: string;
-      expirationDate: string;
-      userId: string
-    } = JSON.parse(<string>localStorage.getItem('user'));
-    if (!userData){
-      return;
-    }
-    const user = new User(userData._token, new Date(userData.expirationDate), userData.email, userData.username, userData.userId);
-    this.activeUsername = user.username;
   }
 
   ngOnDestroy(): void {

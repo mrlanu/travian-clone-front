@@ -27,6 +27,7 @@ import {LoginComponent} from "./auth/login/login.component";
 import {AuthInterceptor} from "./auth/auth.interceptor";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { ActiveVillageComponent } from './village/active-village/active-village.component';
+import { VillagesListComponent } from './village/villages-list/villages-list.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ActiveVillageComponent } from './village/active-village/active-village.
     SignupComponent,
     LoginComponent,
     WelcomePageComponent,
-    ActiveVillageComponent
+    ActiveVillageComponent,
+    VillagesListComponent
   ],
   imports: [
     BrowserModule,

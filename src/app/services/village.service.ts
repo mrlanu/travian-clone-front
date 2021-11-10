@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Subject} from "rxjs";
+import {BehaviorSubject, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {VillageView} from "../models/village-dto.model";
+import {ShortVillageInfo, VillageView} from "../models/village-dto.model";
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 
@@ -13,8 +13,16 @@ export class VillageService {
   villageId = '';
 
   villageChanged = new Subject<VillageView>();
+  villagesList = new BehaviorSubject<ShortVillageInfo[]>([]);
 
   constructor(private httpClient: HttpClient) { }
+
+  getAllVillagesByUser(userId: string){
+    this.httpClient.get<ShortVillageInfo[]>(this.baseUrl + '/users/' + userId + '/villages')
+      .subscribe(list => {
+        this.villagesList.next(list);
+      });
+  }
 
   getVillageById(villageId: string) {
     const url = `${this.baseUrl}/villages/${villageId}`;
@@ -35,6 +43,7 @@ export class VillageService {
       );
     })).subscribe(village => {
       this.villageId = village.villageId;
+      this.getAllVillagesByUser(village.accountId);
       this.villageChanged.next(village);
       console.log(village);
     });
