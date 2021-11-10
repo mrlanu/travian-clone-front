@@ -11,6 +11,7 @@ import {ShortVillageInfo} from "../models/village-dto.model";
 
 interface AuthResponse{
   email: string;
+  username: string;
   token: string;
   expirationDate: Date;
   userId: string;
@@ -43,7 +44,7 @@ export class AuthService {
     this.isLoadingChanged.next(true);
     this.httpClient.post<AuthResponse>(this.baseUrl + '/auth/login', authData)
       .pipe(map(res => {
-      return  new User(res.token, new Date(res.expirationDate), res.email, res.userId);
+      return  new User(res.token, new Date(res.expirationDate), res.email, res.username, res.userId);
     })).subscribe(user => {
         localStorage.setItem('user', JSON.stringify(user));
         this.authSuccessfully(user);
@@ -56,6 +57,7 @@ export class AuthService {
   autoLogin(){
     const userData: {
       email: string;
+      username: string;
       _token: string;
       expirationDate: string;
       userId: string
@@ -63,7 +65,7 @@ export class AuthService {
     if (!userData){
       return;
     }
-    const user = new User(userData._token, new Date(userData.expirationDate), userData.email, userData.userId);
+    const user = new User(userData._token, new Date(userData.expirationDate), userData.email, userData.username, userData.userId);
 
     if (user.token){
       this.authSuccessfully(user);

@@ -19,6 +19,7 @@ export class VillageView {
   villageType: string;
   population: number;
   culture: number;
+  approval: number;
   fields: FieldView[];
   buildings: any[];
   storage: Map<string, number>;
@@ -30,7 +31,7 @@ export class VillageView {
 
 
   constructor(villageId: string, accountId: string, name: string, x: number, y: number,
-              villageType: string, population: number, culture: number, fields: FieldView[],
+              villageType: string, population: number, culture: number, approval: number, fields: FieldView[],
               buildings: any[], storage: Map<string, number>, warehouseCapacity: number,
               granaryCapacity: number, homeLegion: Map<EUnits, number>, producePerHour: Map<string, number>,
               eventsList: EventView[]) {
@@ -42,6 +43,7 @@ export class VillageView {
     this.villageType = villageType;
     this.population = population;
     this.culture = culture;
+    this.approval = approval;
     this.fields = fields;
     this.buildings = buildings;
     this.storage = storage;

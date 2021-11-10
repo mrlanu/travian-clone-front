@@ -1,0 +1,32 @@
+.btn-container {
+
+}
+.active-village__button {
+  background-color: gold;
+  padding: 0.2rem;
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.active-village__button:hover {
+  /*background-color: #C7BC61;*/
+  border: 2px solid black;
+}
+
+.village-name {
+  text-align: left;
+}
+
+.village-name a {
+  font-size: 1rem;
+  text-decoration: none;
+  color: black;
+}
+
+.active-username, .approval {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}

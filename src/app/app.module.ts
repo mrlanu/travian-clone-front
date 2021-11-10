@@ -21,11 +21,12 @@ import { BuildingsComponent } from './village/buildings/buildings.component';
 import { HeaderComponent } from './village/header/header.component';
 import { BuildingDetailsComponent } from './village/building-details/building-details.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import {LoginComponent} from "./auth/login/login.component";
 import {AuthInterceptor} from "./auth/auth.interceptor";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { ActiveVillageComponent } from './village/active-village/active-village.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     BuildingDetailsComponent,
     SignupComponent,
     LoginComponent,
-    WelcomePageComponent
+    WelcomePageComponent,
+    ActiveVillageComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +56,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     ProgressbarModule,
     FontAwesomeModule,
     ModalModule,
+    FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule
   ],

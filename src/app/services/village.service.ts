@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Subject} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {VillageView} from "../models/village-dto.model";
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
@@ -10,6 +10,7 @@ import {environment} from "../../environments/environment";
 })
 export class VillageService {
   baseUrl = environment.baseUrl;
+  villageId = '';
 
   villageChanged = new Subject<VillageView>();
 
@@ -29,13 +30,20 @@ export class VillageService {
       }
       return new VillageView(
         v.villageId, v.accountId, v.name, v.x, v.y, v.villageType,
-        v.population, v.culture, v.fields, v.buildings, storage,
+        v.population, v.culture, v.approval, v.fields, v.buildings, storage,
         v.warehouseCapacity, v.granaryCapacity, v.homeLegion, producePerHour, v.eventsList
       );
     })).subscribe(village => {
+      this.villageId = village.villageId;
       this.villageChanged.next(village);
       console.log(village);
     });
+  }
+
+  updateVillageName(newName: string){
+    const url = `${this.baseUrl}/villages/${this.villageId}/update-name`;
+    let params = new HttpParams().set('name', newName);
+    return this.httpClient.put(url, {}, {responseType: "text", params: params});
   }
 
   upgradeField(villageId: string, fieldPosition: number) {

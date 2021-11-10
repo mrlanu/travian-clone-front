@@ -13,6 +13,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   signUpForm = new FormGroup({
     'email': new FormControl('', {validators: [Validators.required]}),
+    'username': new FormControl('', {validators: [Validators.required]}),
     'password': new FormControl('', {validators: [Validators.required]})
   });
   componentSubs: Subscription[] = [];
@@ -24,6 +25,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.authService.registerUser({
       email: this.signUpForm?.value.email,
+      username: this.signUpForm?.value.username,
       password: this.signUpForm?.value.password
     });
   }
