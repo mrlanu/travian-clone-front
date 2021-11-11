@@ -1,0 +1,27 @@
+.active-village__button {
+  background-color: gold;
+  padding: 0.2rem;
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.list-item {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+.name {
+  text-align: left;
+}
+
+.active-village {
+  line-height: 120%;
+  font-weight: bold;
+  padding-left: 0.3rem;
+  display: block;
+  color: #476001;
+  border-left: 2px solid #476001;
+}

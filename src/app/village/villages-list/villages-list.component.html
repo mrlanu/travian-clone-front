@@ -1,0 +1,23 @@
+<div class="card text-center mt-5">
+  <div class="card-header">
+    <div fxLayout fxLayoutAlign="end" fxLayoutGap="0.2rem">
+      <div class="btn-container">
+        <button class="active-village__button" (click)="null" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Villages overview">
+          <fa-icon [icon]="faEye" size="1x" [styles]="faStyle"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div fxLayout="column">
+      <div *ngFor="let v of villages">
+        <a class="list-item" [ngClass] = "{'active-village': v.villageId === currentVillageId}" (click)="onVillageSelect(v.villageId)">
+          <div fxLayout>
+            <div class="name" fxFlex>{{ v.name }}</div>
+            <div>{{ v.x }} | {{ v.y }}</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

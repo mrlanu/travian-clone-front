@@ -23,7 +23,9 @@ export class BuildingsComponent implements OnInit, OnDestroy {
         (village: VillageView) => {
           this.village = village;
         }));
-    this.villageService.getVillageById(this.route.parent?.snapshot.params['village-id']);
+    this.componentSubs.push(this.route.parent!.params.subscribe((params) => {
+      this.villageService.getVillageById(params['village-id']);
+    }));
   }
 
   ngOnDestroy(): void {

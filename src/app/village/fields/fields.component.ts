@@ -30,19 +30,13 @@ export class FieldsComponent implements OnInit, OnDestroy {
         (village: VillageView) => {
           this.village = village;
         }));
-    this.villageService.getVillageById(this.route.parent?.snapshot.params['village-id']);
-  }
-
-  onFieldClick(villageId: string, field: FieldView) {
-    let res = new Map<string, number>();
-    for(const [key, value] of Object.entries(field.resourcesToNextLevel)){
-      res.set(key, value);
-    }
-    field.resourcesToNextLevel = res;
-    this.selectedField = field;
+    this.componentSubs.push(this.route.parent!.params.subscribe((params) => {
+      this.villageService.getVillageById(params['village-id']);
+    }));
   }
 
   ngOnDestroy(): void {
+    console.log('fields destroy');
     this.componentSubs.forEach(sub => {
       sub.unsubscribe();
     });
