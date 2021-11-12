@@ -1,50 +1,50 @@
 <div class="card text-center" style="position: absolute; top: 50px; width: 100%">
   <div class="card-header" fxLayout fxLayoutAlign="space-between baseline">
-    <h5 class="modal-title" id="buildingConfirmModalLabel">{{ field?.name | uppercase }} Level: {{ field?.level }}</h5>
+    <h5 class="modal-title" id="buildingConfirmModalLabel">{{ buildingView?.name | uppercase }} Level: {{ buildingView?.level }}</h5>
     <button type="button" class="btn-close" routerLink="/villages/{{ village?.villageId }}/fields"></button>
   </div>
   <div class="card-body" style="min-height: 500px">
-    <div>Production: {{ field?.production }}</div>
+    <div>Production: {{ buildingView?.production }}</div>
     <hr>
     <div>
-      {{ field?.description }}
+      {{ buildingView?.description }}
     </div>
     <hr>
     <div fxLayout fxLayoutAlign="center" fxLayoutGap="1rem">
       <div fxLayout>
         <i class="r r-wood"></i>
         <div>
-          {{ field?.resourcesToNextLevel?.get('WOOD') }}
+          {{ buildingView?.resourcesToNextLevel?.get('WOOD') }}
         </div>
       </div>
       <div fxLayout>
         <i class="r r-clay"></i>
         <div>
-          {{ field?.resourcesToNextLevel?.get('CLAY') }}
+          {{ buildingView?.resourcesToNextLevel?.get('CLAY') }}
         </div>
       </div>
       <div fxLayout>
         <i class="r r-iron"></i>
         <div>
-          {{ field?.resourcesToNextLevel?.get('IRON') }}
+          {{ buildingView?.resourcesToNextLevel?.get('IRON') }}
         </div>
       </div>
       <div fxLayout>
         <i class="r r-crop"></i>
         <div>
-          {{ field?.resourcesToNextLevel?.get('CROP') }}
+          {{ buildingView?.resourcesToNextLevel?.get('CROP') }}
         </div>
       </div>
       <div fxLayout>
         <i class="r r-clock"></i>
         <div>
-          {{ formatTime(field?.timeToNextLevel!) }}
+          {{ formatTime(buildingView?.timeToNextLevel!) }}
         </div>
       </div>
     </div>
   </div>
   <div class="card-footer text-muted" fxLayout fxLayoutAlign="center">
     <button type="button" class="btn btn-primary"
-            (click)="onUpgradeClick()">Upgrade to level {{ field?.level! + 1 }}</button>
+            (click)="onUpgradeClick()">Upgrade to level {{ buildingView?.level! + 1 }}</button>
   </div>
 </div>

@@ -4,6 +4,7 @@ import {VillageService} from "../../services/village.service";
 import {VillageView} from "../../models/village-dto.model";
 import {faBalanceScale, faHorseHead, faCrosshairs, faTools, faEdit} from "@fortawesome/free-solid-svg-icons";
 import {User} from "../../auth/user.model";
+import {AuthService} from "../../auth/auth.service";
 
 
 @Component({
@@ -15,7 +16,7 @@ export class ActiveVillageComponent implements OnInit {
 
   village: VillageView | undefined;
   componentSubs: Subscription[] = [];
-  activeUsername = '';
+  activeUsername: string | undefined = '';
   ngTest = 'Serhiy';
 
   faBalanceScale = faBalanceScale;
@@ -28,7 +29,7 @@ export class ActiveVillageComponent implements OnInit {
     'color': 'black'
   }
 
-  constructor(private villageService: VillageService) { }
+  constructor(private villageService: VillageService, private auth: AuthService) { }
 
   ngOnInit(): void {
     this.componentSubs.push(
@@ -36,6 +37,7 @@ export class ActiveVillageComponent implements OnInit {
         (village: VillageView) => {
           this.village = village;
           this.ngTest = village.name;
+          this.activeUsername = this.auth.currentUser?.username;
         }));
   }
 
@@ -43,6 +45,7 @@ export class ActiveVillageComponent implements OnInit {
     this.componentSubs.push(this.villageService.updateVillageName(this.ngTest)
       .subscribe(name => {
       this.ngTest = name;
+      this.villageService.getVillageById(this.village!.villageId);
     }));
   }
 

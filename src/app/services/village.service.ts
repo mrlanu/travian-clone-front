@@ -38,7 +38,7 @@ export class VillageService {
       }
       return new VillageView(
         v.villageId, v.accountId, v.name, v.x, v.y, v.villageType,
-        v.population, v.culture, v.approval, v.fields, v.buildings, storage,
+        v.population, v.culture, v.approval, v.buildings, storage,
         v.warehouseCapacity, v.granaryCapacity, v.homeLegion, producePerHour, v.eventsList
       );
     })).subscribe(village => {

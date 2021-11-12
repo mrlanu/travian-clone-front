@@ -17,7 +17,8 @@ const routes: Routes = [
   {path: 'villages/:village-id', component: VillageComponent, canActivate: [AuthGuard], children: [
       {path: 'fields', component: FieldsComponent},
       {path: 'fields/:position', component: BuildingDetailsComponent},
-      {path: 'buildings', component: BuildingsComponent}
+      {path: 'buildings', component: BuildingsComponent},
+      {path: 'buildings/:position', component: BuildingDetailsComponent}
     ]}
   /*{path: 'welcome-page', component: WelcomePageComponent},
   {path: 'main', component: MainComponent, canActivateChild: [AuthGuard], children: [

@@ -1,6 +1,18 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FieldView} from "../../models/village-dto.model";
 import {VillageService} from "../../services/village.service";
+
+interface FieldView {
+  position: number;
+  level: number;
+  name: string;
+  production: number;
+  underUpgrade: boolean;
+  ableToUpgrade: boolean;
+  maxLevel: number;
+  description: string;
+  timeToNextLevel: number;
+  resourcesToNextLevel: Map<string, number>;
+}
 
 @Component({
   selector: 'app-building-confirm',

@@ -2,14 +2,19 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/com
 import {Observable} from 'rxjs';
 import {AuthService} from "./auth.service";
 import {Injectable} from "@angular/core";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    if (!this.authService.currentUser?.token){
+      this.router.navigate(['/welcome-page', 'login']);
+    }
 
     // requesting signup
     if (!this.authService.currentUser) {

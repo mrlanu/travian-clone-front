@@ -2,7 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EUnits, VillageView} from "../../models/village-dto.model";
 import {VillageService} from "../../services/village.service";
 import {Subscription} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {BuildingView} from "../building-details/building-details.component";
 
 @Component({
   selector: 'app-buildings',
@@ -15,7 +16,7 @@ export class BuildingsComponent implements OnInit, OnDestroy {
 
   componentSubs: Subscription[] = [];
 
-  constructor(private villageService: VillageService, private route: ActivatedRoute) { }
+  constructor(private villageService: VillageService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.componentSubs.push(
@@ -26,6 +27,14 @@ export class BuildingsComponent implements OnInit, OnDestroy {
     this.componentSubs.push(this.route.parent!.params.subscribe((params) => {
       this.villageService.getVillageById(params['village-id']);
     }));
+  }
+
+  onBuildingSelect(building: BuildingView){
+    if (building.name === 'empty-spot'){
+      this.router.navigate(['/villages', this.village.villageId, 'fields']);
+    } else {
+      this.router.navigate(['/villages', this.village.villageId, 'buildings', building.position]);
+    }
   }
 
   ngOnDestroy(): void {

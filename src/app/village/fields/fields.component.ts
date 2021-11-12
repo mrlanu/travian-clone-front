@@ -1,8 +1,8 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
-import {FieldView, VillageView} from "../../models/village-dto.model";
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import {VillageView} from "../../models/village-dto.model";
+import {faHome} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from "@angular/router";
 
 
@@ -12,10 +12,6 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./fields.component.css']
 })
 export class FieldsComponent implements OnInit, OnDestroy {
-
-  @Output() buildClick: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  selectedField!: FieldView;
 
   village!: VillageView;
   faHome = faHome;
@@ -36,7 +32,6 @@ export class FieldsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('fields destroy');
     this.componentSubs.forEach(sub => {
       sub.unsubscribe();
     });

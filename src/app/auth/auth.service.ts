@@ -7,7 +7,6 @@ import {User} from "./user.model";
 import {map} from "rxjs/operators";
 import {AuthRequest} from "./auth-request.model";
 import {UiService} from "../services/ui.service";
-import {ShortVillageInfo} from "../models/village-dto.model";
 import {VillageService} from "../services/village.service";
 
 interface AuthResponse{

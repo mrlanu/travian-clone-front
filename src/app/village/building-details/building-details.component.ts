@@ -1,9 +1,24 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FieldView, VillageView} from "../../models/village-dto.model";
+import {VillageView} from "../../models/village-dto.model";
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UiService} from "../../services/ui.service";
+
+export interface BuildingView {
+  position: number;
+  level: number;
+  name: string;
+  production: number;
+  underUpgrade: boolean;
+  ableToUpgrade: boolean;
+  maxLevel: number;
+  description: string;
+  timeToNextLevel: number;
+  resourcesToNextLevel: Map<string, number>;
+  capacity: number;
+  timeReduction: number;
+}
 
 @Component({
   selector: 'app-building-details',
@@ -13,7 +28,7 @@ import {UiService} from "../../services/ui.service";
 export class BuildingDetailsComponent implements OnInit, OnDestroy {
 
   village!: VillageView;
-  field!: FieldView;
+  buildingView!: BuildingView;
 
   componentSubs: Subscription[] = [];
 
@@ -25,14 +40,14 @@ export class BuildingDetailsComponent implements OnInit, OnDestroy {
       this.villageService.villageChanged.subscribe(
         (village: VillageView) => {
           this.village = village;
-          this.field = village.fields.find(f => {
+          this.buildingView = village.buildings.find(f => {
             return f.position == +this.route.snapshot.params['position'];
           })!;
           let res = new Map<string, number>();
-          for(const [key, value] of Object.entries(this.field!.resourcesToNextLevel)){
+          for(const [key, value] of Object.entries(this.buildingView!.resourcesToNextLevel)){
             res.set(key, value);
           }
-          this.field!.resourcesToNextLevel = res;
+          this.buildingView!.resourcesToNextLevel = res;
         }));
     this.villageService.getVillageById(this.route.parent?.snapshot.params['village-id']);
   }
@@ -59,7 +74,7 @@ export class BuildingDetailsComponent implements OnInit, OnDestroy {
 
   onUpgradeClick(){
     let villageId = this.route.parent?.snapshot.params['village-id'];
-    this.villageService.upgradeField(villageId, this.field.position!).subscribe(resp => {
+    this.villageService.upgradeField(villageId, this.buildingView.position!).subscribe(resp => {
       this.router.navigate(['/villages', villageId, 'fields']);
     }, error => {
       this.uiService.showSnackbar('Error occurred', null, 4000);

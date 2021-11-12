@@ -1,7 +1,8 @@
 <div class="cont" gdGridAlign="center center">
   <div *ngFor="let building of village?.buildings; let i=index;">
-   <div class="buildingSlot position-{{ building['position'] }}">
-     <a href="" [ngClass]="building['name'] == 'empty-spot' ? 'emptyBuildingSlot' : 'level colorLayer good'">
+   <div class="buildingSlot position-{{ building['position'] }}" *ngIf="i > 17">
+     <a [ngClass]="building['name'] == 'empty-spot' ? 'emptyBuildingSlot' : 'level colorLayer good'"
+        (click)="onBuildingSelect(building)" type="button">
        <div class="labelLayer" *ngIf="building['name'] != 'empty-spot'">{{ building['level'] }}</div></a>
      <img src="../../../assets/img/x.gif" class="building {{ building['name'] }}" alt="">
    </div>

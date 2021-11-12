@@ -1,57 +1,21 @@
-export interface Field {
-  position: number;
-  level: number;
-  fieldType: string;
-  productivity: number;
-  underUpgrade: boolean;
-  timeUpgradeComplete: Date;
-  ableToUpgrade: boolean;
-  timeToNextLevel: number;
-  resourcesToNextLevel: Map<string, number>;
-}
-
 export class VillageView {
-  villageId: string;
-  accountId: string;
-  name: string;
-  x: number;
-  y: number;
-  villageType: string;
-  population: number;
-  culture: number;
-  approval: number;
-  fields: FieldView[];
-  buildings: any[];
-  storage: Map<string, number>;
-  warehouseCapacity: number;
-  granaryCapacity: number;
-  homeLegion: Map<EUnits, number>;
-  producePerHour: Map<string, number>;
-  eventsList: EventView[];
 
-
-  constructor(villageId: string, accountId: string, name: string, x: number, y: number,
-              villageType: string, population: number, culture: number, approval: number, fields: FieldView[],
-              buildings: any[], storage: Map<string, number>, warehouseCapacity: number,
-              granaryCapacity: number, homeLegion: Map<EUnits, number>, producePerHour: Map<string, number>,
-              eventsList: EventView[]) {
-    this.villageId = villageId;
-    this.accountId = accountId;
-    this.name = name;
-    this.x = x;
-    this.y = y;
-    this.villageType = villageType;
-    this.population = population;
-    this.culture = culture;
-    this.approval = approval;
-    this.fields = fields;
-    this.buildings = buildings;
-    this.storage = storage;
-    this.warehouseCapacity = warehouseCapacity;
-    this.granaryCapacity = granaryCapacity;
-    this.homeLegion = homeLegion;
-    this.producePerHour = producePerHour;
-    this.eventsList = eventsList;
+  constructor(public villageId: string,
+              public accountId: string,
+              public name: string,
+              public x: number,
+              public y: number,
+              public villageType: string,
+              public population: number,
+              public culture: number,
+              public approval: number,
+              public buildings: any[],
+              public storage: Map<string, number>,
+              public warehouseCapacity: number,
+              public granaryCapacity: number,
+              public homeLegion: Map<EUnits, number>,
+              public producePerHour: Map<string, number>,
+              public eventsList: EventView[]) {
   }
 }
 
@@ -60,19 +24,6 @@ export interface ShortVillageInfo{
   name: string;
   x: number;
   y: number;
-}
-
-export interface FieldView {
-  position: number;
-  level: number;
-  name: string;
-  production: number;
-  underUpgrade: boolean;
-  ableToUpgrade: boolean;
-  maxLevel: number;
-  description: string;
-  timeToNextLevel: number;
-  resourcesToNextLevel: Map<string, number>;
 }
 
 export interface EventView {
