@@ -55,8 +55,8 @@ export class VillageService {
     return this.httpClient.put(url, {}, {responseType: "text", params: params});
   }
 
-  upgradeField(villageId: string, fieldPosition: number) {
-    const url = `${this.baseUrl}/villages/${villageId}/fields/${fieldPosition}/upgrade`;
+  upgradeField(villageId: string, position: number) {
+    const url = `${this.baseUrl}/villages/${villageId}/buildings/${position}/upgrade`;
     return this.httpClient.put<string>(url, {});
   }
 

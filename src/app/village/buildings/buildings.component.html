@@ -1,9 +1,14 @@
 <div class="cont" gdGridAlign="center center">
   <div *ngFor="let building of village?.buildings; let i=index;">
    <div class="buildingSlot position-{{ building['position'] }}" *ngIf="i > 17">
-     <a [ngClass]="building['name'] == 'empty-spot' ? 'emptyBuildingSlot' : 'level colorLayer good'"
+     <a [ngClass]="{'emptyBuildingSlot': building.name == 'empty-spot',
+        'upgrade-available': building.ableToUpgrade && village.eventsList.length <= 1,
+        'is-disabled': !building.ableToUpgrade || village.eventsList.length >= 2,
+        'max-level': building.level >= building.maxLevel}"
+        class="btn-field"
         (click)="onBuildingSelect(building)" type="button">
-       <div class="labelLayer" *ngIf="building['name'] != 'empty-spot'">{{ building['level'] }}</div></a>
+       <div class="fa" [ngClass]="{'under-upgrade': building.underUpgrade}"
+            *ngIf="building['name'] != 'empty-spot'">{{ building['level'] }}</div></a>
      <img src="../../../assets/img/x.gif" class="building {{ building['name'] }}" alt="">
    </div>
   </div>
