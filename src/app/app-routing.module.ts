@@ -8,6 +8,7 @@ import {WelcomePageComponent} from "./welcome-page/welcome-page.component";
 import {SignupComponent} from "./auth/signup/signup.component";
 import {LoginComponent} from "./auth/login/login.component";
 import {AuthGuard} from "./auth/auth.guard";
+import {AllBuildingsListComponent} from "./village/all-buildings-list/all-buildings-list.component";
 
 const routes: Routes = [
   {path: 'welcome-page', component: WelcomePageComponent, children: [
@@ -18,7 +19,8 @@ const routes: Routes = [
       {path: 'fields', component: FieldsComponent},
       {path: 'fields/:position', component: BuildingDetailsComponent},
       {path: 'buildings', component: BuildingsComponent},
-      {path: 'buildings/:position', component: BuildingDetailsComponent}
+      {path: 'buildings/:position', component: BuildingDetailsComponent},
+      {path: 'buildings/:position/new', component: AllBuildingsListComponent},
     ]}
   /*{path: 'welcome-page', component: WelcomePageComponent},
   {path: 'main', component: MainComponent, canActivateChild: [AuthGuard], children: [

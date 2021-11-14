@@ -1,0 +1,51 @@
+<div class="building-item mb-3 ml-3 mr-3 p-3" fxLayout>
+  <div class="" fxLayout="column" fxFlex="60%" fxLayoutAlign="start start" fxLayoutGap="0.5rem">
+    <div class="fs-4 fw-bolder">
+      {{ building.name }}
+    </div>
+    <div class="text-start">
+      {{ building.description }}
+    </div>
+    <div class="fw-bold">Cost: </div>
+    <div fxLayout fxLayoutAlign="center" fxLayoutGap="1rem">
+      <div fxLayout>
+        <i class="r r-wood"></i>
+        <div>
+          {{ building.cost.get('WOOD') }}
+        </div>
+      </div>
+      <div fxLayout>
+        <i class="r r-clay"></i>
+        <div>
+          {{ building.cost.get('CLAY') }}
+        </div>
+      </div>
+      <div fxLayout>
+        <i class="r r-iron"></i>
+        <div>
+          {{ building.cost.get('IRON') }}
+        </div>
+      </div>
+      <div fxLayout>
+        <i class="r r-crop"></i>
+        <div>
+          {{ building.cost.get('CROP') }}
+        </div>
+      </div>
+      <div fxLayout>
+        <i class="r r-clock"></i>
+        <div>
+          {{ formatTime(building.time) }}
+        </div>
+      </div>
+    </div>
+    <div class="fw-bold">Requirements:</div>
+    <div fxLayout fxLayoutGap="1rem">
+      <div *ngFor="let r of building.requirements">
+        {{ r }}
+      </div>
+    </div>
+    <button class="btn btn-success btn-sm" *ngIf="building.isAvailable">Build</button>
+  </div>
+  <div fxFlex>IMAGE</div>
+</div>

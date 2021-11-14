@@ -6,8 +6,7 @@ import { AppComponent } from './app.component';
 import { VillageComponent } from './village/village.component';
 import { FieldsComponent } from './village/fields/fields.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {CountdownModule} from "ngx-countdown";
-import { StorageComponent } from './village/storage/storage.component';
+import {StorageComponent} from './village/storage/storage.component';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { ProducePerHourComponent } from './village/produce-per-hour/produce-per-hour.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,6 +27,9 @@ import {AuthInterceptor} from "./auth/auth.interceptor";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { ActiveVillageComponent } from './village/active-village/active-village.component';
 import { VillagesListComponent } from './village/villages-list/villages-list.component';
+import {AllBuildingsListComponent} from "./village/all-buildings-list/all-buildings-list.component";
+import {BuildingItemComponent} from "./village/all-buildings-list/building-item/building-item.component";
+import {TabsModule} from "ngx-bootstrap/tabs";
 
 @NgModule({
   declarations: [
@@ -46,13 +48,14 @@ import { VillagesListComponent } from './village/villages-list/villages-list.com
     LoginComponent,
     WelcomePageComponent,
     ActiveVillageComponent,
-    VillagesListComponent
+    VillagesListComponent,
+    AllBuildingsListComponent,
+    BuildingItemComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    CountdownModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
     ProgressbarModule,
@@ -60,7 +63,8 @@ import { VillagesListComponent } from './village/villages-list/villages-list.com
     ModalModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    TabsModule.forRoot(),
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]

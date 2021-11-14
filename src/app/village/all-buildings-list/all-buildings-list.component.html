@@ -1,0 +1,31 @@
+<div class="card text-center" style="position: absolute; top: 50px; width: 100%">
+  <div class="card-header" fxLayout fxLayoutAlign="space-between baseline">
+    <h5 class="modal-title">New buildings...</h5>
+    <button type="button" class="btn-close" routerLink="/villages/{{ village?.villageId }}/buildings"></button>
+  </div>
+  <div class="card-body" style="min-height: 500px">
+    <tabset [justified]="true">
+      <tab heading="INFRASTRUCTURE">
+        <div class="tabset__tab">
+          <div *ngFor="let b of buildingList">
+            <app-building-item [building]="b"></app-building-item>
+            <br>
+          </div>
+        </div>
+      </tab>
+      <tab heading="MILITARY">
+        <div class="tabset__tab">
+          Drugiy
+        </div>
+      </tab>
+      <tab heading="INDUSTRIAL">
+        <div class="tabset__tab">
+          Tretiy
+        </div>
+      </tab>
+    </tabset>
+  </div>
+  <div class="card-footer text-muted" fxLayout fxLayoutAlign="center">
+
+  </div>
+</div>

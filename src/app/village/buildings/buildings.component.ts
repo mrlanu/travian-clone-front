@@ -31,7 +31,7 @@ export class BuildingsComponent implements OnInit, OnDestroy {
 
   onBuildingSelect(building: BuildingView){
     if (building.name === 'empty-spot'){
-      this.router.navigate(['/villages', this.village.villageId, 'fields']);
+      this.router.navigate(['/villages', this.village.villageId, 'buildings', building.position, 'new']);
     } else {
       this.router.navigate(['/villages', this.village.villageId, 'buildings', building.position]);
     }

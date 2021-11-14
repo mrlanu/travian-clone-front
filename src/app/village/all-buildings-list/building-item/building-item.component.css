@@ -1,0 +1,36 @@
+.building-item {
+  border-bottom: 1px solid lightgray;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.r {
+  background-size: cover;
+  width: 26px;
+  height: 18px;
+  margin: auto 0.5rem auto 0;
+}
+
+.r-wood {
+  background-image: url('src/assets/img/lumber_small.png');
+}
+
+.r-clay {
+  background-image: url('src/assets/img/clay_small.png');
+}
+
+.r-iron {
+  background-image: url('src/assets/img/iron_small.png');
+}
+
+.r-crop {
+  width: 26px;
+  height: 24px;
+  background-image: url('src/assets/img/crop_medium.png');
+}
+
+.r-clock {
+  width: 22px;
+  height: 22px;
+  background-image: url('src/assets/img/clock_medium.png');
+}
