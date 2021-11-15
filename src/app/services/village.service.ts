@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {ShortVillageInfo, VillageView} from "../models/village-dto.model";
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
+import {Building} from "../village/all-buildings-list/all-buildings-list.component";
 
 @Injectable({
   providedIn: 'root'
@@ -65,5 +66,10 @@ export class VillageService {
     this.httpClient.delete<string>(url).subscribe(() => {
       this.getVillageById(villageId);
     });
+  }
+
+  getListOfAllNewBuildings(villageId: string){
+    const url = `${this.baseUrl}/villages/${villageId}/buildings`;
+    return this.httpClient.get<Building[]>(url);
   }
 }

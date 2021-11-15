@@ -10,8 +10,8 @@ export class Building {
               public description: string,
               public cost: Map<string, number>,
               public time: number,
-              public requirements: string[],
-              public isAvailable: boolean) {}
+              public requirements: { name: string, level: number, exist: boolean }[],
+              public available: boolean) {}
 }
 
 @Component({
@@ -21,20 +21,28 @@ export class Building {
 })
 export class AllBuildingsListComponent implements OnInit, OnDestroy {
 
-  village!: VillageView;
+  villageId!: string;
   buildingList: Building[] = [];
   componentSubs: Subscription[] = [];
 
   constructor(private villageService: VillageService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.initializeDummyData();
+    this.villageId = this.route.parent?.snapshot.params['village-id'];
     this.componentSubs.push(
-      this.villageService.villageChanged.subscribe(
-        (village: VillageView) => {
-          this.village = village;
+      this.villageService.getListOfAllNewBuildings(this.villageId).subscribe(
+        (buildings: Building[]) => {
+          this.buildingList = buildings.map(b => {
+            let cost = new Map<string, number>();
+            for(const [key, value] of Object.entries(b.cost)){
+              cost.set(key, value);
+            }
+            let req = b.requirements.map(r => {
+              return {...r};
+            });
+            return new Building(b.name, b.type, b.description, cost, b.time, req, b.available);
+          });
         }));
-    this.villageService.getVillageById(this.route.parent?.snapshot.params['village-id']);
   }
 
   ngOnDestroy(): void {
@@ -42,15 +50,4 @@ export class AllBuildingsListComponent implements OnInit, OnDestroy {
       sub.unsubscribe();
     });
   }
-
-  private initializeDummyData(): void {
-    this.buildingList.push(
-      new Building('Barrack', 'army',
-        'This building is for producing some kind of troops',
-        new Map<string, number>([['WOOD', 60], ['CROP', 90], ['CLAY', 100], ['IRON', 90]]), 3600, ['Main building', 'Warehouse', 'Barrack'], true),
-      new Building('Granary', 'army',
-        'This building is for storing the crop',
-        new Map<string, number>([['WOOD', 60], ['CROP', 90], ['CLAY', 100], ['IRON', 90]]), 3600, ['Some building'], false));
-  }
-
 }

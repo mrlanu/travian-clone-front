@@ -9,7 +9,7 @@
         (click)="onBuildingSelect(building)" type="button">
        <div class="fa" [ngClass]="{'under-upgrade': building.underUpgrade}"
             *ngIf="building['name'] != 'empty-spot'">{{ building['level'] }}</div></a>
-     <img src="../../../assets/img/x.gif" class="building {{ building['name'] }}" alt="">
+     <img src="../../../assets/img/x.gif" class="building {{ building['name'] | lowercase}}" alt="">
    </div>
   </div>
 </div>

@@ -34,3 +34,7 @@
   height: 22px;
   background-image: url('src/assets/img/clock_medium.png');
 }
+
+.unavailable {
+  color: red;
+}
