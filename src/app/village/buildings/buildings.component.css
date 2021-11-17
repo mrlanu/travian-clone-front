@@ -32,6 +32,11 @@
   background-size: cover;
 }
 
+.marketplace {
+  background-image: url("../../../assets/img/marketplace.png");
+  background-size: cover;
+}
+
 .btn-field {/*dent around button*/
   cursor: pointer;
   position: absolute;

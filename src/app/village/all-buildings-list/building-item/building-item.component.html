@@ -48,7 +48,7 @@
           <div [ngClass]="{'unavailable': !r['exist']}">{{ r.name }} {{ r.level}}</div>
         </div>
       </div>
-      <button class="btn btn-success btn-sm" *ngIf="building.available">Build</button>
+      <button class="btn btn-success btn-sm" *ngIf="building.available" (click)="onBuildingSelect(building.kind)">Build</button>
     </div>
     <div fxFlex>IMAGE</div>
   </div>

@@ -56,6 +56,12 @@ export class VillageService {
     return this.httpClient.put(url, {}, {responseType: "text", params: params});
   }
 
+  createNewBuilding(villageId: string, position: number, kind: string){
+    const url = `${this.baseUrl}/villages/${villageId}/buildings/${position}/new`;
+    let params = new HttpParams().set('kind', kind);
+    return this.httpClient.put(url, {}, {responseType: "text", params: params});
+  }
+
   upgradeField(villageId: string, position: number) {
     const url = `${this.baseUrl}/villages/${villageId}/buildings/${position}/upgrade`;
     return this.httpClient.put<string>(url, {});

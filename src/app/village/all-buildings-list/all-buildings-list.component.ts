@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {VillageView} from "../../models/village-dto.model";
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 
 export class Building {
   constructor(public name: string,
+              public kind: string,
               public type: string,
               public description: string,
               public cost: Map<string, number>,
@@ -40,7 +40,7 @@ export class AllBuildingsListComponent implements OnInit, OnDestroy {
             let req = b.requirements.map(r => {
               return {...r};
             });
-            return new Building(b.name, b.type, b.description, cost, b.time, req, b.available);
+            return new Building(b.name, b.kind, b.type, b.description, cost, b.time, req, b.available);
           });
         }));
   }
