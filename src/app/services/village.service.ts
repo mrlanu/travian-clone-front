@@ -5,6 +5,8 @@ import {ShortVillageInfo, VillageView} from "../models/village-dto.model";
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Building} from "../village/all-buildings-list/all-buildings-list.component";
+import {MilitaryOrder, MilitaryUnit} from "../village/building-details/barracks/barracks.component";
+import {Utils} from "../shared/utils";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,7 @@ export class VillageService {
   villageId = '';
 
   villageChanged = new Subject<VillageView>();
+  militaryOrdersChanged = new Subject<MilitaryOrder[]>();
   villagesList = new BehaviorSubject<ShortVillageInfo[]>([]);
 
   constructor(private httpClient: HttpClient) { }
@@ -77,5 +80,28 @@ export class VillageService {
   getListOfAllNewBuildings(villageId: string){
     const url = `${this.baseUrl}/villages/${villageId}/buildings`;
     return this.httpClient.get<Building[]>(url);
+  }
+
+  getAllResearchedUnits(villageId: string){
+    const url = `${this.baseUrl}/villages/${villageId}/military/researched`;
+    return this.httpClient.get<MilitaryUnit[]>(url);
+  }
+
+  orderMilitaryUnits(villageId: string, unitType: string, amount: number){
+    const url = `${this.baseUrl}/villages/military`;
+    this.httpClient.post(url, {'villageId': villageId, 'unitType': unitType, 'amount': amount})
+      .subscribe(res => {
+      this.getAllMilitaryOrders(villageId);
+    })
+  }
+
+  getAllMilitaryOrders(villageId: string){
+    const url = `${this.baseUrl}/villages/${villageId}/military-orders`;
+    this.httpClient.get<MilitaryOrder[]>(url).subscribe(res => {
+      let militaryOrders: MilitaryOrder[] = res.map(order => {
+        return new MilitaryOrder(order.unit, order.amount, Utils.formatTime(+order.duration), order.endOrder);
+      });
+      this.militaryOrdersChanged.next(militaryOrders);
+    });
   }
 }

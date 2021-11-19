@@ -3,9 +3,9 @@
     <h5 class="modal-title">{{ buildingView?.name | uppercase }} Level: {{ buildingView?.level }}</h5>
     <button type="button" class="btn-close" routerLink="/villages/{{ village?.villageId }}/fields"></button>
   </div>
-  <div class="card-body" style="min-height: 500px">
-    <div>Production: {{ buildingView?.production }}</div>
-    <hr>
+  <div class="card-body" style="min-height: 300px" fxLayout="column" fxLayoutAlign="space-between center">
+    <div *ngIf="buildingView?.production">Production: {{ buildingView?.production }}</div>
+    <hr *ngIf="buildingView?.production">
     <div>
       {{ buildingView?.description }}
     </div>
@@ -42,9 +42,10 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="card-footer text-muted" fxLayout fxLayoutAlign="center">
-    <button type="button" class="btn btn-primary"
+    <button type="button" class="btn btn-primary mt-4"
             (click)="onUpgradeClick()">Upgrade to level {{ buildingView?.level! + 1 }}</button>
+  </div>
+  <div class="card-footer text-muted pb-5" fxLayout="column" fxLayoutAlign="center">
+    <app-barracks *ngIf="buildingView?.name === 'Barrack'"></app-barracks>
   </div>
 </div>
