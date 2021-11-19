@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-lanu-countdown',
   templateUrl: './lanu-countdown.component.html',
   styleUrls: ['./lanu-countdown.component.css']
 })
-export class LanuCountdownComponent implements OnInit {
+export class LanuCountdownComponent implements OnInit, OnDestroy {
 
   @Input() config: {
     'timeLeft': number;
@@ -19,40 +19,62 @@ export class LanuCountdownComponent implements OnInit {
 
   constructor() { }
 
-  private formatTime(): string {
+  private static formatTime(timeSeconds: number): string {
     // The largest round integer less than or equal to the result of time divided being by 60.
-    const minutes = Math.floor(this.config.timeLeft / 60);
+    const hours = Math.floor(timeSeconds / 3600);
+    const minutes = Math.floor(timeSeconds % 3600 / 60);
 
     // Seconds are the remainder of the time divided by 60 (modulus operator)
-    let seconds = this.config.timeLeft % 60;
+    let seconds = timeSeconds % 60;
+    let hoursString = hours.toString();
+    let minutesStr = minutes.toString();
     let secondsStr = seconds.toString();
     // If the value of seconds is less than 10, then display seconds with a leading zero
+    if (hours < 10) {
+      hoursString = `0${hours}`
+    }
+    if (minutes < 10) {
+      minutesStr = `0${minutes}`;
+    }
     if (seconds < 10) {
       secondsStr = `0${seconds}`;
     }
 
     // The output in MM:SS format
-    return `${minutes}:${secondsStr}`;
-  }
-
-  stopTimer() {
-    if (this.timerIntervalId){
-      clearInterval(this.timerIntervalId);
-    }
+    return `${hoursString}:${minutesStr}:${secondsStr}`;
   }
 
   ngOnInit(): void {
+    this.startInterval();
+  }
+
+  reset(time: number){
+    clearInterval(this.timerIntervalId);
+    this.timePassed = 0;
+    this.config = {
+      'timeLeft': time
+    }
+    this.startInterval();
+  }
+
+  startInterval(){
     this.timerIntervalId = setInterval(() => {
       // The amount of time passed increments by one
       this.timePassed++;
       this.config.timeLeft--;
       // The time left label is updated
-      this.timeLeftStr = this.formatTime();
       if (this.config.timeLeft === -1) {
         clearInterval(this.timerIntervalId);
         this.countDone.next(null);
       }
+      this.timeLeftStr = LanuCountdownComponent.formatTime(this.config.timeLeft);
     }, 1000);
+  }
+
+  ngOnDestroy() {
+    if (this.timerIntervalId){
+      clearInterval(this.timerIntervalId);
+    }
   }
 
 }

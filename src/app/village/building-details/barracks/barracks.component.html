@@ -3,25 +3,33 @@
   <div class="card-body">
     <app-military-unit *ngFor="let unit of militaryUnitsList" [unit]="unit"></app-military-unit>
   </div>
-  <div class="m-3">
+  <div *ngIf="militaryOrders.length > 0" class="m-3">
     <table class="table table-striped table-sm">
       <thead>
       <tr class="table-success">
-        <th scope="col">Military</th>
+        <th scope="col">Units</th>
         <th scope="col">Duration</th>
-        <th scope="col">Ready at</th>
+        <th scope="col">Ready</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let order of militaryOrders">
         <td>{{ order.amount }} {{ order.unit }}</td>
-        <td>{{ order.duration }}</td>
+        <td>
+          <app-lanu-countdown [config]="{'timeLeft': order.duration}"></app-lanu-countdown>
+        </td>
         <td>{{ order.endOrder | date:'short' }}</td>
       </tr>
       </tbody>
       <tfoot>
       <tr>
-        <td class="table-success" colspan="3">Last one going to be ready at: hh:mm:ss</td>
+        <td class="table-success" colspan="3">
+          <div fxLayout fxLayoutAlign="center">
+            <div>Current unit going to be ready in:</div>
+            <app-lanu-countdown [config]="{'timeLeft': currentUnitTime}" (countDone)="onCountDone()" #count>
+            </app-lanu-countdown>
+          </div>
+        </td>
       </tr>
       </tfoot>
     </table>

@@ -99,7 +99,7 @@ export class VillageService {
     const url = `${this.baseUrl}/villages/${villageId}/military-orders`;
     this.httpClient.get<MilitaryOrder[]>(url).subscribe(res => {
       let militaryOrders: MilitaryOrder[] = res.map(order => {
-        return new MilitaryOrder(order.unit, order.amount, Utils.formatTime(+order.duration), order.endOrder);
+        return new MilitaryOrder(order.unit, order.amount, order.duration, order.eachDuration, order.endOrder);
       });
       this.militaryOrdersChanged.next(militaryOrders);
     });
