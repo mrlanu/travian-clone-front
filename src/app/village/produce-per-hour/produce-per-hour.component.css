@@ -21,6 +21,9 @@ i.r-crop {
   background-image: url('../../../assets/img/crop_small.png');
 }
 
-
+.negative-crop {
+  color: red;
+  font-weight: bold;
+}
 
 

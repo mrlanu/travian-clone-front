@@ -1,6 +1,6 @@
 <div class="card shadow text-center">
   <div class="card-body">
-    <div>{{ unit?.name | uppercase }}  Level: {{ unit?.level}}  There are:  {{ 123 }}  units</div>
+    <div>{{ unit?.name | uppercase }}  Level: {{ unit?.level}}  There are:  {{ amount? amount : 'no'}}  units</div>
     <hr>
     <div fxLayout fxLayoutAlign="center" fxLayoutGap="1rem">
       <div fxLayout>
@@ -38,7 +38,7 @@
   <div class="card-footer text-muted" fxLayout fxLayoutAlign="center">
     <div class="input-group mb-3">
       <input type="number" class="form-control" placeholder="How many" #amountInput>
-      <button class="btn btn-outline-primary" type="button" id="button-addon2" (click)="orderUnits(amountInput.value)">Order</button>
+      <button class="btn btn-outline-success" type="button" id="button-addon2" (click)="orderUnits(amountInput.value)">Order</button>
     </div>
   </div>
 </div>

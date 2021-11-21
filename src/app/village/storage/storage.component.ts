@@ -10,6 +10,7 @@ import {Subscription} from "rxjs";
 })
 export class StorageComponent implements OnInit, OnDestroy {
 
+  negativeCrop = false;
   max = 100;
 
   wood = 0;
@@ -33,7 +34,7 @@ export class StorageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.componentSubs.push(this.villageService.villageChanged
       .subscribe((v: VillageView) => {
-
+        this.negativeCrop = v.producePerHour.get('CROP')! < 0;
         let type: 'success' | 'info' | 'warning' | 'danger';
 
         this.intervalList.forEach(i => {
@@ -87,7 +88,11 @@ export class StorageComponent implements OnInit, OnDestroy {
           break;
         }
         case 'CROP': {
-          this.crop++;
+          if (timeout <= 0){
+            this.crop--;
+          }else {
+            this.crop++;
+          }
           if (this.crop > this.granaryCapacity){
             this.crop = this.granaryCapacity;
           }
@@ -97,7 +102,7 @@ export class StorageComponent implements OnInit, OnDestroy {
           break;
         }
       }
-    }, timeout);
+    }, timeout <= 0 ? -timeout : timeout);
   }
 
   ngOnDestroy() {

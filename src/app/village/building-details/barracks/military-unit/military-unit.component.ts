@@ -12,6 +12,7 @@ import {ActivatedRoute} from "@angular/router";
 export class MilitaryUnitComponent implements OnInit {
 
   @Input() unit: MilitaryUnit | undefined;
+  @Input() amount: number | undefined;
   @ViewChild('amountInput') amountInput: ElementRef | undefined;
   constructor(private villageService: VillageService, private route: ActivatedRoute) { }
 

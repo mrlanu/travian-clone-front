@@ -51,7 +51,7 @@
       <a href="" fxLayout class="storage-bar-button">
         <i class="r r-crop"></i>
         <div fxLayout="column" fxFlex>
-          <div class="balance font-weight-bold" fxFlexAlign="center">{{ crop }}</div>
+          <div class="balance font-weight-bold" [ngClass] = "{'negative-crop': negativeCrop}" fxFlexAlign="center">{{ crop }}</div>
           <div class="">
             <progressbar [max]="max" [value]="cropProgress"
                          [type]="cropProgress >= 100 ? 'danger' : 'success'" style="max-height: 0.4rem;"></progressbar>

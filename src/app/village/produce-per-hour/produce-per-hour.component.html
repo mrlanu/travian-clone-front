@@ -23,7 +23,7 @@
       <div>{{ wood }}</div>
       <div>{{ clay }}</div>
       <div>{{ iron }}</div>
-      <div>{{ crop }}</div>
+      <div [ngClass]="{'negative-crop': crop < 0}">{{ crop }}</div>
     </div>
   </div>
 </div>

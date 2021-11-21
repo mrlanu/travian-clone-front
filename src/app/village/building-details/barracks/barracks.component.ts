@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {VillageService} from "../../../services/village.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
@@ -31,6 +31,8 @@ export class MilitaryOrder{
   styleUrls: ['./barracks.component.css']
 })
 export class BarracksComponent implements OnInit {
+
+  @Input() military: any;
 
   villageId = '';
   militaryUnitsList: MilitaryUnit[] = [];
