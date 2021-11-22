@@ -35,10 +35,11 @@
       </div>
     </div>
   </div>
-  <div class="card-footer text-muted" fxLayout fxLayoutAlign="center">
+  <div class="card-footer text-muted" fxLayout="column" fxLayoutAlign="center center">
     <div class="input-group mb-3">
-      <input type="number" class="form-control" placeholder="How many" #amountInput>
-      <button class="btn btn-outline-success" type="button" id="button-addon2" (click)="orderUnits(amountInput.value)">Order</button>
+      <input type="number" class="form-control" [placeholder]="+maxUnits > 0 ? 'How many' : 'Not enough resources'" [disabled]="+maxUnits <= 0" (keyup)="onInput($event)" #amountInput>
+      <button class="btn btn-outline-secondary" type="button" [disabled]="+maxUnits <= 0"  (click)="amountInput.value = maxUnits; enteredValue = maxUnits">{{ maxUnits }}</button>
+      <button class="btn btn-outline-success" type="button" [disabled]="+enteredValue > +maxUnits || +enteredValue == 0" (click)="orderUnits(amountInput.value)">Order</button>
     </div>
   </div>
 </div>

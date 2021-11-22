@@ -6,7 +6,6 @@ import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Building} from "../village/all-buildings-list/all-buildings-list.component";
 import {MilitaryOrder, MilitaryUnit} from "../village/building-details/barracks/barracks.component";
-import {Utils} from "../shared/utils";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,7 @@ import {Utils} from "../shared/utils";
 export class VillageService {
   baseUrl = environment.baseUrl;
   villageId = '';
-
+  currentVillage = new BehaviorSubject<VillageView | null>(null);
   villageChanged = new Subject<VillageView>();
   militaryOrdersChanged = new Subject<MilitaryOrder[]>();
   villagesList = new BehaviorSubject<ShortVillageInfo[]>([]);
@@ -49,6 +48,7 @@ export class VillageService {
       this.villageId = village.villageId;
       this.getAllVillagesByUser(village.accountId);
       this.villageChanged.next(village);
+      this.currentVillage.next(village);
       console.log(village);
     });
   }
@@ -92,6 +92,7 @@ export class VillageService {
     this.httpClient.post(url, {'villageId': villageId, 'unitType': unitType, 'amount': amount})
       .subscribe(res => {
       this.getAllMilitaryOrders(villageId);
+      this.getVillageById(villageId);
     })
   }
 

@@ -70,8 +70,6 @@
 
 .is-disabled {
   color: currentColor;
-  cursor: unset;
-  pointer-events: none;
   opacity: 0.8;
   text-decoration: none;
 }
