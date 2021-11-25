@@ -71,7 +71,7 @@ export class VillageService {
   }
 
   deleteBuildingEvent(villageId: string, eventId: string){
-    const url = `${this.baseUrl}/villages/events/${eventId}`;
+    const url = `${this.baseUrl}/villages/${villageId}/events/${eventId}`;
     this.httpClient.delete<string>(url).subscribe(() => {
       this.getVillageById(villageId);
     });

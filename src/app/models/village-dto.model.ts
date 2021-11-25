@@ -28,6 +28,7 @@ export interface ShortVillageInfo{
 
 export interface EventView {
   id: string;
+  position: number;
   name: string;
   toLevel: number;
   completeTime: Date;

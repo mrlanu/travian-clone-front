@@ -5,6 +5,7 @@
   </div>
   <div class="card-body" style="min-height: 300px" fxLayout="column" fxLayoutAlign="space-between center">
     <div *ngIf="buildingView?.production">Production: {{ buildingView?.production }}</div>
+    <div *ngIf="buildingView?.underUpgrade">Under construction to level: {{ buildingView.level + 1 }}</div>
     <hr *ngIf="buildingView?.production">
     <div>
       {{ buildingView?.description }}
@@ -43,7 +44,9 @@
       </div>
     </div>
     <button type="button" class="btn btn-success mt-4"
-            (click)="onUpgradeClick()">Upgrade to level {{ buildingView?.level! + 1 }}</button>
+            (click)="onUpgradeClick()">
+      Upgrade to level {{ buildingView?.underUpgrade ? buildingView?.level! + 2 : buildingView?.level! + 1}}
+    </button>
   </div>
   <div class="" fxLayout="column" fxLayoutAlign="center">
     <app-barracks *ngIf="buildingView?.name === 'Barrack'" [military] = village.homeLegion></app-barracks>
