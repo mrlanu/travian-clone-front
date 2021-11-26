@@ -17,6 +17,11 @@
   background-size: cover;
 }
 
+.rally-point {
+  background-image: url("../../../assets/img/rally-point.png");
+  background-size: cover;
+}
+
 .warehouse {
   background-image: url("../../../assets/img/warehouse.png");
   background-size: cover;
@@ -202,7 +207,7 @@
 
 .position-31 {
   left: 355px;
-  top: 160px;
+  top: 150px;
   z-index: 23;
 }
 

@@ -32,6 +32,8 @@ import {BuildingItemComponent} from "./village/all-buildings-list/building-item/
 import {TabsModule} from "ngx-bootstrap/tabs";
 import {BarracksComponent} from './village/building-details/barracks/barracks.component';
 import {MilitaryUnitComponent} from './village/building-details/barracks/military-unit/military-unit.component';
+import { RallyPointComponent } from './village/building-details/rally-point/rally-point.component';
+import { BuildingDetailsContainerComponent } from './village/building-details/building-details-container/building-details-container.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import {MilitaryUnitComponent} from './village/building-details/barracks/militar
     AllBuildingsListComponent,
     BuildingItemComponent,
     BarracksComponent,
-    MilitaryUnitComponent
+    MilitaryUnitComponent,
+    RallyPointComponent,
+    BuildingDetailsContainerComponent
   ],
   imports: [
     BrowserModule,

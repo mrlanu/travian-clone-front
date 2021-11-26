@@ -33,7 +33,7 @@ export class BuildingsComponent implements OnInit, OnDestroy {
     if (building.name === 'empty-spot'){
       this.router.navigate(['/villages', this.village.villageId, 'buildings', building.position, 'new']);
     } else {
-      this.router.navigate(['/villages', this.village.villageId, 'buildings', building.position]);
+      this.router.navigate(['/villages', this.village.villageId, 'buildings', building.position, building.name]);
     }
   }
 

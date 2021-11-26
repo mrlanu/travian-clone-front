@@ -1,0 +1,30 @@
+<div class="card text-center" style="position: absolute; top: 50px; width: 100%">
+  <div class="card-header" fxLayout fxLayoutAlign="space-between baseline">
+    <h5 class="modal-title">{{ buildingView.name | uppercase }} Level: {{ buildingView.level }}</h5>
+    <button type="button" class="btn-close" routerLink="/villages/{{ villageId }}/buildings"></button>
+  </div>
+  <div class="card-body" style="min-height: 500px">
+    <tabset [justified]="true">
+      <tab heading="MANAGEMENT">
+        <div class="tabset__tab">
+          <app-building-details [buildingView]="buildingView"></app-building-details>
+        </div>
+      </tab>
+      <tab heading="OVERVIEW">
+        <div class="tabset__tab">
+
+        </div>
+      </tab>
+      <tab heading="SENDING">
+        <div class="tabset__tab">
+          Tretiy
+        </div>
+      </tab>
+      <tab heading="SIMULATOR">
+        <div class="tabset__tab">
+          Tretiy
+        </div>
+      </tab>
+    </tabset>
+  </div>
+</div>

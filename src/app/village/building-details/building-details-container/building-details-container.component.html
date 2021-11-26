@@ -1,0 +1,12 @@
+<div class="card text-center mb-5" style="position: absolute; top: 50px; width: 100%">
+  <div class="card-header" fxLayout fxLayoutAlign="space-between baseline">
+    <h5 class="modal-title">{{ buildingView?.name | uppercase }} Level: {{ buildingView?.level }}</h5>
+    <button type="button" class="btn-close" routerLink="/villages/{{ village?.villageId }}/{{ path }}"></button>
+  </div>
+
+    <app-building-details [buildingView]="buildingView"></app-building-details>
+
+  <div class="" fxLayout="column" fxLayoutAlign="center">
+    <app-barracks *ngIf="buildingView?.name === 'Barrack'" [military] = village.homeLegion></app-barracks>
+  </div>
+</div>
