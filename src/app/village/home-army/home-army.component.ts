@@ -1,17 +1,32 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {VillageView} from "../../models/village-dto.model";
+import {Subscription} from "rxjs";
+import {VillageService} from "../../services/village.service";
 
 @Component({
   selector: 'app-home-army',
   templateUrl: './home-army.component.html',
   styleUrls: ['./home-army.component.css']
 })
-export class HomeArmyComponent implements OnInit {
+export class HomeArmyComponent implements OnInit, OnDestroy {
 
-  @Input() homeArmy: Map<string, number> | undefined;
+  homeArmy: Map<string, number> | undefined;
+  componentSubs: Subscription[] = [];
 
-  constructor() { }
+  constructor(private villageService: VillageService) { }
 
   ngOnInit(): void {
+    this.componentSubs.push(this.villageService.villageChanged
+      .subscribe((v: VillageView) => {
+        this.homeArmy = v.homeLegion;
+      }));
   }
+
+  ngOnDestroy() {
+    this.componentSubs.forEach(sub => {
+      sub.unsubscribe();
+    });
+  }
+
 
 }
