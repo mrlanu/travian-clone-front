@@ -13,7 +13,7 @@ export class VillageView {
               public storage: Map<string, number>,
               public warehouseCapacity: number,
               public granaryCapacity: number,
-              public homeLegion: Map<EUnits, number>,
+              public homeLegion: Map<string, number>,
               public producePerHour: Map<string, number>,
               public eventsList: EventView[]) {
   }
@@ -40,5 +40,5 @@ export enum EResource {
 }
 
 export enum EUnits {
-  LEGIONNAIRE, PRAETORIAN
+  LEGIONNAIRE, PRAETORIAN, PHALANX
 }

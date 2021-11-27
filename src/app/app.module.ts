@@ -34,6 +34,8 @@ import {BarracksComponent} from './village/building-details/barracks/barracks.co
 import {MilitaryUnitComponent} from './village/building-details/barracks/military-unit/military-unit.component';
 import { RallyPointComponent } from './village/building-details/rally-point/rally-point.component';
 import { BuildingDetailsContainerComponent } from './village/building-details/building-details-container/building-details-container.component';
+import { TroopsDetailItemComponent } from './village/building-details/rally-point/troops-detail-item/troops-detail-item.component';
+import { HomeArmyComponent } from './village/home-army/home-army.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { BuildingDetailsContainerComponent } from './village/building-details/bu
     BarracksComponent,
     MilitaryUnitComponent,
     RallyPointComponent,
-    BuildingDetailsContainerComponent
+    BuildingDetailsContainerComponent,
+    TroopsDetailItemComponent,
+    HomeArmyComponent
   ],
   imports: [
     BrowserModule,

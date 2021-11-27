@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {ShortVillageInfo, VillageView} from "../models/village-dto.model";
+import {EUnits, ShortVillageInfo, VillageView} from "../models/village-dto.model";
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Building} from "../village/all-buildings-list/all-buildings-list.component";
@@ -32,6 +32,7 @@ export class VillageService {
     this.httpClient.get<VillageView>(url).pipe(map(v => {
       let producePerHour = new Map<string, number>();
       let storage = new Map<string, number>();
+      let homeLegion = new Map<string, number>();
 
       for(const [key, value] of Object.entries(v.producePerHour)){
         producePerHour.set(key, value);
@@ -39,10 +40,14 @@ export class VillageService {
       for(const [key, value] of Object.entries(v.storage)){
         storage.set(key, value);
       }
+      for(const [key, value] of Object.entries(v.homeLegion)){
+        // PHALANX -> Phalanx
+        homeLegion.set(this.capitalizeFirstLater(key), value);
+      }
       return new VillageView(
         v.villageId, v.accountId, v.name, v.x, v.y, v.villageType,
         v.population, v.culture, v.approval, v.buildings, storage,
-        v.warehouseCapacity, v.granaryCapacity, v.homeLegion, producePerHour, v.eventsList
+        v.warehouseCapacity, v.granaryCapacity, homeLegion, producePerHour, v.eventsList
       );
     })).subscribe(village => {
       this.villageId = village.villageId;
@@ -51,6 +56,11 @@ export class VillageService {
       this.currentVillage.next(village);
       console.log(village);
     });
+  }
+
+  private capitalizeFirstLater(str: string): string{
+    let allToLower = str.toLowerCase();
+    return allToLower.charAt(0).toUpperCase() + allToLower.slice(1);
   }
 
   updateVillageName(newName: string){

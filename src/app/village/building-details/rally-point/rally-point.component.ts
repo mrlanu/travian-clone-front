@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {VillageView} from "../../../models/village-dto.model";
+import {EUnits, VillageView} from "../../../models/village-dto.model";
 import {take} from "rxjs/operators";
 import {VillageService} from "../../../services/village.service";
 import {BuildingView} from "../building-details.component";
@@ -13,6 +13,7 @@ export class RallyPointComponent implements OnInit {
 
   villageId: string | undefined;
   buildingView!: BuildingView;
+  homeLegion!: Map<string, number>;
 
   constructor(private villageService: VillageService) { }
 
@@ -20,6 +21,7 @@ export class RallyPointComponent implements OnInit {
     this.villageService.currentVillage.pipe(take(1)).subscribe(
       (village: VillageView | null) => {
         this.villageId = village?.villageId;
+        this.homeLegion = village!.homeLegion;
         this.buildingView = village!.buildings.find(f => {
           return f.name == "Rally-point";
         })!;

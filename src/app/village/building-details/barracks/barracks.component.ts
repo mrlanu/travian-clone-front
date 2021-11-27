@@ -32,7 +32,7 @@ export class MilitaryOrder{
 })
 export class BarracksComponent implements OnInit {
 
-  @Input() military: any;
+  @Input() military!: Map<string, number>;
 
   villageId = '';
   militaryUnitsList: MilitaryUnit[] = [];

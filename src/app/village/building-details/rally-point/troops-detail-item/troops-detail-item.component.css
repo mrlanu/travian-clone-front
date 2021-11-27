@@ -1,0 +1,69 @@
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #000;
+}
+
+.r4 {
+  background-image: url(src/assets/img/crop_small.png);
+}
+
+.unit {
+  width: 16px;
+  height: 16px;
+}
+
+img.unit {
+  background-image: url(src/assets/img/gaul.png);
+  background-repeat: no-repeat;
+}
+
+.uniticon {
+  text-align: center;
+  width: 7.2%;
+}
+
+.u21 {
+  background-position: 0 0;
+}
+
+.u22 {
+  background-position: -19px 0;
+}
+
+.u23 {
+  background-position: -38px 0;
+}
+
+.u24 {
+  background-position: -57px 0;
+}
+
+.u25 {
+  background-position: -76px 0;
+}
+
+.u26 {
+  background-position: -95px 0;
+}
+
+.u27 {
+  background-position: -114px 0;
+}
+
+.u28 {
+  background-position: -133px 0;
+}
+
+.u29 {
+  background-position: -152px 0;
+}
+
+.u30 {
+  background-position: -171px 0;
+}
+
+.uhero {
+  background-image: url(src/assets/img/specials.gif);
+  background-position: -38px 0
+}

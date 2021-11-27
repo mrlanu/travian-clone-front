@@ -1,0 +1,15 @@
+<div class="card shadow" style="min-width: 200px; max-width: 300px">
+  <div class="card-header">Army:</div>
+  <div class="card-body" fxLayout="column">
+    <div *ngFor="let combatUnit of homeArmy | keyvalue">
+      <div fxLayout *ngIf="combatUnit.value > 0">
+        <i class="r r-wood"></i>
+        <div fxFlex>{{ combatUnit.key }}:</div>
+        <div>{{ combatUnit.value }}</div>
+      </div>
+    </div>
+    <!--<div fxLayout="column">
+      <div fxLayout *ngFor="let combatUnit of homeArmy | keyvalue">{{ combatUnit.value }}</div>
+    </div>-->
+  </div>
+</div>
