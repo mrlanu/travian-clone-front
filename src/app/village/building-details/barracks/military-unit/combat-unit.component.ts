@@ -1,16 +1,29 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {CombatUnit} from "../barracks.component";
 import {Utils} from "../../../../shared/utils";
 import {VillageService} from "../../../../services/village.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 
+export class CombatUnit {
+  constructor(
+    public name: string,
+    public level: number,
+    public attack: number,
+    public defInfantry: number,
+    public defCavalry : number,
+    public speed: number,
+    public capacity: number,
+    public cost: Map<string, number>,
+    public time: number,
+    public description: string) {}
+}
+
 @Component({
-  selector: 'app-military-unit',
-  templateUrl: './military-unit.component.html',
-  styleUrls: ['./military-unit.component.css']
+  selector: 'app-combat-unit',
+  templateUrl: './combat-unit.component.html',
+  styleUrls: ['./combat-unit.component.css']
 })
-export class MilitaryUnitComponent implements OnInit, OnDestroy {
+export class CombatUnitComponent implements OnInit, OnDestroy {
 
   @Input() unit: CombatUnit | undefined;
   @Input() amount: number | undefined;

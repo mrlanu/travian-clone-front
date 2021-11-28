@@ -2,22 +2,9 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {VillageService} from "../../../services/village.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
+import {CombatUnit} from "./military-unit/combat-unit.component";
 
-export class CombatUnit {
-  constructor(
-    public name: string,
-    public level: number,
-    public attack: number,
-    public defInfantry: number,
-    public defCavalry : number,
-    public speed: number,
-    public capacity: number,
-    public cost: Map<string, number>,
-    public time: number,
-    public description: string) {}
-}
-
-export class MilitaryOrder{
+export class OrderCombatUnit {
   constructor(public unit: string,
               public amount: number,
               public duration: number,
@@ -36,7 +23,7 @@ export class BarracksComponent implements OnInit {
 
   villageId = '';
   militaryUnitsList: CombatUnit[] = [];
-  militaryOrders: MilitaryOrder[] = [];
+  militaryOrders: OrderCombatUnit[] = [];
   componentSubs: Subscription[] = [];
   currentUnitTime = 0;
 

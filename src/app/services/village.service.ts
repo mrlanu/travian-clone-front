@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {EUnits, ShortVillageInfo, VillageView} from "../models/village-dto.model";
+import {ShortVillageInfo, VillageView} from "../models/village-dto.model";
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Building} from "../village/all-buildings-list/all-buildings-list.component";
-import {MilitaryOrder, CombatUnit} from "../village/building-details/barracks/barracks.component";
-import {MilitaryUnit} from "../village/building-details/rally-point/rally-point.component";
+import {OrderCombatUnit} from "../village/building-details/barracks/barracks.component";
+import {CombatUnit} from "../village/building-details/barracks/military-unit/combat-unit.component";
+import {MilitaryUnit} from "../village/building-details/rally-point/troops-detail-item/military-unit.component";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class VillageService {
   villageId = '';
   currentVillage = new BehaviorSubject<VillageView | null>(null);
   villageChanged = new Subject<VillageView>();
-  militaryOrdersChanged = new Subject<MilitaryOrder[]>();
+  militaryOrdersChanged = new Subject<OrderCombatUnit[]>();
   villagesList = new BehaviorSubject<ShortVillageInfo[]>([]);
 
   constructor(private httpClient: HttpClient) { }
@@ -109,9 +110,9 @@ export class VillageService {
 
   getAllOrdersCombatUnit(villageId: string){
     const url = `${this.baseUrl}/villages/${villageId}/military-orders`;
-    this.httpClient.get<MilitaryOrder[]>(url).subscribe(res => {
-      let militaryOrders: MilitaryOrder[] = res.map(order => {
-        return new MilitaryOrder(order.unit, order.amount, order.duration, order.eachDuration, order.endOrder);
+    this.httpClient.get<OrderCombatUnit[]>(url).subscribe(res => {
+      let militaryOrders: OrderCombatUnit[] = res.map(order => {
+        return new OrderCombatUnit(order.unit, order.amount, order.duration, order.eachDuration, order.endOrder);
       });
       this.militaryOrdersChanged.next(militaryOrders);
     });

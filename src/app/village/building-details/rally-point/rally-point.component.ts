@@ -1,22 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {VillageView} from "../../../models/village-dto.model";
-import {map, take} from "rxjs/operators";
+import {take} from "rxjs/operators";
 import {VillageService} from "../../../services/village.service";
 import {BuildingView} from "../building-details.component";
-
-export class MilitaryUnit{
-  constructor(
-    public id: string,
-    public nation: string,
-    public dynamic: boolean,
-    public originVillageId: string,
-    public originVillageName: string,
-    public currentLocationVillageId: string,
-    public units: Map<string, number>,
-    public arrivalTime: null | Date,
-    public expensesPerHour: number
-  ) {}
-}
+import {MilitaryUnit} from "./troops-detail-item/military-unit.component";
 
 @Component({
   selector: 'app-rally-point',
