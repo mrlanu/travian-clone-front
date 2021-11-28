@@ -3,7 +3,7 @@ import {VillageService} from "../../../services/village.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 
-export class MilitaryUnit{
+export class CombatUnit {
   constructor(
     public name: string,
     public level: number,
@@ -35,7 +35,7 @@ export class BarracksComponent implements OnInit {
   @Input() military!: Map<string, number>;
 
   villageId = '';
-  militaryUnitsList: MilitaryUnit[] = [];
+  militaryUnitsList: CombatUnit[] = [];
   militaryOrders: MilitaryOrder[] = [];
   componentSubs: Subscription[] = [];
   currentUnitTime = 0;
@@ -52,12 +52,12 @@ export class BarracksComponent implements OnInit {
         for(const [key, value] of Object.entries(unit.cost)){
           cost.set(key, value);
         }
-        return new MilitaryUnit(unit.name, unit.level, unit.attack, unit.defInfantry,
+        return new CombatUnit(unit.name, unit.level, unit.attack, unit.defInfantry,
           unit.defCavalry, unit.speed, unit.capacity, cost, unit.time, unit.description);
       })
     });
     this.componentSubs.push(this.villageService.villageChanged.subscribe(village => {
-      this.villageService.getAllMilitaryOrders(this.villageId);
+      this.villageService.getAllOrdersCombatUnit(this.villageId);
     }));
     this.componentSubs.push(this.villageService.militaryOrdersChanged
       .subscribe(response => {
@@ -65,7 +65,7 @@ export class BarracksComponent implements OnInit {
         this.currentUnitTime = response.length > 0 ?
           response[0].duration % response[0].eachDuration : 0;
       }));
-    this.villageService.getAllMilitaryOrders(this.villageId);
+    this.villageService.getAllOrdersCombatUnit(this.villageId);
   }
 
   onCountDone(){

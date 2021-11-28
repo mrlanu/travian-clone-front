@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MilitaryUnit} from "../barracks.component";
+import {CombatUnit} from "../barracks.component";
 import {Utils} from "../../../../shared/utils";
 import {VillageService} from "../../../../services/village.service";
 import {ActivatedRoute} from "@angular/router";
@@ -12,7 +12,7 @@ import {Subscription} from "rxjs";
 })
 export class MilitaryUnitComponent implements OnInit, OnDestroy {
 
-  @Input() unit: MilitaryUnit | undefined;
+  @Input() unit: CombatUnit | undefined;
   @Input() amount: number | undefined;
   @ViewChild('amountInput') amountInput: ElementRef | undefined;
   maxUnits = '0';
@@ -34,7 +34,7 @@ export class MilitaryUnitComponent implements OnInit, OnDestroy {
   orderUnits(amount: string){
     let villageId = this.route.parent?.snapshot.params['village-id'];
     this.amountInput!.nativeElement.value = '';
-    this.villageService.orderMilitaryUnits(villageId, 'PHALANX', +amount);
+    this.villageService.orderCombatUnits(villageId, 'PHALANX', +amount);
   }
 
   private calculateMaxUnits(storage: Map<string, number>) {

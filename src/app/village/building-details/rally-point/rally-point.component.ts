@@ -1,8 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import {EUnits, VillageView} from "../../../models/village-dto.model";
-import {take} from "rxjs/operators";
+import {Component, OnInit} from '@angular/core';
+import {VillageView} from "../../../models/village-dto.model";
+import {map, take} from "rxjs/operators";
 import {VillageService} from "../../../services/village.service";
 import {BuildingView} from "../building-details.component";
+
+export class MilitaryUnit{
+  constructor(
+    public id: string,
+    public nation: string,
+    public dynamic: boolean,
+    public originVillageId: string,
+    public originVillageName: string,
+    public currentLocationVillageId: string,
+    public units: Map<string, number>,
+    public arrivalTime: null | Date,
+    public expensesPerHour: number
+  ) {}
+}
 
 @Component({
   selector: 'app-rally-point',
@@ -12,25 +26,42 @@ import {BuildingView} from "../building-details.component";
 export class RallyPointComponent implements OnInit {
 
   villageId: string | undefined;
-  buildingView!: BuildingView;
-  homeLegion!: Map<string, number>;
+  buildingView!: BuildingView
+  militaryUnitList: MilitaryUnit[] = [];
 
   constructor(private villageService: VillageService) { }
 
   ngOnInit(): void {
+    this.getRallyPointBuildingFromCurrentVillage();
+  }
+
+  private getRallyPointBuildingFromCurrentVillage() {
     this.villageService.currentVillage.pipe(take(1)).subscribe(
       (village: VillageView | null) => {
         this.villageId = village?.villageId;
-        this.homeLegion = village!.homeLegion;
-        this.buildingView = village!.buildings.find(f => {
-          return f.name == "Rally-point";
-        })!;
-          let res = new Map<string, number>();
-          for(const [key, value] of Object.entries(this.buildingView!.resourcesToNextLevel)){
-            res.set(key, value);
-          }
-          this.buildingView!.resourcesToNextLevel = res;
+        this.buildingView = village!.buildings.find(f => f.name == "Rally-point")!;
+        let res = new Map<string, number>();
+        for (const [key, value] of Object.entries(this.buildingView!.resourcesToNextLevel)) {
+          res.set(key, value);
+        }
+        this.buildingView!.resourcesToNextLevel = res;
+
+        this.getListOfAllMilitaryUnits();
       });
   }
 
+  private getListOfAllMilitaryUnits() {
+    this.villageService.getAllMilitaryUnits(this.villageId!).subscribe(res => {
+      this.militaryUnitList = res.map(mUnit => {
+        console.log(mUnit);
+        let units = new Map<string, number>();
+        for (const [key, value] of Object.entries(mUnit.units)) {
+          units.set(key, value);
+        }
+        return new MilitaryUnit(mUnit.id, mUnit.nation, mUnit.dynamic, mUnit.originVillageId, mUnit.originVillageName,
+          mUnit.currentLocationVillageId, units, mUnit.arrivalTime? new Date(mUnit.arrivalTime!) : null, mUnit.expensesPerHour);
+      });
+      console.log("Military units ", this.militaryUnitList);
+    });
+  }
 }

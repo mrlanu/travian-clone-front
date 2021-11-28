@@ -7,7 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class TroopsDetailItemComponent implements OnInit {
 
-  @Input() troopsUnit!: Map<string, number>;
+  @Input() troopsUnit!: Map<string, number> | null;
   imgSrc = "../../../../../assets/img/x.gif";
 
   constructor() { }

@@ -5,7 +5,8 @@ import {EUnits, ShortVillageInfo, VillageView} from "../models/village-dto.model
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Building} from "../village/all-buildings-list/all-buildings-list.component";
-import {MilitaryOrder, MilitaryUnit} from "../village/building-details/barracks/barracks.component";
+import {MilitaryOrder, CombatUnit} from "../village/building-details/barracks/barracks.component";
+import {MilitaryUnit} from "../village/building-details/rally-point/rally-point.component";
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,7 @@ export class VillageService {
       }
       for(const [key, value] of Object.entries(v.homeLegion)){
         // PHALANX -> Phalanx
-        homeLegion.set(this.capitalizeFirstLater(key), value);
+        homeLegion.set(VillageService.capitalizeFirstLater(key), value);
       }
       return new VillageView(
         v.villageId, v.accountId, v.name, v.x, v.y, v.villageType,
@@ -58,7 +59,7 @@ export class VillageService {
     });
   }
 
-  private capitalizeFirstLater(str: string): string{
+  private static capitalizeFirstLater(str: string): string{
     let allToLower = str.toLowerCase();
     return allToLower.charAt(0).toUpperCase() + allToLower.slice(1);
   }
@@ -94,19 +95,19 @@ export class VillageService {
 
   getAllResearchedUnits(villageId: string){
     const url = `${this.baseUrl}/villages/${villageId}/military/researched`;
-    return this.httpClient.get<MilitaryUnit[]>(url);
+    return this.httpClient.get<CombatUnit[]>(url);
   }
 
-  orderMilitaryUnits(villageId: string, unitType: string, amount: number){
+  orderCombatUnits(villageId: string, unitType: string, amount: number){
     const url = `${this.baseUrl}/villages/military`;
     this.httpClient.post(url, {'villageId': villageId, 'unitType': unitType, 'amount': amount})
       .subscribe(res => {
-      this.getAllMilitaryOrders(villageId);
+      this.getAllOrdersCombatUnit(villageId);
       this.getVillageById(villageId);
     })
   }
 
-  getAllMilitaryOrders(villageId: string){
+  getAllOrdersCombatUnit(villageId: string){
     const url = `${this.baseUrl}/villages/${villageId}/military-orders`;
     this.httpClient.get<MilitaryOrder[]>(url).subscribe(res => {
       let militaryOrders: MilitaryOrder[] = res.map(order => {
@@ -114,5 +115,10 @@ export class VillageService {
       });
       this.militaryOrdersChanged.next(militaryOrders);
     });
+  }
+
+  getAllMilitaryUnits(villageId: string) {
+    const url = `${this.baseUrl}/villages/${villageId}/military-units`;
+    return this.httpClient.get<MilitaryUnit[]>(url);
   }
 }
