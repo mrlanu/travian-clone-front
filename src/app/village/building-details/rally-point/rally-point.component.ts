@@ -40,15 +40,9 @@ export class RallyPointComponent implements OnInit {
   private getListOfAllMilitaryUnits() {
     this.villageService.getAllMilitaryUnits(this.villageId!).subscribe(res => {
       this.militaryUnitList = res.map(mUnit => {
-        console.log(mUnit);
-        let units = new Map<string, number>();
-        for (const [key, value] of Object.entries(mUnit.units)) {
-          units.set(key, value);
-        }
-        return new MilitaryUnit(mUnit.id, mUnit.nation, mUnit.dynamic, mUnit.originVillageId, mUnit.originVillageName,
-          mUnit.currentLocationVillageId, units, mUnit.arrivalTime? new Date(mUnit.arrivalTime!) : null, mUnit.expensesPerHour);
+        return new MilitaryUnit(mUnit.id, mUnit.nation, mUnit.dynamic, mUnit.originVillageId, mUnit.originVillageName, mUnit.originVillageCoordinates,
+          mUnit.currentLocationVillageId, mUnit.units, mUnit.arrivalTime? new Date(mUnit.arrivalTime!) : null, mUnit.expensesPerHour);
       });
-      console.log("Military units ", this.militaryUnitList);
     });
   }
 }

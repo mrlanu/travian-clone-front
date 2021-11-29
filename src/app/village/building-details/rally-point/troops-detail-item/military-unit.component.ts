@@ -7,8 +7,9 @@ export class MilitaryUnit {
     public dynamic: boolean,
     public originVillageId: string,
     public originVillageName: string,
+    public originVillageCoordinates: number[],
     public currentLocationVillageId: string,
-    public units: Map<string, number>,
+    public units: number[],
     public arrivalTime: null | Date,
     public expensesPerHour: number
   ) {
@@ -22,7 +23,7 @@ export class MilitaryUnit {
 })
 export class MilitaryUnitComponent implements OnInit {
 
-  @Input() troopsUnit!: Map<string, number> | null;
+  @Input() militaryUnit!: MilitaryUnit;
   imgSrc = "../../../../../assets/img/x.gif";
 
   constructor() { }

@@ -12,7 +12,24 @@
       </tab>
       <tab heading="OVERVIEW">
         <div class="tabset__tab">
-          <app-military-unit [troopsUnit]="null"></app-military-unit>
+<!--
+          here I'm going to fetch some data from server grouped by state of those units (arriving, on the way, home etc.)
+          and print them out in such a way:
+
+          <div>
+            <app-military-unit [militaryUnit]="unit.home"></app-military-unit>
+          </div>
+
+          <div *ngFor ="let unit of units.arriving">
+            <app-military-unit [militaryUnit]="unit"></app-military-unit>
+          </div>
+
+          <div *ngFor ="let unit of units.onTheWay">
+            <app-military-unit [militaryUnit]="unit"></app-military-unit>
+          </div>
+
+-->
+          <app-military-unit *ngIf="militaryUnitList.length > 0" [militaryUnit]="militaryUnitList[0]"></app-military-unit>
         </div>
       </tab>
       <tab heading="SENDING">
