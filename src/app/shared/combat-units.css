@@ -1,11 +1,6 @@
-a {
-  text-decoration: none;
-  cursor: pointer;
-  color: #000;
-}
-
-.r4 {
-  background-image: url(src/assets/img/crop_small.png);
+.unit-icon {
+  text-align: center;
+  width: 7.2%;
 }
 
 .unit {
@@ -13,14 +8,9 @@ a {
   height: 16px;
 }
 
-img.unit {
+.unit-galls {
   background-image: url(src/assets/img/gaul.png);
   background-repeat: no-repeat;
-}
-
-.unit-icon {
-  text-align: center;
-  width: 7.2%;
 }
 
 .u0 {
@@ -63,7 +53,7 @@ img.unit {
   background-position: -171px 0;
 }
 
-img.unit.u-hero {
+.u10 {
   background-image: url(src/assets/img/specials.gif);
   background-position: -38px 0
 }

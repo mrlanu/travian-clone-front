@@ -2,7 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {VillageService} from "../../../services/village.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
-import {CombatUnit} from "./military-unit/combat-unit.component";
+import {CombatUnit} from "./combat-unit/combat-unit.component";
 
 export class OrderCombatUnit {
   constructor(public unit: string,

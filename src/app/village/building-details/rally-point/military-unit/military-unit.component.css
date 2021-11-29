@@ -1,0 +1,10 @@
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #000;
+}
+
+.r4 {
+  background-image: url(src/assets/img/crop_small.png);
+}
+

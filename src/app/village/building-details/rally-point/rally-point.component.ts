@@ -3,7 +3,7 @@ import {VillageView} from "../../../models/village-dto.model";
 import {take} from "rxjs/operators";
 import {VillageService} from "../../../services/village.service";
 import {BuildingView} from "../building-details.component";
-import {MilitaryUnit} from "./troops-detail-item/military-unit.component";
+import {MilitaryUnit} from "./military-unit/military-unit.component";
 
 @Component({
   selector: 'app-rally-point',

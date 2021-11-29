@@ -19,7 +19,7 @@ export class MilitaryUnit {
 @Component({
   selector: 'app-military-unit',
   templateUrl: './military-unit.component.html',
-  styleUrls: ['./military-unit.component.css']
+  styleUrls: ['./military-unit.component.css', '../../../../shared/combat-units.css']
 })
 export class MilitaryUnitComponent implements OnInit {
 

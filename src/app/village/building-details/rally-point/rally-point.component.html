@@ -34,7 +34,7 @@
       </tab>
       <tab heading="SENDING">
         <div class="tabset__tab">
-          Tretiy
+          <app-troops-send *ngIf="militaryUnitList.length > 0" [militaryUnit]="militaryUnitList[0]"></app-troops-send>
         </div>
       </tab>
       <tab heading="SIMULATOR">

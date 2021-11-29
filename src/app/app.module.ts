@@ -31,11 +31,12 @@ import {AllBuildingsListComponent} from "./village/all-buildings-list/all-buildi
 import {BuildingItemComponent} from "./village/all-buildings-list/building-item/building-item.component";
 import {TabsModule} from "ngx-bootstrap/tabs";
 import {BarracksComponent} from './village/building-details/barracks/barracks.component';
-import {CombatUnitComponent} from './village/building-details/barracks/military-unit/combat-unit.component';
+import {CombatUnitComponent} from './village/building-details/barracks/combat-unit/combat-unit.component';
 import { RallyPointComponent } from './village/building-details/rally-point/rally-point.component';
 import { BuildingDetailsContainerComponent } from './village/building-details/building-details-container/building-details-container.component';
-import { MilitaryUnitComponent } from './village/building-details/rally-point/troops-detail-item/military-unit.component';
+import { MilitaryUnitComponent } from './village/building-details/rally-point/military-unit/military-unit.component';
 import { HomeArmyComponent } from './village/home-army/home-army.component';
+import { TroopsSendComponent } from './village/building-details/rally-point/troops-send/troops-send.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { HomeArmyComponent } from './village/home-army/home-army.component';
     RallyPointComponent,
     BuildingDetailsContainerComponent,
     MilitaryUnitComponent,
-    HomeArmyComponent
+    HomeArmyComponent,
+    TroopsSendComponent
   ],
   imports: [
     BrowserModule,

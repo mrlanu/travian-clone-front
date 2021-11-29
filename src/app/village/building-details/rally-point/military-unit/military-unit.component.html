@@ -18,18 +18,13 @@
         </span>
       </th>
       <td class="unit-icon" *ngFor="let u of militaryUnit.units; let i=index;">
-        <img class="unit u{{ i }}" alt="u-{{ u }}" [src]="imgSrc">
-      </td>
-
-      <td class="unit-icon">
-        <img class="unit u-hero" alt="Hero" [src]="imgSrc">
+        <img class="unit unit-{{ militaryUnit.nation | lowercase}} u{{ i }}" alt="u-{{ u }}" [src]="imgSrc">
       </td>
     </tr>
 
     <tr>
       <th class="fw-normal">Troops</th>
       <td class="unit none" *ngFor="let u of militaryUnit.units"> {{ u }} </td>
-      <td class="unit none last">0</td>
     </tr>
 
     <tr>

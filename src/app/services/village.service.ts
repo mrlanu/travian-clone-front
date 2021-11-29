@@ -6,8 +6,8 @@ import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Building} from "../village/all-buildings-list/all-buildings-list.component";
 import {OrderCombatUnit} from "../village/building-details/barracks/barracks.component";
-import {CombatUnit} from "../village/building-details/barracks/military-unit/combat-unit.component";
-import {MilitaryUnit} from "../village/building-details/rally-point/troops-detail-item/military-unit.component";
+import {CombatUnit} from "../village/building-details/barracks/combat-unit/combat-unit.component";
+import {MilitaryUnit} from "../village/building-details/rally-point/military-unit/military-unit.component";
 
 @Injectable({
   providedIn: 'root'
