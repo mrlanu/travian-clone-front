@@ -2,10 +2,21 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {MilitaryUnit} from "../military-unit/military-unit.component";
+import {VillageService} from "../../../../services/village.service";
+import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
+import {ConfirmTroopsSendComponent} from "./confirm-troops-send/confirm-troops-send.component";
 
-export class AttackModel {
-  constructor(public villageName: string, public x: number, public y: number,
-              public kindAttack: number, public waves: WaveModels[]) {}
+export class AttackRequest {
+  constructor(public villageId: string, public x: number, public y: number,
+              public kind: string, public waves: WaveModels[]) {}
+}
+
+export class TroopsSendingResponse {
+  constructor(public attackingVillageId: string, public targetName: string,
+              public targetX: number, public targetY: number,
+              public targetPlayerName: string, public troops: number[],
+              public kind: string, public duration: number, public arriveTime: Date){}
+
 }
 
 export interface WaveModels {
@@ -22,8 +33,8 @@ export interface WaveModels {
   styleUrls: ['./troops-send.component.css', '../../../../shared/combat-units.css']
 })
 export class TroopsSendComponent implements OnInit, OnDestroy {
-
-  attack: AttackModel = new AttackModel('', 0, 0, 0,  []);
+  bsModalRef?: BsModalRef;
+  attack: AttackRequest = new AttackRequest('', 0, 0, 'REINFORCEMENT',  []);
 
   targets: string[] = ['Random target', 'Random target'];
 
@@ -33,9 +44,10 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
 
   @Input() militaryUnit!: MilitaryUnit;
 
-  constructor() {
+  constructor(private villageService: VillageService,
+              private modalService: BsModalService) {
     this.attackForm = new FormGroup({
-      villageName: new FormControl({value: '', disabled: true}),
+      villageId: new FormControl({value: ''}),
       x: new FormControl({value: '', disabled: true}, Validators.required),
       y: new FormControl({value: '', disabled: true}, Validators.required),
       kind: new FormControl({value: '3', disabled: true}),
@@ -60,7 +72,6 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
   }
 
   private setEnable() {
-    this.attackForm.controls.villageName.enable();
     this.attackForm.controls.x.enable();
     this.attackForm.controls.y.enable();
     this.attackForm.controls.kind.enable();
@@ -135,34 +146,37 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.attack = {
       ...this.attack,
-      villageName: this.attackForm.value.villageName,
+      villageId: this.militaryUnit.originVillageId,
       x: +this.attackForm.value.x,
       y: +this.attackForm.value.y,
-      kindAttack: +this.attackForm.value.kind,
+      kind: +this.attackForm.value.kind === 2 ? 'REINFORCEMENT': +this.attackForm.value.kind === 3 ? 'ATTACK' : 'RAID',
       waves: this.attack.waves,
     };
+
+    this.villageService.checkTroopsSendingRequest(this.attack).subscribe(response => {
+      console.log('Attack response - ', response);
+      this.openModalWithComponent(response);
+    }, error => {
+      console.log(error.error);
+    });
 
     this.attack.waves = [];
     this.militaryUnit.units = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     this.attackForm.reset({
-      immediately: true,
-      date: new Date(),
       x: 0,
       y: 0,
       kind: '3',
-      clientId: this.attackForm.value.clientId,
-      timeCorrection: 0,
-      u21: 0,
-      u22: 0,
-      u23: 0,
-      u24: 0,
-      u25: 0,
-      u26: 0,
-      u27: 0,
-      u28: 0,
-      u29: 0,
-      u30: 0,
-      u31: 0,
+      u0: 0,
+      u1: 0,
+      u2: 0,
+      u3: 0,
+      u4: 0,
+      u5: 0,
+      u6: 0,
+      u7: 0,
+      u8: 0,
+      u9: 0,
+      u10: 0,
       firstTarget: '99',
       secondTarget: '99',
     });
@@ -177,7 +191,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
       this.attackForm.get('u' + inputName)!.patchValue(this.militaryUnit.units[id]) :
       this.attackForm.get('u' + inputName)!.patchValue(amount);
 
-    /*if (id === 7 && amount >= 1 && +this.attackForm.value.kind === 3) {
+    if (id === 7 && amount >= 1 && +this.attackForm.value.kind === 3) {
       this.attackForm.controls.firstTarget.enable();
     } else if ((id === 7 && amount < 1) || +this.attackForm.value.kind !== 3) {
       this.attackForm.controls.firstTarget.disable();
@@ -186,7 +200,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
       this.attackForm.controls.secondTarget.enable();
     } else if ((id === 7 && amount < 20) || +this.attackForm.value.kind !== 3) {
       this.attackForm.controls.secondTarget.disable();
-    }*/
+    }
   }
 
   onKindChange() {
@@ -197,6 +211,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
       this.attackForm.controls.firstTarget.disable();
       this.attackForm.controls.secondTarget.disable();
     }
+
   }
 
   ngOnDestroy(): void {
@@ -207,5 +222,16 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
 
   counter(i: number) {
     return new Array(i);
+  }
+
+  openModalWithComponent(militaryUnit: MilitaryUnit) {
+    const initialState: ModalOptions = {
+      initialState: {
+        militaryUnit: militaryUnit,
+        title: 'Confirm sending '
+      }
+    };
+    this.bsModalRef = this.modalService.show(ConfirmTroopsSendComponent, initialState);
+    this.bsModalRef.content.closeBtnName = 'Close';
   }
 }

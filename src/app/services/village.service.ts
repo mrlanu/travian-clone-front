@@ -8,6 +8,7 @@ import {Building} from "../village/all-buildings-list/all-buildings-list.compone
 import {OrderCombatUnit} from "../village/building-details/barracks/barracks.component";
 import {CombatUnit} from "../village/building-details/barracks/combat-unit/combat-unit.component";
 import {MilitaryUnit} from "../village/building-details/rally-point/military-unit/military-unit.component";
+import {AttackRequest, TroopsSendingResponse} from "../village/building-details/rally-point/troops-send/troops-send.component";
 
 @Injectable({
   providedIn: 'root'
@@ -121,5 +122,14 @@ export class VillageService {
   getAllMilitaryUnits(villageId: string) {
     const url = `${this.baseUrl}/villages/${villageId}/military-units`;
     return this.httpClient.get<MilitaryUnit[]>(url);
+  }
+
+  checkTroopsSendingRequest(attackRequest: AttackRequest){
+    const url = `${this.baseUrl}/villages/check-troops-send`;
+    return this.httpClient.post<MilitaryUnit>(url, attackRequest).pipe(map(mU => new MilitaryUnit(
+      mU.id, mU.nation, mU.move, mU.mission, mU.originVillageId, mU.originVillageName, mU.originVillageCoordinates,
+      mU.currentLocationVillageId, mU.targetVillageId, mU.targetVillageName, mU.targetPlayerName, mU.targetVillageCoordinates,
+      mU.units, mU.arrivalTime ? new Date(mU.arrivalTime) : null, mU.duration, mU.expensesPerHour)
+    ));
   }
 }

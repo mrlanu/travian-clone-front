@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {VillageView} from "../../../models/village-dto.model";
-import {take} from "rxjs/operators";
+import {map, take} from "rxjs/operators";
 import {VillageService} from "../../../services/village.service";
 import {BuildingView} from "../building-details.component";
 import {MilitaryUnit} from "./military-unit/military-unit.component";
@@ -39,10 +39,10 @@ export class RallyPointComponent implements OnInit {
 
   private getListOfAllMilitaryUnits() {
     this.villageService.getAllMilitaryUnits(this.villageId!).subscribe(res => {
-      this.militaryUnitList = res.map(mUnit => {
-        return new MilitaryUnit(mUnit.id, mUnit.nation, mUnit.dynamic, mUnit.originVillageId, mUnit.originVillageName, mUnit.originVillageCoordinates,
-          mUnit.currentLocationVillageId, mUnit.units, mUnit.arrivalTime? new Date(mUnit.arrivalTime!) : null, mUnit.expensesPerHour);
+      this.militaryUnitList = res.map(mU => new MilitaryUnit(
+          mU.id, mU.nation, mU.move, mU.mission, mU.originVillageId, mU.originVillageName, mU.originVillageCoordinates,
+          mU.currentLocationVillageId, mU.targetVillageId, mU.targetVillageName, mU.targetPlayerName, mU.targetVillageCoordinates,
+          mU.units, mU.arrivalTime ? new Date(mU.arrivalTime) : null, mU.duration, mU.expensesPerHour))
       });
-    });
   }
 }

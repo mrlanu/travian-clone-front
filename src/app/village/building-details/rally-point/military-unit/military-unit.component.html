@@ -5,8 +5,11 @@
       <td class="fw-bold">
         <a href="/karte.php?d=46567">{{ militaryUnit.originVillageName }}</a>
       </td>
-      <td colspan="11" class="fw-bold">
-        <a href="/profile/18616">Own army</a>
+      <td colspan="11" class="fw-bold" style="text-align: center">
+        <div *ngIf="militaryUnit.mission === 'Attack' || militaryUnit.mission === 'Raid'">
+          {{ militaryUnit.mission }} on {{ militaryUnit.targetVillageName }}
+        </div>
+        <div *ngIf="militaryUnit.mission === 'Reinforcement'">{{ militaryUnit.mission }} to {{ militaryUnit.targetVillageName }}</div>
       </td>
     </tr>
     <tr>
@@ -27,7 +30,7 @@
       <td class="unit none" *ngFor="let u of militaryUnit.units"> {{ u }} </td>
     </tr>
 
-    <tr>
+    <tr *ngIf="!militaryUnit.move">
       <th class="fw-normal">
         Expenses
       </th>
@@ -36,6 +39,17 @@
           <div>{{ militaryUnit.expensesPerHour }}</div>
           <div class="unit r4"></div>
           <div>per hour</div>
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="militaryUnit.move">
+      <th class="fw-normal">
+        Arrival
+      </th>
+      <td colspan="11">
+        <div fxLayout fxLayoutAlign="space-between center" fxLayoutGap="0.3rem">
+          <div>in {{ getDuration() }}</div>
+          <div>at {{ militaryUnit.arrivalTime | date: 'hh:mm:ss' }}</div>
         </div>
       </td>
     </tr>

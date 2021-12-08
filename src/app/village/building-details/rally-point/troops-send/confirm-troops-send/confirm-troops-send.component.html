@@ -1,0 +1,29 @@
+<div>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}{{militaryUnit?.mission}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      Target: {{ militaryUnit?.targetVillageName }}
+      <span class="coordinates">
+          <span>{{ militaryUnit?.targetVillageCoordinates![0] }}</span>
+          <span>|</span>
+          <span>{{ militaryUnit?.targetVillageCoordinates![1] }}</span>
+        </span>
+    </div>
+    <div>
+      Player: {{ militaryUnit?.targetPlayerName }}
+    </div>
+    <app-military-unit *ngIf="militaryUnit"
+                       [militaryUnit]="militaryUnit">
+    </app-military-unit>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-success" (click)="bsModalRef.hide()">Confirm</button>
+    <button type="button" class="btn btn-outline-warning" (click)="bsModalRef.hide()">Edit</button>
+    <button type="button" class="btn btn-outline-danger" routerLink="/villages/{{ militaryUnit?.originVillageId }}/">Cancel</button>
+  </div>
+</div>

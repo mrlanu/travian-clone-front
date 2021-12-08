@@ -15,7 +15,7 @@ import {TaskListComponent} from './village/task-list/task-list.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {LanuCountdownComponent} from './shared/lanu-countdown/lanu-countdown.component';
 import {BuildingConfirmComponent} from './modals/building-confirm/building-confirm.component';
-import {ModalModule} from "ngx-bootstrap/modal";
+import {BsModalService, ModalModule} from "ngx-bootstrap/modal";
 import {BuildingsComponent} from './village/buildings/buildings.component';
 import {HeaderComponent} from './village/header/header.component';
 import {BuildingDetailsComponent} from './village/building-details/building-details.component';
@@ -37,6 +37,7 @@ import { BuildingDetailsContainerComponent } from './village/building-details/bu
 import { MilitaryUnitComponent } from './village/building-details/rally-point/military-unit/military-unit.component';
 import { HomeArmyComponent } from './village/home-army/home-army.component';
 import { TroopsSendComponent } from './village/building-details/rally-point/troops-send/troops-send.component';
+import { ConfirmTroopsSendComponent } from './village/building-details/rally-point/troops-send/confirm-troops-send/confirm-troops-send.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { TroopsSendComponent } from './village/building-details/rally-point/troo
     BuildingDetailsContainerComponent,
     MilitaryUnitComponent,
     HomeArmyComponent,
-    TroopsSendComponent
+    TroopsSendComponent,
+    ConfirmTroopsSendComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +82,7 @@ import { TroopsSendComponent } from './village/building-details/rally-point/troo
     MatSnackBarModule,
     TabsModule.forRoot(),
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, BsModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
