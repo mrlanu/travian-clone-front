@@ -2,6 +2,7 @@ export class VillageView {
 
   constructor(public villageId: string,
               public accountId: string,
+              public nation: string,
               public name: string,
               public x: number,
               public y: number,

@@ -4,7 +4,7 @@
     <button type="button" class="btn-close" routerLink="/villages/{{ villageId }}/buildings"></button>
   </div>
   <div class="card-body" style="min-height: 500px">
-    <tabset [justified]="true">
+    <tabset [justified]="true"  #staticTabs>
       <tab heading="MANAGEMENT">
         <div class="tabset__tab">
           <app-building-details [buildingView]="buildingView"></app-building-details>
@@ -32,9 +32,9 @@
           <app-military-unit *ngIf="militaryUnitList.length > 0" [militaryUnit]="militaryUnitList[0]"></app-military-unit>
         </div>
       </tab>
-      <tab heading="SENDING">
+      <tab heading="SENDING" (selectTab)="onSendingSelect()">
         <div class="tabset__tab">
-          <app-troops-send *ngIf="militaryUnitList.length > 0" [militaryUnit]="militaryUnitList[0]"></app-troops-send>
+          <app-troops-send *ngIf="militaryUnitList.length > 0" [militaryUnit]="militaryUnitList[0]" (confirmClick)="selectTab(1)"></app-troops-send>
         </div>
       </tab>
       <tab heading="SIMULATOR">

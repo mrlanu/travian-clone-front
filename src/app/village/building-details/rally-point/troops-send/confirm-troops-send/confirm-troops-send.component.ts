@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {BsModalRef} from "ngx-bootstrap/modal";
+import {BsModalRef, ModalOptions} from "ngx-bootstrap/modal";
 import {MilitaryUnit} from "../../military-unit/military-unit.component";
-import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-confirm-troops-send',
@@ -9,13 +8,19 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./confirm-troops-send.component.css']
 })
 export class ConfirmTroopsSendComponent implements OnInit {
+
   title?: string;
   closeBtnName?: string;
   militaryUnit?: MilitaryUnit;
+  position?: string;
 
   constructor(public bsModalRef: BsModalRef) { }
 
   ngOnInit(): void {
+  }
+
+  confirm(){
+    this.bsModalRef.onHide?.emit('confirm');
   }
 
 }

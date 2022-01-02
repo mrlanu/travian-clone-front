@@ -1,23 +1,18 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {MilitaryUnit} from "../military-unit/military-unit.component";
 import {VillageService} from "../../../../services/village.service";
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {ConfirmTroopsSendComponent} from "./confirm-troops-send/confirm-troops-send.component";
+import {ActivatedRoute} from "@angular/router";
+import {take} from "rxjs/operators";
 
 export class AttackRequest {
   constructor(public villageId: string, public x: number, public y: number,
               public kind: string, public waves: WaveModels[]) {}
 }
 
-export class TroopsSendingResponse {
-  constructor(public attackingVillageId: string, public targetName: string,
-              public targetX: number, public targetY: number,
-              public targetPlayerName: string, public troops: number[],
-              public kind: string, public duration: number, public arriveTime: Date){}
-
-}
 
 export interface WaveModels {
   troops: number[];
@@ -33,6 +28,9 @@ export interface WaveModels {
   styleUrls: ['./troops-send.component.css', '../../../../shared/combat-units.css']
 })
 export class TroopsSendComponent implements OnInit, OnDestroy {
+
+  @Output() confirmClick = new EventEmitter<string>();
+
   bsModalRef?: BsModalRef;
   attack: AttackRequest = new AttackRequest('', 0, 0, 'REINFORCEMENT',  []);
 
@@ -45,6 +43,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
   @Input() militaryUnit!: MilitaryUnit;
 
   constructor(private villageService: VillageService,
+              private route: ActivatedRoute,
               private modalService: BsModalService) {
     this.attackForm = new FormGroup({
       villageId: new FormControl({value: ''}),
@@ -154,31 +153,9 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
     };
 
     this.villageService.checkTroopsSendingRequest(this.attack).subscribe(response => {
-      console.log('Attack response - ', response);
       this.openModalWithComponent(response);
     }, error => {
       console.log(error.error);
-    });
-
-    this.attack.waves = [];
-    this.militaryUnit.units = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    this.attackForm.reset({
-      x: 0,
-      y: 0,
-      kind: '3',
-      u0: 0,
-      u1: 0,
-      u2: 0,
-      u3: 0,
-      u4: 0,
-      u5: 0,
-      u6: 0,
-      u7: 0,
-      u8: 0,
-      u9: 0,
-      u10: 0,
-      firstTarget: '99',
-      secondTarget: '99',
     });
   }
 
@@ -214,6 +191,28 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
 
   }
 
+  resetForm(){
+    this.attack.waves = [];
+    this.militaryUnit.units = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    this.attackForm.reset({
+      x: 0, y: 0,
+      kind: '3',
+      u0: 0,
+      u1: 0,
+      u2: 0,
+      u3: 0,
+      u4: 0,
+      u5: 0,
+      u6: 0,
+      u7: 0,
+      u8: 0,
+      u9: 0,
+      u10: 0,
+      firstTarget: '99',
+      secondTarget: '99',
+    });
+  }
+
   ngOnDestroy(): void {
     this.componentSubs.forEach(sub => {
       sub.unsubscribe();
@@ -228,10 +227,19 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
     const initialState: ModalOptions = {
       initialState: {
         militaryUnit: militaryUnit,
-        title: 'Confirm sending '
+        title: 'Confirm sending ',
+        position: this.route.snapshot.params['position']
       }
     };
     this.bsModalRef = this.modalService.show(ConfirmTroopsSendComponent, initialState);
+    this.bsModalRef.onHide?.pipe(take(1)).subscribe((reason: string | any) => {
+      if (reason === 'confirm'){
+        console.log('Confirm was pressed');
+        this.bsModalRef?.hide();
+        this.resetForm();
+        this.confirmClick.emit('confirm');
+      }
+    });
     this.bsModalRef.content.closeBtnName = 'Close';
   }
 }

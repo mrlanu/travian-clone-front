@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {VillageView} from "../../models/village-dto.model";
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";

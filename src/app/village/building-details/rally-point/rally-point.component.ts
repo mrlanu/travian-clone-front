@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {VillageView} from "../../../models/village-dto.model";
 import {map, take} from "rxjs/operators";
 import {VillageService} from "../../../services/village.service";
 import {BuildingView} from "../building-details.component";
 import {MilitaryUnit} from "./military-unit/military-unit.component";
+import {TabsetComponent} from "ngx-bootstrap/tabs";
 
 @Component({
   selector: 'app-rally-point',
@@ -11,6 +12,8 @@ import {MilitaryUnit} from "./military-unit/military-unit.component";
   styleUrls: ['./rally-point.component.css']
 })
 export class RallyPointComponent implements OnInit {
+
+  @ViewChild('staticTabs', { static: false }) staticTabs?: TabsetComponent;
 
   villageId: string | undefined;
   buildingView!: BuildingView
@@ -20,6 +23,16 @@ export class RallyPointComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRallyPointBuildingFromCurrentVillage();
+  }
+
+  onSendingSelect(){
+    this.getListOfAllMilitaryUnits();
+  }
+
+  selectTab(tabId: number) {
+    if (this.staticTabs?.tabs[tabId]) {
+      this.staticTabs.tabs[tabId].active = true;
+    }
   }
 
   private getRallyPointBuildingFromCurrentVillage() {

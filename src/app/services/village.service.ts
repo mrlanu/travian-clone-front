@@ -8,7 +8,7 @@ import {Building} from "../village/all-buildings-list/all-buildings-list.compone
 import {OrderCombatUnit} from "../village/building-details/barracks/barracks.component";
 import {CombatUnit} from "../village/building-details/barracks/combat-unit/combat-unit.component";
 import {MilitaryUnit} from "../village/building-details/rally-point/military-unit/military-unit.component";
-import {AttackRequest, TroopsSendingResponse} from "../village/building-details/rally-point/troops-send/troops-send.component";
+import {AttackRequest} from "../village/building-details/rally-point/troops-send/troops-send.component";
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +48,7 @@ export class VillageService {
         homeLegion.set(VillageService.capitalizeFirstLater(key), value);
       }
       return new VillageView(
-        v.villageId, v.accountId, v.name, v.x, v.y, v.villageType,
+        v.villageId, v.accountId, v.nation, v.name, v.x, v.y, v.villageType,
         v.population, v.culture, v.approval, v.buildings, storage,
         v.warehouseCapacity, v.granaryCapacity, homeLegion, producePerHour, v.eventsList
       );

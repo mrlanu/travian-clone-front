@@ -22,8 +22,7 @@
     </app-military-unit>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-success" (click)="bsModalRef.hide()">Confirm</button>
     <button type="button" class="btn btn-outline-warning" (click)="bsModalRef.hide()">Edit</button>
-    <button type="button" class="btn btn-outline-danger" routerLink="/villages/{{ militaryUnit?.originVillageId }}/">Cancel</button>
+    <button type="button" class="btn btn-outline-success" (click)="confirm()">Confirm</button>
   </div>
 </div>
