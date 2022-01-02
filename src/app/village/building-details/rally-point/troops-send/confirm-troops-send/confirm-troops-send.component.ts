@@ -23,4 +23,8 @@ export class ConfirmTroopsSendComponent implements OnInit {
     this.bsModalRef.onHide?.emit('confirm');
   }
 
+  cancel(){
+    this.bsModalRef.onHide?.emit('cancel');
+  }
+
 }

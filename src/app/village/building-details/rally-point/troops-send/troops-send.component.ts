@@ -193,9 +193,9 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
 
   resetForm(){
     this.attack.waves = [];
-    this.militaryUnit.units = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    /*this.militaryUnit.units = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];*/
     this.attackForm.reset({
-      x: 0, y: 0,
+      x: '', y: '',
       kind: '3',
       u0: 0,
       u1: 0,
@@ -238,6 +238,13 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
         this.bsModalRef?.hide();
         this.resetForm();
         this.confirmClick.emit('confirm');
+      }
+      if (reason === 'cancel'){
+        this.bsModalRef?.hide();
+        for (let i = 0; i < this.attack.waves.length; i++) {
+          this.onWaveDelete(i);
+        }
+        this.resetForm();
       }
     });
     this.bsModalRef.content.closeBtnName = 'Close';
