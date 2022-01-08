@@ -7,8 +7,8 @@ import {environment} from "../../environments/environment";
 import {Building} from "../village/all-buildings-list/all-buildings-list.component";
 import {OrderCombatUnit} from "../village/building-details/barracks/barracks.component";
 import {CombatUnit} from "../village/building-details/barracks/combat-unit/combat-unit.component";
+import {MilitaryUnitContract, TroopsSendingRequest} from "../village/building-details/rally-point/rally-point.component";
 import {MilitaryUnit} from "../village/building-details/rally-point/military-unit/military-unit.component";
-import {AttackRequest} from "../village/building-details/rally-point/troops-send/troops-send.component";
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +50,7 @@ export class VillageService {
       return new VillageView(
         v.villageId, v.accountId, v.nation, v.name, v.x, v.y, v.villageType,
         v.population, v.culture, v.approval, v.buildings, storage,
-        v.warehouseCapacity, v.granaryCapacity, homeLegion, producePerHour, v.eventsList
+        v.warehouseCapacity, v.granaryCapacity, homeLegion, v.homeUnits, producePerHour, v.eventsList
       );
     })).subscribe(village => {
       this.villageId = village.villageId;
@@ -124,12 +124,17 @@ export class VillageService {
     return this.httpClient.get<MilitaryUnit[]>(url);
   }
 
-  checkTroopsSendingRequest(attackRequest: AttackRequest){
+  checkTroopsSendingRequest(attackRequest: TroopsSendingRequest){
     const url = `${this.baseUrl}/villages/check-troops-send`;
-    return this.httpClient.post<MilitaryUnit>(url, attackRequest).pipe(map(mU => new MilitaryUnit(
+    return this.httpClient.post<MilitaryUnitContract>(url, attackRequest).pipe(map(mU => new MilitaryUnitContract(
       mU.id, mU.nation, mU.move, mU.mission, mU.originVillageId, mU.originVillageName, mU.originVillageCoordinates,
       mU.currentLocationVillageId, mU.targetVillageId, mU.targetVillageName, mU.targetPlayerName, mU.targetVillageCoordinates,
       mU.units, mU.arrivalTime ? new Date(mU.arrivalTime) : null, mU.duration, mU.expensesPerHour)
     ));
+  }
+
+  sendConfirmedTroops(militaryUnit: MilitaryUnitContract){
+    const url = `${this.baseUrl}/villages/troops-send`;
+    return this.httpClient.post<any>(url, militaryUnit);
   }
 }

@@ -1,0 +1,58 @@
+<div class="mt-3">
+  <table class="table table-bordered border-dark table-sm">
+    <tbody>
+    <tr>
+      <td class="fw-bold">
+        <a href="/karte.php?d=46567">{{ militaryUnitContract.originVillageName }}</a>
+      </td>
+      <td colspan="11" class="fw-bold" style="text-align: center">
+        <div *ngIf="militaryUnitContract.mission === 'Attack' || militaryUnitContract.mission === 'Raid'">
+          {{ militaryUnitContract.mission }} on {{ militaryUnitContract.targetVillageName }}
+        </div>
+        <div *ngIf="militaryUnitContract.mission === 'Reinforcement'">{{ militaryUnitContract.mission }} to {{ militaryUnitContract.targetVillageName }}</div>
+      </td>
+    </tr>
+    <tr>
+      <th class="coords fw-normal">
+        <span class="coordinates">
+          <span>{{ militaryUnitContract.originVillageCoordinates[0] }}</span>
+          <span>|</span>
+          <span>{{ militaryUnitContract.originVillageCoordinates[1] }}</span>
+        </span>
+      </th>
+      <td class="unit-icon" *ngFor="let u of militaryUnitContract.units; let i=index;">
+        <img class="unit unit-{{ militaryUnitContract.nation | lowercase}} u{{ i }}" alt="u-{{ u }}" [src]="imgSrc">
+      </td>
+    </tr>
+
+    <tr>
+      <th class="fw-normal">Troops</th>
+      <td class="unit none" *ngFor="let u of militaryUnitContract.units"> {{ u }} </td>
+    </tr>
+
+    <tr *ngIf="!militaryUnitContract.move">
+      <th class="fw-normal">
+        Expenses
+      </th>
+      <td colspan="11">
+        <div fxLayout fxLayoutAlign="center center" fxLayoutGap="0.3rem">
+          <div>{{ militaryUnitContract.expensesPerHour }}</div>
+          <div class="unit r4"></div>
+          <div>per hour</div>
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="militaryUnitContract.move">
+      <th class="fw-normal">
+        Arrival
+      </th>
+      <td colspan="11">
+        <div fxLayout fxLayoutAlign="space-between center" fxLayoutGap="0.3rem">
+          <div>in {{ getDuration() }}</div>
+          <div>at {{ militaryUnitContract.arrivalTime | date: 'hh:mm:ss' }}</div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

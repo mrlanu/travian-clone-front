@@ -63,12 +63,12 @@
             <div class="col-md-4 col-sm-6" *ngFor="let count of counter(3) ;let i = index;">
               <div class="input-group input-group-sm">
                 <span class="input-group-text">
-                  <img class="unit unit-{{ militaryUnit.nation | lowercase }} u{{ i }}" [src]="imgSrc" alt="">
+                  <img class="unit unit-{{ homeLegion.nation | lowercase }} u{{ i }}" [src]="imgSrc" alt="">
                 </span>
                 <input type="text" class="form-control" formControlName="u{{ i }}" name="u{{ i }}"
                        (input)="checkAvailableTroops(i, $any(i), $event)">
                 <span class="input-group-text">
-                  {{ militaryUnit.units[i] }}
+                  {{ homeLegion.units[i] }}
                 </span>
               </div>
             </div>
@@ -78,12 +78,12 @@
             <div class="col-md-4 col-sm-6" *ngFor="let count of counter(3) ;let i = index;">
               <div class="input-group input-group-sm">
                 <span class="input-group-text">
-                  <img class="unit unit-{{ militaryUnit.nation | lowercase }} u{{ i + 3 }}" [src]="imgSrc" alt="">
+                  <img class="unit unit-{{ homeLegion.nation | lowercase }} u{{ i + 3 }}" [src]="imgSrc" alt="">
                 </span>
                 <input type="text" class="form-control" formControlName="u{{ i + 3 }}" name="u{{ i + 3 }}"
                        (input)="checkAvailableTroops(i + 3, $any(i + 3), $event)">
                 <span class="input-group-text">
-                  {{ militaryUnit.units[i + 3] }}
+                  {{ homeLegion.units[i + 3] }}
                 </span>
               </div>
             </div>
@@ -93,12 +93,12 @@
             <div class="col-md-4 col-sm-6" *ngFor="let count of counter(3) ;let i = index;">
               <div class="input-group input-group-sm">
                 <span class="input-group-text">
-                  <img class="unit unit-{{ militaryUnit.nation | lowercase }} u{{ i + 6}}" [src]="imgSrc" alt="">
+                  <img class="unit unit-{{ homeLegion.nation | lowercase }} u{{ i + 6}}" [src]="imgSrc" alt="">
                 </span>
                 <input type="text" class="form-control" formControlName="u{{ i + 6 }}" name="u{{ i + 6 }}"
                        (input)="checkAvailableTroops(i + 6, $any(i + 6), $event)">
                 <span class="input-group-text">
-                  {{ militaryUnit.units[i + 6] }}
+                  {{ homeLegion.units[i + 6] }}
                 </span>
               </div>
             </div>
@@ -108,12 +108,12 @@
             <div class="col-md-4 col-sm-6" *ngFor="let count of counter(2) ;let i = index;">
               <div class="input-group input-group-sm">
                 <span class="input-group-text">
-                  <img class="unit unit-{{ militaryUnit.nation | lowercase }} u{{ i + 9}}" [src]="imgSrc" alt="">
+                  <img class="unit unit-{{ homeLegion.nation | lowercase }} u{{ i + 9}}" [src]="imgSrc" alt="">
                 </span>
                 <input type="text" class="form-control" formControlName="u{{ i + 9 }}" name="u{{ i + 9 }}"
                        (input)="checkAvailableTroops(i + 9, $any(i + 9), $event)">
                 <span class="input-group-text">
-                  {{ militaryUnit.units[i + 9] }}
+                  {{ homeLegion.units[i + 9] }}
                 </span>
               </div>
             </div>
@@ -230,8 +230,8 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col" *ngFor="let troop of militaryUnit.units; let i = index;">
-                  <img class="unit unit-{{ militaryUnit.nation | lowercase }} u{{ i }}" [src]="imgSrc" alt="image">
+                <th scope="col" *ngFor="let troop of homeLegion.units; let i = index;">
+                  <img class="unit unit-{{ homeLegion.nation | lowercase }} u{{ i }}" [src]="imgSrc" alt="image">
                 </th>
               </tr>
             </thead>

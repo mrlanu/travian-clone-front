@@ -34,7 +34,7 @@
       </tab>
       <tab heading="SENDING" (selectTab)="onSendingSelect()">
         <div class="tabset__tab">
-          <app-troops-send *ngIf="militaryUnitList.length > 0" [militaryUnit]="militaryUnitList[0]" (confirmClick)="selectTab(1)"></app-troops-send>
+          <app-troops-send [homeLegion]="homeLegion" (confirmClick)="selectTab(1)"></app-troops-send>
         </div>
       </tab>
       <tab heading="SIMULATOR">

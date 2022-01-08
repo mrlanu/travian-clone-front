@@ -1,26 +1,13 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
-import {MilitaryUnit} from "../military-unit/military-unit.component";
 import {VillageService} from "../../../../services/village.service";
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {ConfirmTroopsSendComponent} from "./confirm-troops-send/confirm-troops-send.component";
 import {ActivatedRoute} from "@angular/router";
 import {take} from "rxjs/operators";
+import {HomeLegion, MilitaryUnitContract, TroopsSendingRequest} from "../rally-point.component";
 
-export class AttackRequest {
-  constructor(public villageId: string, public x: number, public y: number,
-              public kind: string, public waves: WaveModels[]) {}
-}
-
-
-export interface WaveModels {
-  troops: number[];
-  firstTarget: number;
-  firstTargetText: string;
-  secondTarget: number;
-  secondTargetText: string;
-}
 
 @Component({
   selector: 'app-troops-send',
@@ -29,18 +16,18 @@ export interface WaveModels {
 })
 export class TroopsSendComponent implements OnInit, OnDestroy {
 
+  @Input() homeLegion!: HomeLegion;
   @Output() confirmClick = new EventEmitter<string>();
 
   bsModalRef?: BsModalRef;
-  attack: AttackRequest = new AttackRequest('', 0, 0, 'REINFORCEMENT',  []);
+
+  attack: TroopsSendingRequest = new TroopsSendingRequest('', 0, 0, 'REINFORCEMENT',  []);
 
   targets: string[] = ['Random target', 'Random target'];
-
   attackForm!: FormGroup;
   componentSubs: Subscription[] = [];
-  imgSrc = "../../../../../assets/img/x.gif";
 
-  @Input() militaryUnit!: MilitaryUnit;
+  imgSrc = "../../../../../assets/img/x.gif";
 
   constructor(private villageService: VillageService,
               private route: ActivatedRoute,
@@ -107,17 +94,17 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
       firstTarget: +this.attackForm.value.firstTarget, firstTargetText: this.targets[0],
       secondTarget: +this.attackForm.value.secondTarget, secondTargetText: this.targets[1]});
 
-    this.militaryUnit.units[0] = +this.militaryUnit.units[0] - +this.attackForm.value.u0;
-    this.militaryUnit.units[1] = +this.militaryUnit.units[1] - +this.attackForm.value.u1;
-    this.militaryUnit.units[2] = +this.militaryUnit.units[2] - +this.attackForm.value.u2;
-    this.militaryUnit.units[3] = +this.militaryUnit.units[3] - +this.attackForm.value.u3;
-    this.militaryUnit.units[4] = +this.militaryUnit.units[4] - +this.attackForm.value.u4;
-    this.militaryUnit.units[5] = +this.militaryUnit.units[5] - +this.attackForm.value.u5;
-    this.militaryUnit.units[6] = +this.militaryUnit.units[6] - +this.attackForm.value.u6;
-    this.militaryUnit.units[7] = +this.militaryUnit.units[7] - +this.attackForm.value.u7;
-    this.militaryUnit.units[8] = +this.militaryUnit.units[8] - +this.attackForm.value.u8;
-    this.militaryUnit.units[9] = +this.militaryUnit.units[9] - +this.attackForm.value.u9;
-    this.militaryUnit.units[10] = +this.militaryUnit.units[10] - +this.attackForm.value.u10;
+    this.homeLegion.units[0] = +this.homeLegion.units[0] - +this.attackForm.value.u0;
+    this.homeLegion.units[1] = +this.homeLegion.units[1] - +this.attackForm.value.u1;
+    this.homeLegion.units[2] = +this.homeLegion.units[2] - +this.attackForm.value.u2;
+    this.homeLegion.units[3] = +this.homeLegion.units[3] - +this.attackForm.value.u3;
+    this.homeLegion.units[4] = +this.homeLegion.units[4] - +this.attackForm.value.u4;
+    this.homeLegion.units[5] = +this.homeLegion.units[5] - +this.attackForm.value.u5;
+    this.homeLegion.units[6] = +this.homeLegion.units[6] - +this.attackForm.value.u6;
+    this.homeLegion.units[7] = +this.homeLegion.units[7] - +this.attackForm.value.u7;
+    this.homeLegion.units[8] = +this.homeLegion.units[8] - +this.attackForm.value.u8;
+    this.homeLegion.units[9] = +this.homeLegion.units[9] - +this.attackForm.value.u9;
+    this.homeLegion.units[10] = +this.homeLegion.units[10] - +this.attackForm.value.u10;
 
     this.attackForm.patchValue(
       {u0: 0, u1: 0, u2: 0, u3: 0, u4: 0, u5: 0, u6: 0, u7: 0, u8: 0, u9: 0, u10: 0,
@@ -128,24 +115,24 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
   }
 
   onWaveDelete(i: number) {
-    this.militaryUnit.units[0] = +this.militaryUnit.units[0] + this.attack.waves[i].troops[0];
-    this.militaryUnit.units[1] = +this.militaryUnit.units[1] + this.attack.waves[i].troops[1];
-    this.militaryUnit.units[2] = +this.militaryUnit.units[2] + this.attack.waves[i].troops[2];
-    this.militaryUnit.units[3] = +this.militaryUnit.units[3] + this.attack.waves[i].troops[3];
-    this.militaryUnit.units[4] = +this.militaryUnit.units[4] + this.attack.waves[i].troops[4];
-    this.militaryUnit.units[5] = +this.militaryUnit.units[5] + this.attack.waves[i].troops[5];
-    this.militaryUnit.units[6] = +this.militaryUnit.units[6] + this.attack.waves[i].troops[6];
-    this.militaryUnit.units[7] = +this.militaryUnit.units[7] + this.attack.waves[i].troops[7];
-    this.militaryUnit.units[8] = +this.militaryUnit.units[8] + this.attack.waves[i].troops[8];
-    this.militaryUnit.units[9] = +this.militaryUnit.units[9] + this.attack.waves[i].troops[9];
-    this.militaryUnit.units[10] = +this.militaryUnit.units[10] + this.attack.waves[i].troops[10];
+    this.homeLegion.units[0] = +this.homeLegion.units[0] + this.attack.waves[i].troops[0];
+    this.homeLegion.units[1] = +this.homeLegion.units[1] + this.attack.waves[i].troops[1];
+    this.homeLegion.units[2] = +this.homeLegion.units[2] + this.attack.waves[i].troops[2];
+    this.homeLegion.units[3] = +this.homeLegion.units[3] + this.attack.waves[i].troops[3];
+    this.homeLegion.units[4] = +this.homeLegion.units[4] + this.attack.waves[i].troops[4];
+    this.homeLegion.units[5] = +this.homeLegion.units[5] + this.attack.waves[i].troops[5];
+    this.homeLegion.units[6] = +this.homeLegion.units[6] + this.attack.waves[i].troops[6];
+    this.homeLegion.units[7] = +this.homeLegion.units[7] + this.attack.waves[i].troops[7];
+    this.homeLegion.units[8] = +this.homeLegion.units[8] + this.attack.waves[i].troops[8];
+    this.homeLegion.units[9] = +this.homeLegion.units[9] + this.attack.waves[i].troops[9];
+    this.homeLegion.units[10] = +this.homeLegion.units[10] + this.attack.waves[i].troops[10];
     this.attack.waves.splice(i, 1);
   }
 
   onSubmit() {
     this.attack = {
       ...this.attack,
-      villageId: this.militaryUnit.originVillageId,
+      villageId: this.homeLegion.villageId,
       x: +this.attackForm.value.x,
       y: +this.attackForm.value.y,
       kind: +this.attackForm.value.kind === 2 ? 'REINFORCEMENT': +this.attackForm.value.kind === 3 ? 'ATTACK' : 'RAID',
@@ -164,8 +151,8 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
     if (amountEvent.target.value == 0) {
       return;
     }
-    amount > this.militaryUnit.units[id] ?
-      this.attackForm.get('u' + inputName)!.patchValue(this.militaryUnit.units[id]) :
+    amount > this.homeLegion.units[id] ?
+      this.attackForm.get('u' + inputName)!.patchValue(this.homeLegion.units[id]) :
       this.attackForm.get('u' + inputName)!.patchValue(amount);
 
     if (id === 7 && amount >= 1 && +this.attackForm.value.kind === 3) {
@@ -223,10 +210,10 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
     return new Array(i);
   }
 
-  openModalWithComponent(militaryUnit: MilitaryUnit) {
+  openModalWithComponent(militaryUnitContract: MilitaryUnitContract) {
     const initialState: ModalOptions = {
       initialState: {
-        militaryUnit: militaryUnit,
+        militaryUnitContract: militaryUnitContract,
         title: 'Confirm sending ',
         position: this.route.snapshot.params['position']
       }
@@ -234,19 +221,31 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
     this.bsModalRef = this.modalService.show(ConfirmTroopsSendComponent, initialState);
     this.bsModalRef.onHide?.pipe(take(1)).subscribe((reason: string | any) => {
       if (reason === 'confirm'){
-        console.log('Confirm was pressed');
-        this.bsModalRef?.hide();
-        this.resetForm();
-        this.confirmClick.emit('confirm');
+        this.confirmSending(militaryUnitContract);
       }
       if (reason === 'cancel'){
-        this.bsModalRef?.hide();
-        for (let i = 0; i < this.attack.waves.length; i++) {
-          this.onWaveDelete(i);
-        }
-        this.resetForm();
+        this.cancelSending();
       }
     });
     this.bsModalRef.content.closeBtnName = 'Close';
+  }
+
+  private cancelSending() {
+    this.bsModalRef?.hide();
+    for (let i = 0; i < this.attack.waves.length; i++) {
+      this.onWaveDelete(i);
+    }
+    this.resetForm();
+  }
+
+  private confirmSending(militaryUnit: MilitaryUnitContract) {
+    this.villageService.sendConfirmedTroops(militaryUnit).subscribe(result => {
+      console.log('URA: ', result);
+    }, error => {
+      console.log('Error: ', error);
+    });
+    this.bsModalRef?.hide();
+    this.resetForm();
+    this.confirmClick.emit('confirm');
   }
 }

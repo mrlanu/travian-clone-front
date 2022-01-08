@@ -1,25 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Utils} from "../../../../shared/utils";
 
-export class MilitaryUnit {
+export class MilitaryUnit{
   constructor(
-    public id: string,
-    public nation: string,
-    public move: boolean,
-    public mission: string,
-    public originVillageId: string,
-    public originVillageName: string,
-    public originVillageCoordinates: number[],
-    public currentLocationVillageId: string,
-    public targetVillageId: string,
-    public targetVillageName: string,
-    public targetPlayerName: string,
-    public targetVillageCoordinates: number[],
-    public units: number[],
-    public arrivalTime: null | Date,
-    public duration: number,
-    public expensesPerHour: number
-  ) {}
+    public id: string, public nation: string, public move: boolean, public state: string, public mission: string, public originVillageId: string,
+    public originVillageName: string, public originVillageCoordinates: number[], public targetVillageId: string,
+    public targetVillageName: string, public currentLocationVillageId: string, public arrivalTime: Date | null, public duration: number,
+    public eatExpenses: number, public units: number[]
+  ) {
+  }
 }
 
 @Component({
@@ -35,6 +24,7 @@ export class MilitaryUnitComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
   getDuration(): string{

@@ -15,6 +15,7 @@ export class VillageView {
               public warehouseCapacity: number,
               public granaryCapacity: number,
               public homeLegion: Map<string, number>,
+              public homeUnits: number[],
               public producePerHour: Map<string, number>,
               public eventsList: EventView[]) {
   }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {BsModalRef, ModalOptions} from "ngx-bootstrap/modal";
-import {MilitaryUnit} from "../../military-unit/military-unit.component";
+import {BsModalRef} from "ngx-bootstrap/modal";
+import {MilitaryUnitContract} from "../../rally-point.component";
 
 @Component({
   selector: 'app-confirm-troops-send',
@@ -11,7 +11,7 @@ export class ConfirmTroopsSendComponent implements OnInit {
 
   title?: string;
   closeBtnName?: string;
-  militaryUnit?: MilitaryUnit;
+  militaryUnitContract?: MilitaryUnitContract;
   position?: string;
 
   constructor(public bsModalRef: BsModalRef) { }

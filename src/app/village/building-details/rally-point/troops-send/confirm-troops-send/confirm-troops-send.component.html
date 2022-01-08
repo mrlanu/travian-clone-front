@@ -1,25 +1,25 @@
 <div>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">{{title}}{{militaryUnit?.mission}}</h4>
+    <h4 class="modal-title pull-left">{{title}}{{militaryUnitContract?.mission}}</h4>
     <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="cancel()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div>
-      Target: {{ militaryUnit?.targetVillageName }}
+      Target: {{ militaryUnitContract?.targetVillageName }}
       <span class="coordinates">
-          <span>{{ militaryUnit?.targetVillageCoordinates![0] }}</span>
+          <span>{{ militaryUnitContract?.targetVillageCoordinates![0] }}</span>
           <span>|</span>
-          <span>{{ militaryUnit?.targetVillageCoordinates![1] }}</span>
+          <span>{{ militaryUnitContract?.targetVillageCoordinates![1] }}</span>
         </span>
     </div>
     <div>
-      Player: {{ militaryUnit?.targetPlayerName }}
+      Player: {{ militaryUnitContract?.targetPlayerName }}
     </div>
-    <app-military-unit *ngIf="militaryUnit"
-                       [militaryUnit]="militaryUnit">
-    </app-military-unit>
+    <app-military-unit-contract *ngIf="militaryUnitContract"
+                       [militaryUnitContract]="militaryUnitContract">
+    </app-military-unit-contract>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-warning" (click)="bsModalRef.hide()">Edit</button>

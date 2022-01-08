@@ -38,6 +38,7 @@ import { MilitaryUnitComponent } from './village/building-details/rally-point/mi
 import { HomeArmyComponent } from './village/home-army/home-army.component';
 import { TroopsSendComponent } from './village/building-details/rally-point/troops-send/troops-send.component';
 import { ConfirmTroopsSendComponent } from './village/building-details/rally-point/troops-send/confirm-troops-send/confirm-troops-send.component';
+import {MilitaryUnitContractComponent} from "./village/building-details/rally-point/military-unit-contract/military-unit-contract.component";
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { ConfirmTroopsSendComponent } from './village/building-details/rally-poi
     RallyPointComponent,
     BuildingDetailsContainerComponent,
     MilitaryUnitComponent,
+    MilitaryUnitContractComponent,
     HomeArmyComponent,
     TroopsSendComponent,
     ConfirmTroopsSendComponent
