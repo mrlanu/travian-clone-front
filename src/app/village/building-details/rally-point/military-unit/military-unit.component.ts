@@ -27,6 +27,10 @@ export class MilitaryUnitComponent implements OnInit {
 
   }
 
+  onCountDone(){
+
+  }
+
   getDuration(): string{
     return Utils.formatTime(this.militaryUnit.duration);
   }

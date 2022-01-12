@@ -78,6 +78,7 @@ export class RallyPointComponent implements OnInit {
   }
 
   selectTab(tabId: number) {
+    this.getListOfAllMilitaryUnits();
     if (this.staticTabs?.tabs[tabId]) {
       this.staticTabs.tabs[tabId].active = true;
     }

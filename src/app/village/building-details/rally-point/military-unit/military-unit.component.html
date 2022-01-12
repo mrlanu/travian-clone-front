@@ -49,7 +49,9 @@
       </th>
       <td colspan="11">
         <div fxLayout fxLayoutAlign="space-between center" fxLayoutGap="0.3rem">
-          <div>in {{ getDuration() }}</div>
+          <div fxLayout>
+            <span>in</span><app-lanu-countdown [config]="{'timeLeft': militaryUnit.duration}" (countDone)="onCountDone()"></app-lanu-countdown>
+          </div>
           <div>at {{ militaryUnit.arrivalTime | date: 'hh:mm:ss' }}</div>
         </div>
       </td>
