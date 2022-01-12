@@ -5,11 +5,12 @@
       <td class="fw-bold">
         <a href="/karte.php?d=46567">{{ militaryUnit.originVillageName }}</a>
       </td>
-      <td colspan="11" class="fw-bold" style="text-align: center">
+      <td colspan="11" class="fw-bold" [ngStyle]="{'background-color': militaryUnit.mission === 'Attack' || militaryUnit.mission === 'Raid' ? '#ffcece':'#d8f1c8'}" style="text-align: center">
         <div *ngIf="militaryUnit.mission === 'Attack' || militaryUnit.mission === 'Raid'">
-          {{ militaryUnit.mission }} on {{ militaryUnit.targetVillageName }}
+          {{ militaryUnit.originPlayerName }} {{ militaryUnit.mission | lowercase }}ing {{ militaryUnit.targetVillageName }}
         </div>
-        <div *ngIf="militaryUnit.mission === 'Reinforcement'">{{ militaryUnit.mission }} to {{ militaryUnit.targetVillageName }}</div>
+        <div *ngIf="militaryUnit.mission === 'Reinforcement'">
+          {{ militaryUnit.originPlayerName }} {{ militaryUnit.mission | lowercase }}ing {{ militaryUnit.targetVillageName }}</div>
       </td>
     </tr>
     <tr>

@@ -4,7 +4,7 @@ import {Utils} from "../../../../shared/utils";
 export class MilitaryUnit{
   constructor(
     public id: string, public nation: string, public move: boolean, public state: string, public mission: string, public originVillageId: string,
-    public originVillageName: string, public originVillageCoordinates: number[], public targetVillageId: string,
+    public originVillageName: string, public originPlayerName: string, public originVillageCoordinates: number[], public targetVillageId: string,
     public targetVillageName: string, public currentLocationVillageId: string, public arrivalTime: Date | null, public duration: number,
     public eatExpenses: number, public units: number[]
   ) {

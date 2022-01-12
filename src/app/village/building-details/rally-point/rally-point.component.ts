@@ -34,6 +34,7 @@ export class MilitaryUnitContract {
     public mission: string,
     public originVillageId: string,
     public originVillageName: string,
+    public originPlayerName: string,
     public originVillageCoordinates: number[],
     public currentLocationVillageId: string,
     public targetVillageId: string,
@@ -64,7 +65,7 @@ export class RallyPointComponent implements OnInit {
     units: [0,0,0,0,0,0,0,0,0,0,0],
     nation: 'GALLS'
   };
-  militaryUnitList: MilitaryUnit[] = [];
+  militaryUnitList: any;
 
   constructor(private villageService: VillageService) { }
 
@@ -104,11 +105,20 @@ export class RallyPointComponent implements OnInit {
 
   private getListOfAllMilitaryUnits() {
     this.villageService.getAllMilitaryUnits(this.villageId!).subscribe(res => {
-      this.militaryUnitList = res.map(
+      /*let units = new Map<string, MilitaryUnit[]>();
+      units.set('Outgoing armies', res['Outgoing armies']);
+      units.set('Incoming armies', res['Incoming armies']);
+      units.set('Armies in this village', res['Armies in this village']);
+      units.set('Armies in other places', res['Armies in other places']);
+      console.log(units);*/
+      this.militaryUnitList = res;
+      console.log(res);
+      /*res.map(
+
         mU => new MilitaryUnit(
           mU.id, mU.nation, mU.move, mU.state, mU.mission, mU.originVillageId, mU.originVillageName, mU.originVillageCoordinates, mU.targetVillageId,
           mU.targetVillageName, mU.currentLocationVillageId, mU.arrivalTime ? new Date(mU.arrivalTime) : null, mU.duration,
-          mU.eatExpenses, mU.units));
+          mU.eatExpenses, mU.units));*/
       });
   }
 }

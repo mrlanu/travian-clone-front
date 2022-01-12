@@ -12,26 +12,22 @@
       </tab>
       <tab heading="OVERVIEW">
         <div class="tabset__tab">
-<!--
-          here I'm going to fetch some data from server grouped by state of those units (arriving, on the way, home etc.)
-          and print them out in such a way:
+          <div *ngIf="militaryUnitList">
+            <p class="fs-4 fw-bold mt-4 text-start" *ngIf="militaryUnitList['Incoming armies']">Incoming armies</p>
+            <app-military-unit *ngFor="let unit of militaryUnitList['Incoming armies']" [militaryUnit]="unit"></app-military-unit>
 
-          <div>
-            <app-military-unit [militaryUnit]="unit.home"></app-military-unit>
+            <p class="fs-4 fw-bold mt-4 text-start" *ngIf="militaryUnitList['Outgoing armies']">Outgoing armies</p>
+            <app-military-unit *ngFor="let unit of militaryUnitList['Outgoing armies']" [militaryUnit]="unit"></app-military-unit>
+
+            <p class="fs-4 fw-bold mt-4 text-start" *ngIf="militaryUnitList['Armies in this village']">Armies in this village</p>
+            <app-military-unit *ngFor="let unit of militaryUnitList['Armies in this village']" [militaryUnit]="unit"></app-military-unit>
+
+            <p class="fs-4 fw-bold mt-4 text-start" *ngIf="militaryUnitList['Armies in other places']">Armies in other places</p>
+            <app-military-unit *ngFor="let unit of militaryUnitList['Armies in other places']" [militaryUnit]="unit"></app-military-unit>
           </div>
-
-          <div *ngFor ="let unit of units.arriving">
-            <app-military-unit [militaryUnit]="unit"></app-military-unit>
-          </div>
-
-          <div *ngFor ="let unit of units.onTheWay">
-            <app-military-unit [militaryUnit]="unit"></app-military-unit>
-          </div>
-
--->
-          <app-military-unit *ngIf="militaryUnitList.length > 0" [militaryUnit]="militaryUnitList[0]"></app-military-unit>
         </div>
       </tab>
+
       <tab heading="SENDING" (selectTab)="onSendingSelect()">
         <div class="tabset__tab">
           <app-troops-send [homeLegion]="homeLegion" (confirmClick)="selectTab(1)"></app-troops-send>
