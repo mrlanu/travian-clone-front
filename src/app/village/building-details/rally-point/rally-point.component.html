@@ -14,16 +14,16 @@
         <div class="tabset__tab">
           <div *ngIf="militaryUnitList">
             <p class="fs-4 fw-bold mt-4 text-start" *ngIf="militaryUnitList['Incoming armies']">Incoming armies</p>
-            <app-military-unit *ngFor="let unit of militaryUnitList['Incoming armies']" [militaryUnit]="unit"></app-military-unit>
+            <app-military-unit *ngFor="let unit of militaryUnitList['Incoming armies']" [militaryUnit]="unit" (countDownDone)="onCountDone()"></app-military-unit>
 
             <p class="fs-4 fw-bold mt-4 text-start" *ngIf="militaryUnitList['Outgoing armies']">Outgoing armies</p>
-            <app-military-unit *ngFor="let unit of militaryUnitList['Outgoing armies']" [militaryUnit]="unit"></app-military-unit>
+            <app-military-unit *ngFor="let unit of militaryUnitList['Outgoing armies']" [militaryUnit]="unit" (countDownDone)="onCountDone()"></app-military-unit>
 
             <p class="fs-4 fw-bold mt-4 text-start" *ngIf="militaryUnitList['Armies in this village']">Armies in this village</p>
-            <app-military-unit *ngFor="let unit of militaryUnitList['Armies in this village']" [militaryUnit]="unit"></app-military-unit>
+            <app-military-unit *ngFor="let unit of militaryUnitList['Armies in this village']" [militaryUnit]="unit" (countDownDone)="onCountDone()"></app-military-unit>
 
             <p class="fs-4 fw-bold mt-4 text-start" *ngIf="militaryUnitList['Armies in other places']">Armies in other places</p>
-            <app-military-unit *ngFor="let unit of militaryUnitList['Armies in other places']" [militaryUnit]="unit"></app-military-unit>
+            <app-military-unit *ngFor="let unit of militaryUnitList['Armies in other places']" [militaryUnit]="unit" (countDownDone)="onCountDone()"></app-military-unit>
           </div>
         </div>
       </tab>

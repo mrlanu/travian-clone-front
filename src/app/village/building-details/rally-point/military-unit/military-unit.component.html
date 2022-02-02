@@ -3,22 +3,26 @@
     <tbody>
     <tr>
       <td class="fw-bold">
-        <a href="/karte.php?d=46567">{{ militaryUnit.originVillageName }}</a>
+        <a href="/karte.php?d=46567">{{ militaryUnit.origin.villageName }}</a>
       </td>
       <td colspan="11" class="fw-bold" [ngStyle]="{'background-color': militaryUnit.mission === 'Attack' || militaryUnit.mission === 'Raid' ? '#ffcece':'#d8f1c8'}" style="text-align: center">
         <div *ngIf="militaryUnit.mission === 'Attack' || militaryUnit.mission === 'Raid'">
-          {{ militaryUnit.originPlayerName }} {{ militaryUnit.mission | lowercase }}ing {{ militaryUnit.targetVillageName }}
+          {{ militaryUnit.origin.playerName }} {{ militaryUnit.mission | lowercase }}ing {{ militaryUnit.target.villageName }}
         </div>
         <div *ngIf="militaryUnit.mission === 'Reinforcement'">
-          {{ militaryUnit.originPlayerName }} {{ militaryUnit.mission | lowercase }}ing {{ militaryUnit.targetVillageName }}</div>
+          {{ militaryUnit.origin.playerName }} {{ militaryUnit.mission | lowercase }}ing {{ militaryUnit.target.villageName }}
+        </div>
+        <div *ngIf="militaryUnit.mission === 'Own army'">
+          Own army
+        </div>
       </td>
     </tr>
     <tr>
       <th class="coords fw-normal">
         <span class="coordinates">
-          <span>{{ militaryUnit.originVillageCoordinates[0] }}</span>
+          <span>{{ militaryUnit.origin.coordinates[0] }}</span>
           <span>|</span>
-          <span>{{ militaryUnit.originVillageCoordinates[1] }}</span>
+          <span>{{ militaryUnit.origin.coordinates[1] }}</span>
         </span>
       </th>
       <td class="unit-icon" *ngFor="let u of militaryUnit.units; let i=index;">
@@ -52,7 +56,7 @@
           <div fxLayout>
             <span>in</span><app-lanu-countdown [config]="{'timeLeft': militaryUnit.duration}" (countDone)="onCountDone()"></app-lanu-countdown>
           </div>
-          <div>at {{ militaryUnit.arrivalTime | date: 'hh:mm:ss' }}</div>
+          <div>at {{ militaryUnit.executionTime | date: 'hh:mm:ss' }}</div>
         </div>
       </td>
     </tr>

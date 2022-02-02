@@ -84,6 +84,10 @@ export class RallyPointComponent implements OnInit {
     }
   }
 
+  onCountDone(){
+    this.getListOfAllMilitaryUnits();
+  }
+
   private getRallyPointBuildingFromCurrentVillage() {
     this.villageService.currentVillage.pipe(take(1)).subscribe(
       (village: VillageView | null) => {
