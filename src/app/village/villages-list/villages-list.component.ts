@@ -1,10 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {faEye} from "@fortawesome/free-solid-svg-icons";
-import {ShortVillageInfo, VillageView} from "../../models/village-dto.model";
+import {ShortVillageInfo} from "../../models/village-dto.model";
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {map} from "rxjs/operators";
 
 
 @Component({

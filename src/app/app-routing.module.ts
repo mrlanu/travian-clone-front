@@ -10,6 +10,7 @@ import {AuthGuard} from "./auth/auth.guard";
 import {AllBuildingsListComponent} from "./village/all-buildings-list/all-buildings-list.component";
 import {RallyPointComponent} from "./village/building-details/rally-point/rally-point.component";
 import {BuildingDetailsContainerComponent} from "./village/building-details/building-details-container/building-details-container.component";
+import {MapComponent} from "./village/map/map.component";
 
 const routes: Routes = [
   {path: 'welcome-page', component: WelcomePageComponent, children: [
@@ -23,6 +24,7 @@ const routes: Routes = [
       {path: 'buildings/:position/new', component: AllBuildingsListComponent},
       {path: 'buildings/:position/Rally-point', component: RallyPointComponent},
       {path: 'buildings/:position/:name', component: BuildingDetailsContainerComponent},
+      {path: 'map', component: MapComponent},
     ]},
   {path: '**', redirectTo: '/welcome-page/login'}
 ];

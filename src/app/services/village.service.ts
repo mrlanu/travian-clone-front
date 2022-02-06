@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {ShortVillageInfo, VillageView} from "../models/village-dto.model";
+import {MapPart, MapTile, ShortVillageInfo, VillageView} from "../models/village-dto.model";
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Building} from "../village/all-buildings-list/all-buildings-list.component";
 import {OrderCombatUnit} from "../village/building-details/barracks/barracks.component";
 import {CombatUnit} from "../village/building-details/barracks/combat-unit/combat-unit.component";
 import {MilitaryUnitContract, TroopsSendingRequest} from "../village/building-details/rally-point/rally-point.component";
-import {MilitaryUnit} from "../village/building-details/rally-point/military-unit/military-unit.component";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +19,7 @@ export class VillageService {
   villageChanged = new Subject<VillageView>();
   militaryOrdersChanged = new Subject<OrderCombatUnit[]>();
   villagesList = new BehaviorSubject<ShortVillageInfo[]>([]);
+  partOfWorldChanged = new Subject<MapTile[]>();
 
   constructor(private httpClient: HttpClient) { }
 
@@ -136,5 +136,14 @@ export class VillageService {
   sendConfirmedTroops(militaryUnit: MilitaryUnitContract){
     const url = `${this.baseUrl}/villages/troops-send`;
     return this.httpClient.post<any>(url, militaryUnit);
+  }
+
+  getPartOfMap(mapPart: MapPart){
+    const url = `${this.baseUrl}/world/map-part`;
+    this.httpClient.post<MapTile[]>(url, mapPart)
+      .subscribe(res => {
+        console.log(res);
+        this.partOfWorldChanged.next(res);
+      })
   }
 }

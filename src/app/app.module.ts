@@ -39,6 +39,8 @@ import { HomeArmyComponent } from './village/home-army/home-army.component';
 import { TroopsSendComponent } from './village/building-details/rally-point/troops-send/troops-send.component';
 import { ConfirmTroopsSendComponent } from './village/building-details/rally-point/troops-send/confirm-troops-send/confirm-troops-send.component';
 import {MilitaryUnitContractComponent} from "./village/building-details/rally-point/military-unit-contract/military-unit-contract.component";
+import { MapComponent } from './village/map/map.component';
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -68,7 +70,8 @@ import {MilitaryUnitContractComponent} from "./village/building-details/rally-po
     MilitaryUnitContractComponent,
     HomeArmyComponent,
     TroopsSendComponent,
-    ConfirmTroopsSendComponent
+    ConfirmTroopsSendComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +85,7 @@ import {MilitaryUnitContractComponent} from "./village/building-details/rally-po
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
+    MatGridListModule,
     TabsModule.forRoot(),
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, BsModalService],
