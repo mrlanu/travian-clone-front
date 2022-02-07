@@ -1,8 +1,8 @@
-<div class="m-3 mt-5 p-2" style="background: whitesmoke; position: relative; width: 655px;"
-     gdColumns="1fr 20fr"
-     gdRows="6fr 47px "
-     gdAreas="y-axis map | empty x-axis">
-  <div class="btn-group button-group" role="group">
+<div class="m-3 mt-5 p-2 shadow rounded" style="background: whitesmoke; position: relative; width: 680px;"
+     gdColumns="31px 20fr 31px"
+     gdRows="50 px 6fr 50px "
+     gdAreas="empty x-axis2 empty2 | y-axis map y-axis2 | empty3 x-axis empty4">
+  <div class="btn-group button-group shadow" role="group">
     <button type="button" class="btn btn-success">
       <fa-icon [icon]="faArrowLeft" size="1x" [styles]="faStyle" (click)="onLeft()"></fa-icon>
     </button>
@@ -29,6 +29,16 @@
       </a>
     </mat-grid-list>
   </div>
+  <div gdArea="x-axis2" class="pb-1">
+    <mat-grid-list cols="10" rowHeight="27px">
+      <a style="text-decoration: none; cursor: pointer" *ngFor="let x of xAxis">
+        <mat-grid-tile
+          [style.background]="'seagreen'" [style.color]="'white'">
+          {{x.corX}}
+        </mat-grid-tile>
+      </a>
+    </mat-grid-list>
+  </div>
   <div gdArea="y-axis" class="pe-1">
     <mat-grid-list cols="1" rowHeight="60px">
       <a style="text-decoration: none; cursor: pointer" *ngFor="let y of yAxis">
@@ -38,6 +48,16 @@
         </mat-grid-tile>
       </a>
   </mat-grid-list>
+  </div>
+  <div gdArea="y-axis2" class="ps-1">
+    <mat-grid-list cols="1" rowHeight="60px">
+      <a style="text-decoration: none; cursor: pointer" *ngFor="let y of yAxis">
+        <mat-grid-tile
+          [style.background]="'seagreen'" [style.color]="'white'">
+          {{y.corY}}
+        </mat-grid-tile>
+      </a>
+    </mat-grid-list>
   </div>
   <div gdArea="map">
     <mat-grid-list cols="10" rowHeight="60px">
