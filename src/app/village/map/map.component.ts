@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { faArrowUp, faArrowDown, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp, faArrowDown, faArrowLeft, faArrowRight, faHome } from '@fortawesome/free-solid-svg-icons';
 import {VillageService} from "../../services/village.service";
-import {MapPart, MapTile, VillageView} from "../../models/village-dto.model";
+import {MapTile, VillageView} from "../../models/village-dto.model";
 import {Subscription} from "rxjs";
 import {take} from "rxjs/operators";
 
@@ -10,6 +10,13 @@ export interface Tile {
   cols: number;
   rows: number;
   text: string;
+}
+
+export interface MapPart {
+  fromX: number;
+  toX: number;
+  fromY: number;
+  toY: number;
 }
 
 @Component({
@@ -23,12 +30,14 @@ export class MapComponent implements OnInit, OnDestroy {
   faArrowDown = faArrowDown;
   faArrowLeft = faArrowLeft;
   faArrowRight = faArrowRight;
+  faHome = faHome;
 
   faStyle = {
     'color': 'white'
   }
 
-  currentPart = new MapPart(10, 21, 10, 18);
+  villageCoordinates: { x: number, y: number} = {x: 0, y: 0};
+  currentMapPointer: { x: number, y: number} = {x: 0, y: 0};
 
   tiles: MapTile[] = [];
   xAxis: MapTile[] = []
@@ -42,29 +51,9 @@ export class MapComponent implements OnInit, OnDestroy {
       this.villageService.currentVillage.pipe(take(1)).subscribe(
         (village: VillageView | null) => {
           if (village){
-            let fromX = village.x - 5;
-            let toX = village.x + 6;
-            if (village.x - 5 < 0){
-              fromX = 0;
-              toX = 11;
-            }
-            if (village.x + 6 > 50){
-              fromX = 39;
-              toX = 50;
-            }
-            let fromY = village.y - 4;
-            let toY = village.y + 4;
-            if (village.y - 4 < 0){
-              fromY = 0;
-              toY = 8;
-            }
-            if (village.y + 4 > 50){
-              fromY = 42;
-              toY = 50;
-            }
-
-            this.currentPart = new MapPart(fromX, toX, fromY, toY);
-            this.villageService.getPartOfMap(this.currentPart);
+            this.villageCoordinates = {x: village.x, y: village.y};
+            this.currentMapPointer = {x: village.x, y: village.y};
+            this.villageService.getPartOfMap(MapComponent.castCoordinates(this.currentMapPointer.x, this.currentMapPointer.y));
           }
         });
     this.componentSubs.push(
@@ -76,41 +65,58 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   onLeft(){
-    if (this.currentPart.fromX > -1){
-      this.currentPart.fromX--;
-      this.currentPart.toX--;
-    }
-    this.villageService.getPartOfMap(this.currentPart);
+    this.currentMapPointer.x--;
+    this.villageService.getPartOfMap(MapComponent.castCoordinates(this.currentMapPointer.x, this.currentMapPointer.y));
   }
 
   onRight(){
-    if (this.currentPart.toX < 51){
-      this.currentPart.fromX++;
-      this.currentPart.toX++;
-    }
-    this.villageService.getPartOfMap(this.currentPart);
+    this.currentMapPointer.x++;
+    this.villageService.getPartOfMap(MapComponent.castCoordinates(this.currentMapPointer.x, this.currentMapPointer.y));
   }
 
   onUp(){
-    if (this.currentPart.fromY > -1){
-      this.currentPart.fromY--;
-      this.currentPart.toY--;
-    }
-    this.villageService.getPartOfMap(this.currentPart);
+    this.currentMapPointer.y--;
+    this.villageService.getPartOfMap(MapComponent.castCoordinates(this.currentMapPointer.x, this.currentMapPointer.y));
   }
 
   onDown(){
-    if (this.currentPart.toY < 51){
-      this.currentPart.fromY++;
-      this.currentPart.toY++;
-    }
-    this.villageService.getPartOfMap(this.currentPart);
+    this.currentMapPointer.y++;
+    this.villageService.getPartOfMap(MapComponent.castCoordinates(this.currentMapPointer.x, this.currentMapPointer.y));
+  }
+
+  onCenter(){
+    this.villageService.getPartOfMap(MapComponent.castCoordinates(this.villageCoordinates.x, this.villageCoordinates.y));
+    this.currentMapPointer = {x: this.villageCoordinates.x, y: this.villageCoordinates.y};
   }
 
   ngOnDestroy(): void {
     this.componentSubs.forEach(sub => {
       sub.unsubscribe();
     });
+  }
+
+  private static castCoordinates(x: number, y: number): MapPart{
+    let fromX = x - 5;
+    let toX = x + 6;
+    let fromY = y - 4;
+    let toY = y + 4;
+    if (x - 5 < 0){
+      fromX = 0;
+      toX = 11;
+    }
+    if (x + 6 > 50){
+      fromX = 40;
+      toX = 51;
+    }
+    if (y - 4 < 0){
+      fromY = 0;
+      toY = 8;
+    }
+    if (y + 4 > 50){
+      fromY = 43;
+      toY = 51;
+    }
+    return {fromX: fromX, toX: toX, fromY: fromY, toY: toY}
   }
 
 }

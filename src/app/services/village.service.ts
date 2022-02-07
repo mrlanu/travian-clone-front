@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {MapPart, MapTile, ShortVillageInfo, VillageView} from "../models/village-dto.model";
+import {MapTile, ShortVillageInfo, VillageView} from "../models/village-dto.model";
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Building} from "../village/all-buildings-list/all-buildings-list.component";
 import {OrderCombatUnit} from "../village/building-details/barracks/barracks.component";
 import {CombatUnit} from "../village/building-details/barracks/combat-unit/combat-unit.component";
 import {MilitaryUnitContract, TroopsSendingRequest} from "../village/building-details/rally-point/rally-point.component";
+import {MapPart} from "../village/map/map.component";
 
 @Injectable({
   providedIn: 'root'

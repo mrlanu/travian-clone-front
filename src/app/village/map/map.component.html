@@ -15,6 +15,9 @@
     <button type="button" class="btn btn-success">
       <fa-icon [icon]="faArrowRight" size="1x" [styles]="faStyle" (click)="onRight()"></fa-icon>
     </button>
+    <button type="button" class="btn btn-danger">
+      <fa-icon [icon]="faHome" size="1x" [styles]="faStyle" (click)="onCenter()"></fa-icon>
+    </button>
   </div>
   <div gdArea="x-axis" class="pt-1">
     <mat-grid-list cols="10" rowHeight="27px">
@@ -39,8 +42,7 @@
   <div gdArea="map">
     <mat-grid-list cols="10" rowHeight="60px">
       <a style="text-decoration: none; cursor: pointer" *ngFor="let tile of tiles">
-      <mat-grid-tile
-        [style.background]="tile.color">
+      <mat-grid-tile>
         <div class="tile" [class]="tile.clazz">
           <!--{{tile.name}}-->
         </div>

@@ -45,12 +45,8 @@ export enum EUnits {
   LEGIONNAIRE, PRAETORIAN, PHALANX
 }
 
-export class MapPart{
-  constructor(public fromX: number, public toX: number, public fromY: number, public toY: number) {
-  }
-}
-
 export class MapTile{
-  constructor(public id: string, public corX: number, public corY: number, public name: string, public clazz: string, public color: string) {
+  constructor(public id: string, public corX: number, public corY: number,
+              public ownerId: string, public name: string, public clazz: string) {
   }
 }
