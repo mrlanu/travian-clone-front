@@ -41,6 +41,7 @@ import { ConfirmTroopsSendComponent } from './village/building-details/rally-poi
 import {MilitaryUnitContractComponent} from "./village/building-details/rally-point/military-unit-contract/military-unit-contract.component";
 import { MapComponent } from './village/map/map.component';
 import {MatGridListModule} from "@angular/material/grid-list";
+import { TileDetailComponent } from './village/map/tile-detail/tile-detail.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import {MatGridListModule} from "@angular/material/grid-list";
     HomeArmyComponent,
     TroopsSendComponent,
     ConfirmTroopsSendComponent,
-    MapComponent
+    MapComponent,
+    TileDetailComponent
   ],
   imports: [
     BrowserModule,

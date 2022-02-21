@@ -1,9 +1,17 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { faArrowUp, faArrowDown, faArrowLeft, faArrowRight, faHome } from '@fortawesome/free-solid-svg-icons';
+import {faArrowDown, faArrowLeft, faArrowRight, faArrowUp, faHome} from '@fortawesome/free-solid-svg-icons';
 import {VillageService} from "../../services/village.service";
 import {MapTile, VillageView} from "../../models/village-dto.model";
 import {Subscription} from "rxjs";
 import {take} from "rxjs/operators";
+import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
+import {TileDetailComponent} from "./tile-detail/tile-detail.component";
+
+export class TileDetail{
+  constructor(public id: string, public type: string, public subType: string, public nation: string, public playerName: string,
+              public name: string, public x: number, public y: number, public population: number, public distance: number) {
+  }
+}
 
 export interface Tile {
   color: string;
@@ -26,6 +34,8 @@ export interface MapPart {
 })
 export class MapComponent implements OnInit, OnDestroy {
 
+  bsModalRef?: BsModalRef;
+
   faArrowUp = faArrowUp;
   faArrowDown = faArrowDown;
   faArrowLeft = faArrowLeft;
@@ -36,6 +46,7 @@ export class MapComponent implements OnInit, OnDestroy {
     'color': 'white'
   }
 
+  villageId?: string;
   villageCoordinates: { x: number, y: number} = {x: 0, y: 0};
   currentMapPointer: { x: number, y: number} = {x: 0, y: 0};
 
@@ -45,12 +56,13 @@ export class MapComponent implements OnInit, OnDestroy {
 
   componentSubs: Subscription[] = [];
 
-  constructor(private villageService: VillageService) { }
+  constructor(private villageService: VillageService, private modalService: BsModalService) { }
 
   ngOnInit(): void {
       this.villageService.currentVillage.pipe(take(1)).subscribe(
         (village: VillageView | null) => {
           if (village){
+            this.villageId = village.villageId;
             this.villageCoordinates = {x: village.x, y: village.y};
             this.currentMapPointer = {x: village.x, y: village.y};
             this.villageService.getPartOfMap(MapComponent.castCoordinates(this.currentMapPointer.x, this.currentMapPointer.y));
@@ -62,6 +74,34 @@ export class MapComponent implements OnInit, OnDestroy {
         this.xAxis = list.slice(0, 10);
         this.yAxis = [list[0], list[10], list[20], list[30], list[40], list[50], list[60]];
       }));
+  }
+
+  onTileSelected(id: string){
+    this.villageService.getTileDetail(id, this.villageCoordinates.x, this.villageCoordinates.y).subscribe(detail => {
+      console.log('Tile detail - ', detail);
+      this.openModalWithComponent(detail);
+    });
+  }
+
+  openModalWithComponent(tileDetail: TileDetail) {
+    const initialState: ModalOptions = {
+      initialState: {
+        villageId: this.villageId,
+        title: 'Confirm sending ',
+        tileDetail: tileDetail,
+        /*position: this.route.snapshot.params['position']*/
+      }
+    };
+    this.bsModalRef = this.modalService.show(TileDetailComponent, initialState);
+    this.bsModalRef.onHide?.pipe(take(1)).subscribe((reason: string | any) => {
+      if (reason === 'confirm'){
+        //this.confirmSending(militaryUnitContract);
+      }
+      if (reason === 'cancel'){
+        //this.cancelSending();
+      }
+    });
+    this.bsModalRef.content.closeBtnName = 'Close';
   }
 
   onLeft(){

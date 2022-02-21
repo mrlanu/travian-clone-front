@@ -34,8 +34,8 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
               private modalService: BsModalService) {
     this.attackForm = new FormGroup({
       villageId: new FormControl({value: ''}),
-      x: new FormControl({value: '', disabled: true}, Validators.required),
-      y: new FormControl({value: '', disabled: true}, Validators.required),
+      x: new FormControl({value: this.route.snapshot.queryParams.x, disabled: true}, Validators.required),
+      y: new FormControl({value: this.route.snapshot.queryParams.y, disabled: true}, Validators.required),
       kind: new FormControl({value: '3', disabled: true}),
       u0: new FormControl({value: 0, disabled: true}),
       u1: new FormControl({value: 0, disabled: true}),

@@ -1,0 +1,59 @@
+<div>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      <div>
+        {{ tileDetail?.name | lowercase }}
+        <span class="coordinates">
+          <span>{{ tileDetail?.x }}</span>
+          <span>|</span>
+          <span>{{ tileDetail?.y }}</span>
+        </span>
+      </div>
+    </h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div fxLayout *ngIf="tileDetail?.type === 'OASIS'">
+      <div fxFlex>Empty area</div>
+      <div fxLayout="column" fxFlex>
+        <div>Bonus:</div>
+        <div>25%</div>
+        <div>Military:</div>
+        <div>no any troops</div>
+        <div fxLayout>
+          <div>Distance:</div>
+          <div>{{ tileDetail?.distance }}</div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout *ngIf="tileDetail?.type === 'VILLAGE'">
+      <div fxFlex>Empty area</div>
+      <div fxLayout="column" fxFlex>
+        <div fxLayout>
+          <div>Nation: </div>
+          <div>{{ tileDetail?.nation }}</div>
+        </div>
+        <div fxLayout>
+          <div>Alliance:</div>
+          <div>HZ</div>
+        </div>
+        <div fxLayout>
+          <div>Player:</div>
+          <div>{{ tileDetail?.playerName }}</div>
+        </div>
+        <div fxLayout>
+          <div>Population:</div>
+          <div>{{ tileDetail?.population }}</div>
+        </div>
+        <div fxLayout>
+          <div>Distance:</div>
+          <div>{{ tileDetail?.distance }}</div>
+        </div>
+      </div>
+    </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-success" (click)="onSendTroops()">Send troops</button>
+  </div>
+</div>

@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {VillageView} from "../../../models/village-dto.model";
 import {take} from "rxjs/operators";
 import {VillageService} from "../../../services/village.service";
 import {BuildingView} from "../building-details.component";
 import {TabsetComponent} from "ngx-bootstrap/tabs";
-import {MilitaryUnit} from "./military-unit/military-unit.component";
+import {ActivatedRoute} from "@angular/router";
+import {interval} from "rxjs";
 
 export class TroopsSendingRequest {
   constructor(public villageId: string, public x: number, public y: number,
@@ -67,11 +68,13 @@ export class RallyPointComponent implements OnInit {
   };
   militaryUnitList: any;
 
-  constructor(private villageService: VillageService) { }
+  constructor(private villageService: VillageService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getRallyPointBuildingFromCurrentVillage();
+    setTimeout(()=>{this.selectTab(this.route.snapshot.queryParams.tab)}, 100);
   }
+
 
   onSendingSelect(){
     this.getListOfAllMilitaryUnits();

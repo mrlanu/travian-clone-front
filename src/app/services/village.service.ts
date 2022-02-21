@@ -8,7 +8,7 @@ import {Building} from "../village/all-buildings-list/all-buildings-list.compone
 import {OrderCombatUnit} from "../village/building-details/barracks/barracks.component";
 import {CombatUnit} from "../village/building-details/barracks/combat-unit/combat-unit.component";
 import {MilitaryUnitContract, TroopsSendingRequest} from "../village/building-details/rally-point/rally-point.component";
-import {MapPart} from "../village/map/map.component";
+import {MapPart, TileDetail} from "../village/map/map.component";
 
 @Injectable({
   providedIn: 'root'
@@ -146,5 +146,14 @@ export class VillageService {
         console.log(res);
         this.partOfWorldChanged.next(res);
       })
+  }
+
+  getTileDetail(id: string, fromX: number, fromY: number){
+    const url = `${this.baseUrl}/world/tile-detail/${id}/${fromX}/${fromY}`;
+    return this.httpClient.get<TileDetail>(url)
+      .pipe(map(
+        tile => new TileDetail(tile.id, tile.type, tile.subType, tile.nation, tile.playerName, tile.name,
+          tile.x, tile.y, tile.population, tile.distance))
+      );
   }
 }
