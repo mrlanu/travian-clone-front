@@ -3,20 +3,20 @@
      gdRows="50 px 6fr 50px "
      gdAreas="empty x-axis2 empty2 | y-axis map y-axis2 | empty3 x-axis empty4">
   <div class="btn-group button-group shadow" role="group">
-    <button type="button" class="btn btn-success">
-      <fa-icon [icon]="faArrowLeft" size="1x" [styles]="faStyle" (click)="onLeft()"></fa-icon>
+    <button type="button" class="btn btn-success" (click)="onLeft()">
+      <fa-icon [icon]="faArrowLeft" size="1x" [styles]="faStyle"></fa-icon>
     </button>
-    <button type="button" class="btn btn-success">
-      <fa-icon [icon]="faArrowUp" size="1x" [styles]="faStyle" (click)="onUp()"></fa-icon>
+    <button type="button" class="btn btn-success" (click)="onUp()">
+      <fa-icon [icon]="faArrowUp" size="1x" [styles]="faStyle"></fa-icon>
     </button>
-    <button type="button" class="btn btn-success">
-      <fa-icon [icon]="faArrowDown" size="1x" [styles]="faStyle" (click)="onDown()"></fa-icon>
+    <button type="button" class="btn btn-success" (click)="onDown()">
+      <fa-icon [icon]="faArrowDown" size="1x" [styles]="faStyle"></fa-icon>
     </button>
-    <button type="button" class="btn btn-success">
-      <fa-icon [icon]="faArrowRight" size="1x" [styles]="faStyle" (click)="onRight()"></fa-icon>
+    <button type="button" class="btn btn-success" (click)="onRight()">
+      <fa-icon [icon]="faArrowRight" size="1x" [styles]="faStyle"></fa-icon>
     </button>
-    <button type="button" class="btn btn-danger">
-      <fa-icon [icon]="faHome" size="1x" [styles]="faStyle" (click)="onCenter()"></fa-icon>
+    <button type="button" class="btn btn-danger" (click)="onCenter()">
+      <fa-icon [icon]="faHome" size="1x" [styles]="faStyle"></fa-icon>
     </button>
   </div>
   <div gdArea="x-axis" class="pt-1">
