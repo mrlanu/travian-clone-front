@@ -30,26 +30,14 @@
       <td class="unit none" *ngFor="let u of militaryUnitContract.units"> {{ u }} </td>
     </tr>
 
-    <tr *ngIf="!militaryUnitContract.move">
-      <th class="fw-normal">
-        Expenses
-      </th>
-      <td colspan="11">
-        <div fxLayout fxLayoutAlign="center center" fxLayoutGap="0.3rem">
-          <div>{{ militaryUnitContract.expensesPerHour }}</div>
-          <div class="unit r4"></div>
-          <div>per hour</div>
-        </div>
-      </td>
-    </tr>
-    <tr *ngIf="militaryUnitContract.move">
+    <tr>
       <th class="fw-normal">
         Arrival
       </th>
       <td colspan="11">
         <div fxLayout fxLayoutAlign="space-between center" fxLayoutGap="0.3rem">
           <div>in {{ getDuration() }}</div>
-          <div>at {{ militaryUnitContract.arrivalTime | date: 'hh:mm:ss' }}</div>
+          <div>at {{ arrivalTimeStr }}</div>
         </div>
       </td>
     </tr>
