@@ -77,18 +77,18 @@ export class RallyPointComponent implements OnInit {
 
 
   onSendingSelect(){
-    this.getListOfAllMilitaryUnits();
+    this.getListOfAllMilitaryUnits(false);
   }
 
   selectTab(tabId: number) {
-    this.getListOfAllMilitaryUnits();
     if (this.staticTabs?.tabs[tabId]) {
       this.staticTabs.tabs[tabId].active = true;
     }
   }
 
   onCountDone(){
-    this.getListOfAllMilitaryUnits();
+    this.villageService.getVillageById(this.villageId!);
+    this.getListOfAllMilitaryUnits(false);
   }
 
   private getRallyPointBuildingFromCurrentVillage() {
@@ -107,11 +107,11 @@ export class RallyPointComponent implements OnInit {
           units: village!.homeUnits,
           nation: village!.nation
         };
-        this.getListOfAllMilitaryUnits();
+        this.getListOfAllMilitaryUnits(false);
       });
   }
 
-  private getListOfAllMilitaryUnits() {
+  getListOfAllMilitaryUnits(redirected: boolean) {
     this.villageService.getAllMilitaryUnits(this.villageId!).subscribe(res => {
       /*let units = new Map<string, MilitaryUnit[]>();
       units.set('Outgoing armies', res['Outgoing armies']);
@@ -121,6 +121,9 @@ export class RallyPointComponent implements OnInit {
       console.log(units);*/
       this.militaryUnitList = res;
       console.log(res);
+      if (redirected){
+        this.selectTab(1);
+      }
       /*res.map(
 
         mU => new MilitaryUnit(

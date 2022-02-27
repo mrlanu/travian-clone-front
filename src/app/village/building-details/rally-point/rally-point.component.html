@@ -30,7 +30,7 @@
 
       <tab heading="SENDING" (selectTab)="onSendingSelect()">
         <div class="tabset__tab">
-          <app-troops-send [homeLegion]="homeLegion" (confirmClick)="selectTab(1)"></app-troops-send>
+          <app-troops-send [homeLegion]="homeLegion" (confirmClick)="getListOfAllMilitaryUnits(true)"></app-troops-send>
         </div>
       </tab>
       <tab heading="SIMULATOR">

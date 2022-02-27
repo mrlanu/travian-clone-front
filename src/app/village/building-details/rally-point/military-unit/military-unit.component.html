@@ -12,6 +12,9 @@
         <div *ngIf="militaryUnit.mission === 'Reinforcement'">
           {{ militaryUnit.origin.playerName }} {{ militaryUnit.mission | lowercase }}ing {{ militaryUnit.target.villageName }}
         </div>
+        <div *ngIf="militaryUnit.mission === 'Return to home'">
+          {{ militaryUnit.origin.playerName }} {{ militaryUnit.mission | lowercase }} from {{ militaryUnit.target.villageName }}
+        </div>
         <div *ngIf="militaryUnit.mission === 'Own army'">
           Own army
         </div>
