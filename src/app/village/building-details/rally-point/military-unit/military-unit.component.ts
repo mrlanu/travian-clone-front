@@ -9,7 +9,7 @@ export class MilitaryUnit{
   constructor(
     public id: string, public nation: string, public move: boolean, public state: string, public mission: string,
     public origin: VillageBrief, public target: VillageBrief, public currentLocationVillageId: string, public executionTime: Date | null, public duration: number,
-    public eatExpenses: number, public units: number[]
+    public eatExpenses: number, public units: number[], public plunder: any
   ) {
   }
 }
@@ -23,7 +23,7 @@ export class VillageBrief{
 @Component({
   selector: 'app-military-unit',
   templateUrl: './military-unit.component.html',
-  styleUrls: ['./military-unit.component.css', '../../../../shared/combat-units.css']
+  styleUrls: ['./military-unit.component.css', '../../../../shared/combat-units.css', '../../../../shared/resources.css']
 })
 export class MilitaryUnitComponent implements OnInit {
 

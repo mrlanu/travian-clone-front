@@ -1,0 +1,54 @@
+.r {
+  background-size: cover;
+  width: 26px;
+  height: 18px;
+  margin: auto 0.5rem auto 0;
+}
+
+.r-wood {
+  background-image: url('../../assets/img/lumber_small.png');
+}
+
+.r-wood-tiny {
+  background-image: url('../../assets/img/lumber_tiny.png');
+  width: 16px;
+  height: 12px;
+}
+
+.r-clay {
+  background-image: url('../../assets/img/clay_small.png');
+}
+
+.r-clay-tiny {
+  background-image: url('../../assets/img/clay_tiny.png');
+  width: 16px;
+  height: 12px;
+}
+
+.r-iron {
+  background-image: url('../../assets/img/iron_small.png');
+}
+
+.r-iron-tiny {
+  background-image: url('../../assets/img/iron_tiny.png');
+  width: 16px;
+  height: 12px;
+}
+
+.r-crop {
+  width: 26px;
+  height: 24px;
+  background-image: url('../../assets/img/crop_medium.png');
+}
+
+.r-crop-tiny {
+  width: 16px;
+  height: 16px;
+  background-image: url('../../assets/img/crop_small.png');
+}
+
+.r-clock {
+  width: 22px;
+  height: 22px;
+  background-image: url('../../assets/img/clock_medium.png');
+}

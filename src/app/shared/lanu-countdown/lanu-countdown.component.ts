@@ -63,9 +63,11 @@ export class LanuCountdownComponent implements OnInit, OnDestroy {
       this.timePassed++;
       this.config.timeLeft--;
       // The time left label is updated
-      if (this.config.timeLeft === -1) {
+      if (this.config.timeLeft === 0) {
         clearInterval(this.timerIntervalId);
-        this.countDone.next(null);
+        setTimeout(() => {
+          this.countDone.next(null);
+        }, 1000);
       }
       this.timeLeftStr = LanuCountdownComponent.formatTime(this.config.timeLeft);
     }, 1000);

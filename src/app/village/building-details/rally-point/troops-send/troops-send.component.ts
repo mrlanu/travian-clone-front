@@ -240,12 +240,11 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
 
   private confirmSending(militaryUnit: MilitaryUnitContract) {
     this.villageService.sendConfirmedTroops(militaryUnit).subscribe(result => {
-      console.log('URA: ', result);
+      this.bsModalRef?.hide();
+      this.resetForm();
+      this.confirmClick.emit('confirm');
     }, error => {
       console.log('Error: ', error);
     });
-    this.bsModalRef?.hide();
-    this.resetForm();
-    this.confirmClick.emit('confirm');
   }
 }

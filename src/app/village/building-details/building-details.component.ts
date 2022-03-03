@@ -23,7 +23,7 @@ export interface BuildingView {
 @Component({
   selector: 'app-building-details',
   templateUrl: './building-details.component.html',
-  styleUrls: ['./building-details.component.css']
+  styleUrls: ['./building-details.component.css', '../../shared/resources.css']
 })
 export class BuildingDetailsComponent implements OnInit {
 

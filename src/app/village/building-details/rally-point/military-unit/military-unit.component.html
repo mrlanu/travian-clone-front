@@ -13,7 +13,7 @@
           {{ militaryUnit.origin.playerName }} {{ militaryUnit.mission | lowercase }}ing {{ militaryUnit.target.villageName }}
         </div>
         <div *ngIf="militaryUnit.mission === 'Return to home'">
-          {{ militaryUnit.origin.playerName }} {{ militaryUnit.mission | lowercase }} from {{ militaryUnit.target.villageName }}
+          {{ militaryUnit.mission | lowercase }} from {{ militaryUnit.target.villageName }}
         </div>
         <div *ngIf="militaryUnit.mission === 'Own army'">
           Own army
@@ -58,6 +58,32 @@
         <div fxLayout fxLayoutAlign="space-between center" fxLayoutGap="0.3rem">
           <div fxLayout>
             <span>in</span><app-lanu-countdown [config]="{'timeLeft': militaryUnit.duration}" (countDone)="onCountDone()"></app-lanu-countdown>
+          </div>
+          <div *ngIf="militaryUnit.mission === 'Return to home'" fxLayout fxLayoutAlign="center" fxLayoutGap="1rem">
+            <div fxLayout>
+              <i class="r r-wood-tiny"></i>
+              <div>
+                {{ militaryUnit.plunder?.WOOD }}
+              </div>
+            </div>
+            <div fxLayout>
+              <i class="r r-clay-tiny"></i>
+              <div>
+                {{ militaryUnit.plunder?.CLAY }}
+              </div>
+            </div>
+            <div fxLayout>
+              <i class="r r-iron-tiny"></i>
+              <div>
+                {{ militaryUnit.plunder?.IRON }}
+              </div>
+            </div>
+            <div fxLayout>
+              <i class="r r-crop-tiny"></i>
+              <div>
+                {{ militaryUnit.plunder?.CROP }}
+              </div>
+            </div>
           </div>
           <div>at {{ militaryUnit.executionTime | date: 'hh:mm:ss' }}</div>
         </div>
