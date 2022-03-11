@@ -9,6 +9,7 @@ import {OrderCombatUnit} from "../village/building-details/barracks/barracks.com
 import {CombatUnit} from "../village/building-details/barracks/combat-unit/combat-unit.component";
 import {MilitaryUnitContract, TroopsSendingRequest} from "../village/building-details/rally-point/rally-point.component";
 import {MapPart, TileDetail} from "../village/map/map.component";
+import {TroopMovementsResponse} from "../village/troop-movements/troop-movements.component";
 
 @Injectable({
   providedIn: 'root'
@@ -123,6 +124,11 @@ export class VillageService {
   getAllMilitaryUnits(villageId: string) {
     const url = `${this.baseUrl}/villages/${villageId}/military-units`;
     return this.httpClient.get<any>(url);
+  }
+
+  getTroopMovements(villageId: string) {
+    const url = `${this.baseUrl}/villages/${villageId}/troop-movements`;
+    return this.httpClient.get<TroopMovementsResponse[]>(url);
   }
 
   checkTroopsSendingRequest(attackRequest: TroopsSendingRequest){

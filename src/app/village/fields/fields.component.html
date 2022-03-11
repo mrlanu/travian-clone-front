@@ -1,7 +1,7 @@
 <div class="fields-container mt-5"
      gdColumns="2fr 1fr"
      gdRows="auto auto auto"
-     gdAreas="fields . | fields prod | tasks army"
+     gdAreas="fields movements | fields prod | tasks army"
      gdGap="1rem">
   <div class="fields_container" gdArea="fields">
     <button class="btn-buildings" routerLink="../buildings" >
@@ -19,6 +19,9 @@
   </div>
   <div gdArea="prod">
     <app-produce-per-hour></app-produce-per-hour>
+  </div>
+  <div gdArea="movements">
+    <app-troop-movements></app-troop-movements>
   </div>
   <div gdArea="army">
     <app-home-army></app-home-army>

@@ -1,0 +1,16 @@
+<div *ngIf="movedTroopsList.length > 0" class="card shadow" style="min-width: 200px; max-width: 300px">
+  <div class="card-body" fxLayout="column">
+    <div *ngIf="movedTroopsList[0].count > 0 || movedTroopsList[1].count > 0">Outgoing:
+      <div>
+        <div *ngIf="movedTroopsList[0].count > 0">{{ movedTroopsList[0].count }}{{ movedTroopsList[0].mission }}{{ movedTroopsList[0].timeToArrive}}</div>
+        <div *ngIf="movedTroopsList[1].count > 0">{{ movedTroopsList[1].count }}{{ movedTroopsList[1].mission }}{{ movedTroopsList[1].timeToArrive}}</div>
+      </div>
+    </div>
+    <div *ngIf="movedTroopsList[2].count > 0 || movedTroopsList[3].count > 0">Incoming:
+      <div>
+        <div *ngIf="movedTroopsList[2].count > 0">{{ movedTroopsList[2].count }}{{ movedTroopsList[2].mission }}{{ movedTroopsList[2].timeToArrive}}</div>
+        <div *ngIf="movedTroopsList[3].count > 0">{{ movedTroopsList[3].count }}{{ movedTroopsList[3].mission }}{{ movedTroopsList[3].timeToArrive}}</div>
+      </div>
+    </div>
+  </div>
+</div>
