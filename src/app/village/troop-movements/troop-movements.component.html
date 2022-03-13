@@ -1,16 +1,38 @@
-<div *ngIf="movedTroopsList.length > 0" class="card shadow" style="min-width: 200px; max-width: 300px">
+<div *ngIf="movedTroopsList.length > 0" class="card shadow" style="min-width: 250px; max-width: 300px">
   <div class="card-body" fxLayout="column">
     <div *ngIf="movedTroopsList[0].count > 0 || movedTroopsList[1].count > 0">Outgoing:
-      <div>
-        <div *ngIf="movedTroopsList[0].count > 0">{{ movedTroopsList[0].count }}{{ movedTroopsList[0].mission }}{{ movedTroopsList[0].timeToArrive}}</div>
-        <div *ngIf="movedTroopsList[1].count > 0">{{ movedTroopsList[1].count }}{{ movedTroopsList[1].mission }}{{ movedTroopsList[1].timeToArrive}}</div>
+      <div *ngIf="movedTroopsList[0].count > 0" fxLayout fxLayoutAlign="space-between" fxLayoutGap="0.5rem">
+        <div fxLayout fxLayoutGap="0.5rem">
+          <div>{{ movedTroopsList[0].count }}</div>
+          <div>{{ movedTroopsList[0].mission }}</div>
+        </div>
+        <app-lanu-countdown [config]="{'timeLeft': movedTroopsList[0].timeToArrive}" (countDone)="onCountDone()"></app-lanu-countdown>
+      </div>
+      <div *ngIf="movedTroopsList[1].count > 0" fxLayout fxLayoutAlign="space-between" fxLayoutGap="0.5rem">
+        <div fxLayout fxLayoutGap="0.5rem">
+          <div>{{ movedTroopsList[1].count }}</div>
+          <div>{{ movedTroopsList[1].mission }}</div>
+        </div>
+        <app-lanu-countdown [config]="{'timeLeft': movedTroopsList[1].timeToArrive}" (countDone)="onCountDone()"></app-lanu-countdown>
       </div>
     </div>
-    <div *ngIf="movedTroopsList[2].count > 0 || movedTroopsList[3].count > 0">Incoming:
-      <div>
-        <div *ngIf="movedTroopsList[2].count > 0">{{ movedTroopsList[2].count }}{{ movedTroopsList[2].mission }}{{ movedTroopsList[2].timeToArrive}}</div>
-        <div *ngIf="movedTroopsList[3].count > 0">{{ movedTroopsList[3].count }}{{ movedTroopsList[3].mission }}{{ movedTroopsList[3].timeToArrive}}</div>
+
+    <div class="mt-2" *ngIf="movedTroopsList[2].count > 0 || movedTroopsList[3].count > 0">Incoming:
+      <div *ngIf="movedTroopsList[2].count > 0" fxLayout fxLayoutAlign="space-between" fxLayoutGap="0.5rem">
+        <div fxLayout fxLayoutGap="0.5rem">
+          <div>{{ movedTroopsList[2].count }}</div>
+          <div>{{ movedTroopsList[2].mission }}</div>
+        </div>
+        <app-lanu-countdown [config]="{'timeLeft': movedTroopsList[2].timeToArrive}" (countDone)="onCountDone()"></app-lanu-countdown>
+      </div>
+      <div *ngIf="movedTroopsList[3].count > 0" fxLayout fxLayoutAlign="space-between" fxLayoutGap="0.5rem">
+        <div fxLayout fxLayoutGap="0.5rem">
+          <div>{{ movedTroopsList[3].count }}</div>
+          <div>{{ movedTroopsList[3].mission }}</div>
+        </div>
+        <app-lanu-countdown [config]="{'timeLeft': movedTroopsList[3].timeToArrive}" (countDone)="onCountDone()"></app-lanu-countdown>
       </div>
     </div>
+
   </div>
 </div>
