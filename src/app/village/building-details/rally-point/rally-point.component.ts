@@ -1,15 +1,14 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {VillageView} from "../../../models/village-dto.model";
 import {take} from "rxjs/operators";
 import {VillageService} from "../../../services/village.service";
 import {BuildingView} from "../building-details.component";
 import {TabsetComponent} from "ngx-bootstrap/tabs";
 import {ActivatedRoute} from "@angular/router";
-import {interval} from "rxjs";
 
 export class TroopsSendingRequest {
   constructor(public villageId: string, public x: number, public y: number,
-              public kind: string, public waves: WaveModels[]) {
+              public mission: string, public waves: WaveModels[]) {
   }
 }
 

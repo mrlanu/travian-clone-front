@@ -8,6 +8,14 @@ import {ActivatedRoute} from "@angular/router";
 import {take} from "rxjs/operators";
 import {HomeLegion, MilitaryUnitContract, TroopsSendingRequest} from "../rally-point.component";
 
+export enum ECombatUnitMission {
+  HOME="Own army",
+  BACK="Return to home",
+  CAUGHT="Caught",
+  ATTACK="Attack",
+  RAID="Raid",
+  REINFORCEMENT="Reinforcement"
+}
 
 @Component({
   selector: 'app-troops-send',
@@ -135,7 +143,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
       villageId: this.homeLegion.villageId,
       x: +this.attackForm.value.x,
       y: +this.attackForm.value.y,
-      kind: +this.attackForm.value.kind === 2 ? 'REINFORCEMENT': +this.attackForm.value.kind === 3 ? 'ATTACK' : 'RAID',
+      mission: +this.attackForm.value.kind === 2 ? 'REINFORCEMENT': +this.attackForm.value.kind === 3 ? 'ATTACK' : 'RAID',
       waves: this.attack.waves,
     };
 

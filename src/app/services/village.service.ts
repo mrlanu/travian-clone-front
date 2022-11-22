@@ -9,7 +9,7 @@ import {OrderCombatUnit} from "../village/building-details/barracks/barracks.com
 import {CombatUnit} from "../village/building-details/barracks/combat-unit/combat-unit.component";
 import {MilitaryUnitContract, TroopsSendingRequest} from "../village/building-details/rally-point/rally-point.component";
 import {MapPart, TileDetail} from "../village/map/map.component";
-import {TroopMovementsResponse} from "../village/troop-movements/troop-movements.component";
+import {TroopMovementsBrief} from "../village/troop-movements/troop-movements.component";
 
 @Injectable({
   providedIn: 'root'
@@ -128,14 +128,22 @@ export class VillageService {
 
   getTroopMovements(villageId: string) {
     const url = `${this.baseUrl}/villages/${villageId}/troop-movements`;
-    return this.httpClient.get<TroopMovementsResponse[]>(url);
+    return this.httpClient.get(url)
+      .pipe(map(o => {
+        let result = new Map<string, TroopMovementsBrief>();
+        for(const [key, value] of Object.entries(o)){
+        result.set(key, new TroopMovementsBrief(value.count, value.timeToArrive));
+      }
+      return result;
+    }));
   }
 
   checkTroopsSendingRequest(attackRequest: TroopsSendingRequest){
     const url = `${this.baseUrl}/villages/check-troops-send`;
-    return this.httpClient.post<MilitaryUnitContract>(url, attackRequest).pipe(map(mU => new MilitaryUnitContract(
-      mU.id, mU.nation, mU.move, mU.mission, mU.originVillageId, mU.originVillageName, mU.originPlayerName, mU.originVillageCoordinates,
-      mU.currentLocationVillageId, mU.targetVillageId, mU.targetVillageName, mU.targetPlayerName, mU.targetVillageCoordinates,
+    return this.httpClient.post<MilitaryUnitContract>(url, attackRequest)
+      .pipe(map(mU => new MilitaryUnitContract(mU.id, mU.nation, mU.move, mU.mission, mU.originVillageId,
+        mU.originVillageName, mU.originPlayerName, mU.originVillageCoordinates, mU.currentLocationVillageId,
+        mU.targetVillageId, mU.targetVillageName, mU.targetPlayerName, mU.targetVillageCoordinates,
       mU.units, mU.arrivalTime ? new Date(mU.arrivalTime) : null, mU.duration, mU.expensesPerHour)
     ));
   }

@@ -1,36 +1,36 @@
-<div *ngIf="movedTroopsList.length > 0" class="card shadow" style="min-width: 250px; max-width: 300px">
+<div *ngIf="movedTroopsList" class="card shadow" style="min-width: 250px; max-width: 300px">
   <div class="card-body" fxLayout="column">
-    <div *ngIf="movedTroopsList[0].count > 0 || movedTroopsList[1].count > 0">Outgoing:
-      <div *ngIf="movedTroopsList[0].count > 0" fxLayout fxLayoutAlign="space-between" fxLayoutGap="0.5rem">
+    <div *ngIf="movedTroopsList.get('Outgoing Reinforcements')!.count > 0 || movedTroopsList.get('Outgoing Attacks')!.count > 0">Outgoing:
+      <div *ngIf="movedTroopsList.get('Outgoing Reinforcements')!.count > 0" fxLayout fxLayoutAlign="space-between" fxLayoutGap="0.5rem">
         <div fxLayout fxLayoutGap="0.5rem">
-          <div>{{ movedTroopsList[0].count }}</div>
-          <div>{{ movedTroopsList[0].mission }}</div>
+          <div>{{ movedTroopsList.get('Outgoing Reinforcements')!.count }}</div>
+          <div>Reinf</div>
         </div>
-        <app-lanu-countdown [config]="{'timeLeft': movedTroopsList[0].timeToArrive}" (countDone)="onCountDone()"></app-lanu-countdown>
+        <app-lanu-countdown [config]="{'timeLeft': movedTroopsList.get('Outgoing Reinforcements')!.timeToArrive}" (countDone)="onCountDone()"></app-lanu-countdown>
       </div>
-      <div *ngIf="movedTroopsList[1].count > 0" fxLayout fxLayoutAlign="space-between" fxLayoutGap="0.5rem">
+      <div *ngIf="movedTroopsList.get('Outgoing Attacks')!.count > 0" fxLayout fxLayoutAlign="space-between" fxLayoutGap="0.5rem">
         <div fxLayout fxLayoutGap="0.5rem">
-          <div>{{ movedTroopsList[1].count }}</div>
-          <div>{{ movedTroopsList[1].mission }}</div>
+          <div>{{ movedTroopsList.get('Outgoing Attacks')!.count }}</div>
+          <div>Attack</div>
         </div>
-        <app-lanu-countdown [config]="{'timeLeft': movedTroopsList[1].timeToArrive}" (countDone)="onCountDone()"></app-lanu-countdown>
+        <app-lanu-countdown [config]="{'timeLeft': movedTroopsList.get('Outgoing Attacks')!.timeToArrive}" (countDone)="onCountDone()"></app-lanu-countdown>
       </div>
     </div>
 
-    <div class="mt-2" *ngIf="movedTroopsList[2].count > 0 || movedTroopsList[3].count > 0">Incoming:
-      <div *ngIf="movedTroopsList[2].count > 0" fxLayout fxLayoutAlign="space-between" fxLayoutGap="0.5rem">
+    <div class="mt-2" *ngIf="movedTroopsList.get('Incoming Reinforcements')!.count > 0 || movedTroopsList.get('Incoming Attacks')!.count > 0">Incoming:
+      <div *ngIf="movedTroopsList.get('Incoming Reinforcements')!.count > 0" fxLayout fxLayoutAlign="space-between" fxLayoutGap="0.5rem">
         <div fxLayout fxLayoutGap="0.5rem">
-          <div>{{ movedTroopsList[2].count }}</div>
-          <div>{{ movedTroopsList[2].mission }}</div>
+          <div>{{ movedTroopsList.get('Incoming Reinforcements')!.count }}</div>
+          <div>Reinf</div>
         </div>
-        <app-lanu-countdown [config]="{'timeLeft': movedTroopsList[2].timeToArrive}" (countDone)="onCountDone()"></app-lanu-countdown>
+        <app-lanu-countdown [config]="{'timeLeft': movedTroopsList.get('Incoming Reinforcements')!.timeToArrive}" (countDone)="onCountDone()"></app-lanu-countdown>
       </div>
-      <div *ngIf="movedTroopsList[3].count > 0" fxLayout fxLayoutAlign="space-between" fxLayoutGap="0.5rem">
+      <div *ngIf="movedTroopsList.get('Incoming Attacks')!.count > 0" fxLayout fxLayoutAlign="space-between" fxLayoutGap="0.5rem">
         <div fxLayout fxLayoutGap="0.5rem">
-          <div>{{ movedTroopsList[3].count }}</div>
-          <div>{{ movedTroopsList[3].mission }}</div>
+          <div>{{ movedTroopsList.get('Incoming Attacks')!.count }}</div>
+          <div>Attack</div>
         </div>
-        <app-lanu-countdown [config]="{'timeLeft': movedTroopsList[3].timeToArrive}" (countDone)="onCountDone()"></app-lanu-countdown>
+        <app-lanu-countdown [config]="{'timeLeft': movedTroopsList.get('Incoming Attacks')!.timeToArrive}" (countDone)="onCountDone()"></app-lanu-countdown>
       </div>
     </div>
 
