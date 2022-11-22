@@ -9,11 +9,11 @@ export class TroopMovementsBrief {
 }
 
 @Component({
-  selector: 'app-troop-movements',
-  templateUrl: './troop-movements.component.html',
-  styleUrls: ['./troop-movements.component.css']
+  selector: 'app-troop-movements-brief',
+  templateUrl: './troop-movements-brief.component.html',
+  styleUrls: ['./troop-movements-brief.component.css']
 })
-export class TroopMovementsComponent implements OnInit, OnDestroy {
+export class TroopMovementsBriefComponent implements OnInit, OnDestroy {
 
   villageId: string | null | undefined;
   movedTroopsList: Map<string, TroopMovementsBrief> | undefined;

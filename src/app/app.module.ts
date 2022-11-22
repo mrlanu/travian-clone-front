@@ -34,7 +34,7 @@ import {BarracksComponent} from './village/building-details/barracks/barracks.co
 import {CombatUnitComponent} from './village/building-details/barracks/combat-unit/combat-unit.component';
 import { RallyPointComponent } from './village/building-details/rally-point/rally-point.component';
 import { BuildingDetailsContainerComponent } from './village/building-details/building-details-container/building-details-container.component';
-import { MilitaryUnitComponent } from './village/building-details/rally-point/military-unit/military-unit.component';
+import { CombatGroupComponent } from './village/building-details/rally-point/combat-group/combat-group.component';
 import { HomeArmyComponent } from './village/home-army/home-army.component';
 import { TroopsSendComponent } from './village/building-details/rally-point/troops-send/troops-send.component';
 import { ConfirmTroopsSendComponent } from './village/building-details/rally-point/troops-send/confirm-troops-send/confirm-troops-send.component';
@@ -42,7 +42,7 @@ import {MilitaryUnitContractComponent} from "./village/building-details/rally-po
 import { MapComponent } from './village/map/map.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import { TileDetailComponent } from './village/map/tile-detail/tile-detail.component';
-import { TroopMovementsComponent } from './village/troop-movements/troop-movements.component';
+import { TroopMovementsBriefComponent } from './village/troop-movements-brief/troop-movements-brief.component';
 
 @NgModule({
   declarations: [
@@ -68,14 +68,14 @@ import { TroopMovementsComponent } from './village/troop-movements/troop-movemen
     CombatUnitComponent,
     RallyPointComponent,
     BuildingDetailsContainerComponent,
-    MilitaryUnitComponent,
+    CombatGroupComponent,
     MilitaryUnitContractComponent,
     HomeArmyComponent,
     TroopsSendComponent,
     ConfirmTroopsSendComponent,
     MapComponent,
     TileDetailComponent,
-    TroopMovementsComponent
+    TroopMovementsBriefComponent
   ],
   imports: [
     BrowserModule,

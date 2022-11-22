@@ -9,7 +9,7 @@ import {OrderCombatUnit} from "../village/building-details/barracks/barracks.com
 import {CombatUnit} from "../village/building-details/barracks/combat-unit/combat-unit.component";
 import {MilitaryUnitContract, TroopsSendingRequest} from "../village/building-details/rally-point/rally-point.component";
 import {MapPart, TileDetail} from "../village/map/map.component";
-import {TroopMovementsBrief} from "../village/troop-movements/troop-movements.component";
+import {TroopMovementsBrief} from "../village/troop-movements-brief/troop-movements-brief.component";
 
 @Injectable({
   providedIn: 'root'

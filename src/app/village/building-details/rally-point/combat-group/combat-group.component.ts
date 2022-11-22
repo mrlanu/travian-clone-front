@@ -5,7 +5,7 @@ import {VillageService} from "../../../../services/village.service";
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 
-export class MilitaryUnit{
+export class CombatGroup {
   constructor(
     public id: string, public nation: string, public move: boolean, public state: string, public mission: string,
     public origin: VillageBrief, public target: VillageBrief, public currentLocationVillageId: string, public executionTime: Date | null, public duration: number,
@@ -21,13 +21,13 @@ export class VillageBrief{
 }
 
 @Component({
-  selector: 'app-military-unit',
-  templateUrl: './military-unit.component.html',
-  styleUrls: ['./military-unit.component.css', '../../../../shared/combat-units.css', '../../../../shared/resources.css']
+  selector: 'app-combat-group',
+  templateUrl: './combat-group.component.html',
+  styleUrls: ['./combat-group.component.css', '../../../../shared/combat-units.css', '../../../../shared/resources.css']
 })
-export class MilitaryUnitComponent implements OnInit {
+export class CombatGroupComponent implements OnInit {
 
-  @Input() militaryUnit!: MilitaryUnit;
+  @Input() militaryUnit!: CombatGroup;
   @Output() countDownDone = new EventEmitter<any>();
   imgSrc = "../../../../../assets/img/x.gif";
   componentSubs: Subscription[] = [];
