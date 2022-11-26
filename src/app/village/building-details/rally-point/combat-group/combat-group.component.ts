@@ -8,7 +8,7 @@ import {ActivatedRoute} from "@angular/router";
 export class CombatGroup {
   constructor(
     public id: string, public nation: string, public move: boolean, public state: string, public mission: string,
-    public origin: VillageBrief, public target: VillageBrief, public currentLocationVillageId: string, public executionTime: Date | null, public duration: number,
+    public from: VillageBrief, public to: VillageBrief, public currentLocationVillageId: string, public executionTime: Date | null, public duration: number,
     public eatExpenses: number, public units: number[], public plunder: any
   ) {
   }

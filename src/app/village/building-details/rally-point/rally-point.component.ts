@@ -6,7 +6,7 @@ import {BuildingView} from "../building-details.component";
 import {TabsetComponent} from "ngx-bootstrap/tabs";
 import {ActivatedRoute} from "@angular/router";
 
-export class TroopsSendingRequest {
+export class CombatGroupSendingRequest {
   constructor(public villageId: string, public x: number, public y: number,
               public mission: string, public waves: WaveModels[]) {
   }
@@ -26,7 +26,7 @@ export interface HomeLegion {
   nation: string;
 }
 
-export class MilitaryUnitContract {
+export class CombatGroupSendingContract {
   constructor(
     public id: string,
     public nation: string,
@@ -70,13 +70,17 @@ export class RallyPointComponent implements OnInit {
   constructor(private villageService: VillageService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    console.log("Rally point init");
     this.getRallyPointBuildingFromCurrentVillage();
     setTimeout(()=>{this.selectTab(this.route.snapshot.queryParams.tab)}, 100);
   }
 
-
   onSendingSelect(){
-    this.getListOfAllMilitaryUnits(false);
+    this.getAllCombatGroups(false);
+  }
+
+  onOverviewSelected(){
+    this.getAllCombatGroups(false);
   }
 
   selectTab(tabId: number) {
@@ -87,7 +91,7 @@ export class RallyPointComponent implements OnInit {
 
   onCountDone(){
     this.villageService.getVillageById(this.villageId!);
-    this.getListOfAllMilitaryUnits(false);
+    this.getAllCombatGroups(false);
   }
 
   private getRallyPointBuildingFromCurrentVillage() {
@@ -106,29 +110,17 @@ export class RallyPointComponent implements OnInit {
           units: village!.homeUnits,
           nation: village!.nation
         };
-        this.getListOfAllMilitaryUnits(false);
+        //this.getAllCombatGroups(false);
       });
   }
 
-  getListOfAllMilitaryUnits(redirected: boolean) {
-    this.villageService.getAllMilitaryUnits(this.villageId!).subscribe(res => {
-      /*let units = new Map<string, MilitaryUnit[]>();
-      units.set('Outgoing armies', res['Outgoing armies']);
-      units.set('Incoming armies', res['Incoming armies']);
-      units.set('Armies in this village', res['Armies in this village']);
-      units.set('Armies in other places', res['Armies in other places']);
-      console.log(units);*/
+  getAllCombatGroups(redirected: boolean) {
+    this.villageService.getAllCombatGroups(this.villageId!).subscribe(res => {
       this.militaryUnitList = res;
-      console.log(res);
+      console.log("Get List of military units: ", res);
       if (redirected){
         this.selectTab(1);
       }
-      /*res.map(
-
-        mU => new MilitaryUnit(
-          mU.id, mU.nation, mU.move, mU.state, mU.mission, mU.originVillageId, mU.originVillageName, mU.originVillageCoordinates, mU.targetVillageId,
-          mU.targetVillageName, mU.currentLocationVillageId, mU.arrivalTime ? new Date(mU.arrivalTime) : null, mU.duration,
-          mU.eatExpenses, mU.units));*/
-      });
+    });
   }
 }

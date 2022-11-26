@@ -1,7 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Utils} from "../../../../shared/utils";
-import {MilitaryUnitContract} from "../rally-point.component";
-import {Subject} from "rxjs";
+import {CombatGroupSendingContract} from "../rally-point.component";
 
 @Component({
   selector: 'app-military-unit-contract',
@@ -10,7 +9,7 @@ import {Subject} from "rxjs";
 })
 export class MilitaryUnitContractComponent implements OnInit, OnDestroy {
 
-  @Input() militaryUnitContract!: MilitaryUnitContract;
+  @Input() militaryUnitContract!: CombatGroupSendingContract;
   imgSrc = "../../../../../assets/img/x.gif";
   arrivalTime: Date | null | undefined;
   intervalId: number | undefined;

@@ -10,7 +10,7 @@
           <app-building-details [buildingView]="buildingView"></app-building-details>
         </div>
       </tab>
-      <tab heading="OVERVIEW">
+      <tab heading="OVERVIEW" (selectTab)="onOverviewSelected()">
         <div class="tabset__tab">
           <div *ngIf="militaryUnitList">
             <p class="fs-4 fw-bold mt-4 text-start" *ngIf="militaryUnitList['Incoming armies']">Incoming armies</p>
@@ -30,7 +30,7 @@
 
       <tab heading="SENDING" (selectTab)="onSendingSelect()">
         <div class="tabset__tab">
-          <app-troops-send [homeLegion]="homeLegion" (confirmClick)="getListOfAllMilitaryUnits(true)"></app-troops-send>
+          <app-troops-send [homeLegion]="homeLegion" (confirmClick)="getAllCombatGroups(true)"></app-troops-send>
         </div>
       </tab>
       <tab heading="SIMULATOR">

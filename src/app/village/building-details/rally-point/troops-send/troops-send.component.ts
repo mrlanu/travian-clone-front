@@ -6,7 +6,7 @@ import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {ConfirmTroopsSendComponent} from "./confirm-troops-send/confirm-troops-send.component";
 import {ActivatedRoute} from "@angular/router";
 import {take} from "rxjs/operators";
-import {HomeLegion, MilitaryUnitContract, TroopsSendingRequest} from "../rally-point.component";
+import {HomeLegion, CombatGroupSendingContract, CombatGroupSendingRequest} from "../rally-point.component";
 
 export enum ECombatUnitMission {
   HOME="Own army",
@@ -29,7 +29,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
 
   bsModalRef?: BsModalRef;
 
-  attack: TroopsSendingRequest = new TroopsSendingRequest('', 0, 0, 'REINFORCEMENT',  []);
+  attack: CombatGroupSendingRequest = new CombatGroupSendingRequest('', 0, 0, 'REINFORCEMENT',  []);
 
   targets: string[] = ['Random target', 'Random target'];
   attackForm!: FormGroup;
@@ -218,7 +218,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
     return new Array(i);
   }
 
-  openModalWithComponent(militaryUnitContract: MilitaryUnitContract) {
+  openModalWithComponent(militaryUnitContract: CombatGroupSendingContract) {
     const initialState: ModalOptions = {
       initialState: {
         militaryUnitContract: militaryUnitContract,
@@ -246,7 +246,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
     this.resetForm();
   }
 
-  private confirmSending(militaryUnit: MilitaryUnitContract) {
+  private confirmSending(militaryUnit: CombatGroupSendingContract) {
     this.villageService.sendConfirmedTroops(militaryUnit).subscribe(result => {
       this.bsModalRef?.hide();
       this.resetForm();

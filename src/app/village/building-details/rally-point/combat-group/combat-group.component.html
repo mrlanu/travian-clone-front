@@ -3,17 +3,17 @@
     <tbody>
     <tr>
       <td class="fw-bold">
-        <a href="/karte.php?d=46567">{{ militaryUnit.origin.villageName }}</a>
+        <a href="/karte.php?d=46567">{{ militaryUnit.from.villageName }}</a>
       </td>
       <td colspan="11" class="fw-bold" [ngStyle]="{'background-color': militaryUnit.mission === 'ATTACK' || militaryUnit.mission === 'RAID' ? '#ffcece':'#d8f1c8'}" style="text-align: center">
         <div *ngIf="militaryUnit.mission === 'ATTACK' || militaryUnit.mission === 'RAID'">
-          {{ militaryUnit.origin.playerName }} {{ militaryUnit.mission | lowercase }}ing {{ militaryUnit.target.villageName }}
+          {{ militaryUnit.from.playerName }} {{ militaryUnit.mission | lowercase }}ing {{ militaryUnit.to.villageName }}
         </div>
         <div *ngIf="militaryUnit.mission === 'REINFORCEMENT'">
-          {{ militaryUnit.origin.playerName }} {{ militaryUnit.mission | lowercase }}ing {{ militaryUnit.target.villageName }}
+          {{ militaryUnit.from.playerName }} {{ militaryUnit.mission | lowercase }}ing {{ militaryUnit.to.villageName }}
         </div>
         <div *ngIf="militaryUnit.mission === 'BACK'">
-          {{ militaryUnit.mission | lowercase }} from {{ militaryUnit.target.villageName }}
+          {{ militaryUnit.mission | lowercase }} from {{ militaryUnit.to.villageName }}
         </div>
         <div *ngIf="militaryUnit.mission === 'HOME'">
           Own army
@@ -23,9 +23,9 @@
     <tr>
       <th class="coords fw-normal">
         <span class="coordinates">
-          <span>{{ militaryUnit.origin.coordinates[0] }}</span>
+          <span>{{ militaryUnit.from.coordinates[0] }}</span>
           <span>|</span>
-          <span>{{ militaryUnit.origin.coordinates[1] }}</span>
+          <span>{{ militaryUnit.from.coordinates[1] }}</span>
         </span>
       </th>
       <td class="unit-icon" *ngFor="let u of militaryUnit.units; let i=index;">

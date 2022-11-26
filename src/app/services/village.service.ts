@@ -7,7 +7,7 @@ import {environment} from "../../environments/environment";
 import {Building} from "../village/all-buildings-list/all-buildings-list.component";
 import {OrderCombatUnit} from "../village/building-details/barracks/barracks.component";
 import {CombatUnit} from "../village/building-details/barracks/combat-unit/combat-unit.component";
-import {MilitaryUnitContract, TroopsSendingRequest} from "../village/building-details/rally-point/rally-point.component";
+import {CombatGroupSendingContract, CombatGroupSendingRequest} from "../village/building-details/rally-point/rally-point.component";
 import {MapPart, TileDetail} from "../village/map/map.component";
 import {TroopMovementsBrief} from "../village/troop-movements-brief/troop-movements-brief.component";
 
@@ -55,11 +55,11 @@ export class VillageService {
         v.warehouseCapacity, v.granaryCapacity, homeLegion, v.homeUnits, producePerHour, v.eventsList
       );
     })).subscribe(village => {
+      console.log("Get village by ID: ", village)
       this.villageId = village.villageId;
       this.getAllVillagesByUser(village.accountId);
       this.villageChanged.next(village);
       this.currentVillage.next(village);
-      console.log(village);
     });
   }
 
@@ -121,8 +121,8 @@ export class VillageService {
     });
   }
 
-  getAllMilitaryUnits(villageId: string) {
-    const url = `${this.baseUrl}/villages/${villageId}/military-units`;
+  getAllCombatGroups(villageId: string) {
+    const url = `${this.baseUrl}/villages/${villageId}/combat-group`;
     return this.httpClient.get<any>(url);
   }
 
@@ -138,17 +138,17 @@ export class VillageService {
     }));
   }
 
-  checkTroopsSendingRequest(attackRequest: TroopsSendingRequest){
+  checkTroopsSendingRequest(attackRequest: CombatGroupSendingRequest){
     const url = `${this.baseUrl}/villages/check-troops-send`;
-    return this.httpClient.post<MilitaryUnitContract>(url, attackRequest)
-      .pipe(map(mU => new MilitaryUnitContract(mU.id, mU.nation, mU.move, mU.mission, mU.originVillageId,
+    return this.httpClient.post<CombatGroupSendingContract>(url, attackRequest)
+      .pipe(map(mU => new CombatGroupSendingContract(mU.id, mU.nation, mU.move, mU.mission, mU.originVillageId,
         mU.originVillageName, mU.originPlayerName, mU.originVillageCoordinates, mU.currentLocationVillageId,
         mU.targetVillageId, mU.targetVillageName, mU.targetPlayerName, mU.targetVillageCoordinates,
       mU.units, mU.arrivalTime ? new Date(mU.arrivalTime) : null, mU.duration, mU.expensesPerHour)
     ));
   }
 
-  sendConfirmedTroops(militaryUnit: MilitaryUnitContract){
+  sendConfirmedTroops(militaryUnit: CombatGroupSendingContract){
     const url = `${this.baseUrl}/villages/troops-send`;
     return this.httpClient.post<any>(url, militaryUnit);
   }
