@@ -1,45 +1,45 @@
 <div class="card-body" style="min-height: 300px" fxLayout="column" fxLayoutAlign="space-between center">
-  <div *ngIf="buildingView?.production">Production: {{ buildingView?.production }}</div>
-  <div *ngIf="buildingView?.underUpgrade">Under construction to level: {{ buildingView.level + 1 }}</div>
-  <hr *ngIf="buildingView?.production">
+  <div *ngIf="buildingView.production">Production: {{ buildingView.production }}</div>
+  <div *ngIf="buildingView.underUpgrade">Under construction to level: {{ buildingView.level + 1 }}</div>
+  <hr *ngIf="buildingView.production">
   <div>
-    {{ buildingView?.description }}
+    {{ buildingView.description }}
   </div>
   <hr>
   <div fxLayout fxLayoutAlign="center" fxLayoutGap="1rem">
     <div fxLayout>
       <i class="r r-wood"></i>
       <div>
-        {{ buildingView?.resourcesToNextLevel?.get('WOOD') }}
+        {{ buildingView.resourcesToNextLevel.get('WOOD') }}
       </div>
     </div>
     <div fxLayout>
       <i class="r r-clay"></i>
       <div>
-        {{ buildingView?.resourcesToNextLevel?.get('CLAY') }}
+        {{ buildingView.resourcesToNextLevel.get('CLAY') }}
       </div>
     </div>
     <div fxLayout>
       <i class="r r-iron"></i>
       <div>
-        {{ buildingView?.resourcesToNextLevel?.get('IRON') }}
+        {{ buildingView.resourcesToNextLevel.get('IRON') }}
       </div>
     </div>
     <div fxLayout>
       <i class="r r-crop"></i>
       <div>
-        {{ buildingView?.resourcesToNextLevel?.get('CROP') }}
+        {{ buildingView.resourcesToNextLevel.get('CROP') }}
       </div>
     </div>
     <div fxLayout>
       <i class="r r-clock"></i>
       <div>
-        {{ formatTime(buildingView?.timeToNextLevel!) }}
+        {{ formatTime(buildingView.timeToNextLevel!) }}
       </div>
     </div>
   </div>
   <button type="button" class="btn btn-success mt-4"
           (click)="onUpgradeClick()">
-    Upgrade to level {{ buildingView?.underUpgrade ? buildingView?.level! + 2 : buildingView?.level! + 1}}
+    Upgrade to level {{ buildingView.underUpgrade ? buildingView.level! + 2 : buildingView.level! + 1}}
   </button>
 </div>
