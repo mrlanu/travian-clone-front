@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {AuthService} from '../auth.service';
 import {Router} from "@angular/router";
@@ -15,10 +15,10 @@ import {filter} from "rxjs/operators";
 export class LoginComponent implements OnInit, OnDestroy {
 
   user: User | undefined;
-  loginForm = new FormGroup({
-    email: new FormControl('wer@yahoo.com',
+  loginForm = new UntypedFormGroup({
+    email: new UntypedFormControl('wer@yahoo.com',
       {validators: [Validators.required]}),
-    password: new FormControl('12345',
+    password: new UntypedFormControl('12345',
       {validators: [Validators.required]})
   });
   isLoading = false;

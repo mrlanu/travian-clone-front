@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {VillageService} from "../../../../services/village.service";
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
@@ -32,7 +32,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
   attack: CombatGroupSendingRequest = new CombatGroupSendingRequest('', 0, 0, 'REINFORCEMENT',  []);
 
   targets: string[] = ['Random target', 'Random target'];
-  attackForm!: FormGroup;
+  attackForm!: UntypedFormGroup;
   componentSubs: Subscription[] = [];
 
   imgSrc = "../../../../../assets/img/x.gif";
@@ -40,24 +40,24 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
   constructor(private villageService: VillageService,
               private route: ActivatedRoute,
               private modalService: BsModalService) {
-    this.attackForm = new FormGroup({
-      villageId: new FormControl({value: ''}),
-      x: new FormControl({value: this.route.snapshot.queryParams.x, disabled: true}, Validators.required),
-      y: new FormControl({value: this.route.snapshot.queryParams.y, disabled: true}, Validators.required),
-      kind: new FormControl({value: '3', disabled: true}),
-      u0: new FormControl({value: 0, disabled: true}),
-      u1: new FormControl({value: 0, disabled: true}),
-      u2: new FormControl({value: 0, disabled: true}),
-      u3: new FormControl({value: 0, disabled: true}),
-      u4: new FormControl({value: 0, disabled: true}),
-      u5: new FormControl({value: 0, disabled: true}),
-      u6: new FormControl({value: 0, disabled: true}),
-      u7: new FormControl({value: 0, disabled: true}),
-      u8: new FormControl({value: 0, disabled: true}),
-      u9: new FormControl({value: 0, disabled: true}),
-      u10: new FormControl({value: 0, disabled: true}),
-      firstTarget: new FormControl({value: '99', disabled: true}),
-      secondTarget: new FormControl({value: '99', disabled: true}),
+    this.attackForm = new UntypedFormGroup({
+      villageId: new UntypedFormControl({value: ''}),
+      x: new UntypedFormControl({value: this.route.snapshot.queryParams.x, disabled: true}, Validators.required),
+      y: new UntypedFormControl({value: this.route.snapshot.queryParams.y, disabled: true}, Validators.required),
+      kind: new UntypedFormControl({value: '3', disabled: true}),
+      u0: new UntypedFormControl({value: 0, disabled: true}),
+      u1: new UntypedFormControl({value: 0, disabled: true}),
+      u2: new UntypedFormControl({value: 0, disabled: true}),
+      u3: new UntypedFormControl({value: 0, disabled: true}),
+      u4: new UntypedFormControl({value: 0, disabled: true}),
+      u5: new UntypedFormControl({value: 0, disabled: true}),
+      u6: new UntypedFormControl({value: 0, disabled: true}),
+      u7: new UntypedFormControl({value: 0, disabled: true}),
+      u8: new UntypedFormControl({value: 0, disabled: true}),
+      u9: new UntypedFormControl({value: 0, disabled: true}),
+      u10: new UntypedFormControl({value: 0, disabled: true}),
+      firstTarget: new UntypedFormControl({value: '99', disabled: true}),
+      secondTarget: new UntypedFormControl({value: '99', disabled: true}),
     });
   }
 
