@@ -4,5 +4,10 @@ import * as fromSettlement from "./settlement.reducer";
 
 export const settlementSelector = createSelector(
   (state: fromApp.AppState) => state.settlement,
-  (st: fromSettlement.State) => st.settlement
+  (st: fromSettlement.State) => st.current
+);
+
+export const settlementsListSelector = createSelector(
+  (state: fromApp.AppState) => state.settlement,
+  (st: fromSettlement.State) => st.allSettlements
 );

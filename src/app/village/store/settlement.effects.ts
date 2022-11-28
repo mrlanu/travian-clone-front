@@ -3,13 +3,13 @@ import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {catchError, exhaustMap, map} from "rxjs/operators";
 import * as SettlementActions from './settlement.actions';
 import {of} from "rxjs";
-import {VillageView} from "../../models/village-dto.model";
+import {ShortVillageInfo, VillageView} from "../../models/village-dto.model";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class SettlementEffects {
-  login$ = createEffect(() =>
+  settlement$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettlementActions.fetchSettlement),
       exhaustMap(action =>
@@ -18,6 +18,18 @@ export class SettlementEffects {
           .pipe(map(v => SettlementActions.setSettlement({ settlement: this.mapView(v) })),
           catchError(error => of(SettlementActions.errorSettlement({ error })))
         )
+      )
+    )
+  );
+
+  settlementsList$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.fetchSettlementsList),
+      exhaustMap(action =>
+        this.httpClient.get<ShortVillageInfo[]>(`${environment.baseUrl}/users/${action.userId}/villages`)
+          .pipe(map(list => SettlementActions.setSettlementsList({ list })),
+            catchError(error => of(SettlementActions.errorSettlement({ error })))
+          )
       )
     )
   );
