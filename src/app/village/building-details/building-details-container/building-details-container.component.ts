@@ -31,14 +31,14 @@ export class BuildingDetailsContainerComponent implements OnInit, OnDestroy {
       this.store.select(settlementSelector).subscribe(
         village => {
           this.village = village!;
-          this.buildingView = village!.buildings.find(f => {
+          this.buildingView = {...village!.buildings.find(f => {
             return f.position == +this.route.snapshot.params['position'];
-          })!;
+          })!};
           let res = new Map<string, number>();
           for(const [key, value] of Object.entries(this.buildingView!.resourcesToNextLevel)){
             res.set(key, value);
           }
-          this.buildingView!.resourcesToNextLevel = res;
+          this.buildingView.resourcesToNextLevel = res;
         }));
     this.store.dispatch(fetchSettlement({id: this.route.parent?.snapshot.params['village-id']}));
   }
