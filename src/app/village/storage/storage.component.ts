@@ -2,6 +2,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {VillageView} from "../../models/village-dto.model";
 import {VillageService} from "../../services/village.service";
 import {Subscription} from "rxjs";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../store/app.reducer";
+import {settlementSelector} from "../store/settlement.selectors";
 
 @Component({
   selector: 'app-storage',
@@ -29,37 +32,38 @@ export class StorageComponent implements OnInit, OnDestroy {
   componentSubs: Subscription[] = [];
   intervalList: number[] = [];
 
-  constructor(private villageService: VillageService) {}
+  constructor(private villageService: VillageService, private store: Store<fromAppStore.AppState>) {}
 
   ngOnInit(): void {
-    this.componentSubs.push(this.villageService.villageChanged
-      .subscribe((v: VillageView) => {
-        this.negativeCrop = v.producePerHour.get('CROP')! < 0;
-        let type: 'success' | 'info' | 'warning' | 'danger';
+    this.componentSubs.push(this.store.select(settlementSelector)
+      .subscribe(v => {
+          this.negativeCrop = v?.producePerHour.get('CROP')! < 0;
+          let type: 'success' | 'info' | 'warning' | 'danger';
 
-        this.intervalList.forEach(i => {
-          clearInterval(i);
-        });
-        this.intervalList = [];
+          this.intervalList.forEach(i => {
+            clearInterval(i);
+          });
+          this.intervalList = [];
 
-        this.wood = Math.trunc(v.storage.get('WOOD')!);
-        this.woodProgress = Math.floor(v.storage.get('WOOD')! * 100 / v.warehouseCapacity)
-        this.intervalList.push(this.startTimer('WOOD', Math.trunc(3600000 / v.producePerHour.get('WOOD')!)));
+          this.wood = Math.trunc(v!.storage.get('WOOD')!);
+          this.woodProgress = Math.floor(v!.storage.get('WOOD')! * 100 / v!.warehouseCapacity)
+          this.intervalList.push(this.startTimer('WOOD', Math.trunc(3600000 / v!.producePerHour.get('WOOD')!)));
 
-        this.clay = Math.trunc(v.storage.get('CLAY')!);
-        this.clayProgress = Math.floor(v.storage.get('CLAY')! * 100 / v.warehouseCapacity)
-        this.intervalList.push(this.startTimer('CLAY', Math.trunc(3600000 / v.producePerHour.get('CLAY')!)));
+          this.clay = Math.trunc(v!.storage.get('CLAY')!);
+          this.clayProgress = Math.floor(v!.storage.get('CLAY')! * 100 / v!.warehouseCapacity)
+          this.intervalList.push(this.startTimer('CLAY', Math.trunc(3600000 / v!.producePerHour.get('CLAY')!)));
 
-        this.iron = Math.trunc(v.storage.get('IRON')!);
-        this.ironProgress = Math.floor(v.storage.get('IRON')! * 100 / v.warehouseCapacity)
-        this.intervalList.push(this.startTimer('IRON', Math.trunc(3600000 / v.producePerHour.get('IRON')!)));
+          this.iron = Math.trunc(v!.storage.get('IRON')!);
+          this.ironProgress = Math.floor(v!.storage.get('IRON')! * 100 / v!.warehouseCapacity)
+          this.intervalList.push(this.startTimer('IRON', Math.trunc(3600000 / v!.producePerHour.get('IRON')!)));
 
-        this.crop = Math.trunc(v.storage.get('CROP')!);
-        this.cropProgress = Math.floor(v.storage.get('CROP')! * 100 / v.granaryCapacity)
-        this.intervalList.push(this.startTimer('CROP', Math.trunc(3600000 / v.producePerHour.get('CROP')!)));
+          this.crop = Math.trunc(v!.storage.get('CROP')!);
+          this.cropProgress = Math.floor(v!.storage.get('CROP')! * 100 / v!.granaryCapacity)
+          this.intervalList.push(this.startTimer('CROP', Math.trunc(3600000 / v!.producePerHour.get('CROP')!)));
 
-        this.warehouseCapacity = v.warehouseCapacity;
-        this.granaryCapacity = v.granaryCapacity;
+          this.warehouseCapacity = v!.warehouseCapacity;
+          this.granaryCapacity = v!.granaryCapacity;
+
       }));
   }
 

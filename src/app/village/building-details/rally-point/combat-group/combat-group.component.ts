@@ -4,6 +4,9 @@ import {VillageView} from "../../../../models/village-dto.model";
 import {VillageService} from "../../../../services/village.service";
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../../../store/app.reducer";
+import {settlementSelector} from "../../../store/settlement.selectors";
 
 export class CombatGroup {
   constructor(
@@ -32,11 +35,11 @@ export class CombatGroupComponent implements OnInit {
   imgSrc = "../../../../../assets/img/x.gif";
   componentSubs: Subscription[] = [];
 
-  constructor(private villageService: VillageService, private route: ActivatedRoute) { }
+  constructor(private villageService: VillageService, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
-    this.componentSubs.push(this.villageService.villageChanged
-      .subscribe((v: VillageView) => {
+    this.componentSubs.push(this.store.select(settlementSelector)
+      .subscribe(v => {
       }));
   }
 

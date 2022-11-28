@@ -6,6 +6,9 @@ import {Subscription} from "rxjs";
 import {take} from "rxjs/operators";
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {TileDetailComponent} from "./tile-detail/tile-detail.component";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../store/app.reducer";
+import {settlementSelector} from "../store/settlement.selectors";
 
 export class TileDetail{
   constructor(public id: string, public type: string, public subType: string, public nation: string, public playerName: string,
@@ -56,11 +59,11 @@ export class MapComponent implements OnInit, OnDestroy {
 
   componentSubs: Subscription[] = [];
 
-  constructor(private villageService: VillageService, private modalService: BsModalService) { }
+  constructor(private villageService: VillageService, private modalService: BsModalService, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
-      this.villageService.currentVillage.pipe(take(1)).subscribe(
-        (village: VillageView | null) => {
+      this.store.select(settlementSelector).pipe(take(1)).subscribe(
+        village => {
           if (village){
             this.villageId = village.villageId;
             this.villageCoordinates = {x: village.x, y: village.y};

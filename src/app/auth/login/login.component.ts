@@ -6,6 +6,10 @@ import {Router} from "@angular/router";
 import {User} from "../user.model";
 import {VillageService} from "../../services/village.service";
 import {filter} from "rxjs/operators";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../store/app.reducer";
+import {fetchSettlement} from "../../village/store/settlement.actions";
+import {settlementSelector} from "../../village/store/settlement.selectors";
 
 @Component({
   selector: 'app-login',
@@ -24,21 +28,24 @@ export class LoginComponent implements OnInit, OnDestroy {
   isLoading = false;
   componentSubs: Subscription[] = [];
 
-  constructor(private authService: AuthService, private router: Router, private villageService: VillageService) { }
+  constructor(private authService: AuthService, private router: Router, private villageService: VillageService,
+              private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit() {
     this.componentSubs.push(this.authService.isLoadingChanged
       .subscribe(result => {
         this.isLoading = result;
       }));
-    this.componentSubs.push(this.villageService.villagesList
-      .pipe(filter(l => l.length != 0)) // because used BehaviorSubject firs value is []
-      .subscribe(list => {
-        this.router.navigate(['/villages', list[0].villageId, 'fields']);
-      }));
+    this.componentSubs.push(this.store.select(settlementSelector).subscribe(village => {
+      if (village){
+        this.router.navigate(['/villages', village.villageId, 'fields']);
+      }
+    }));
     this.componentSubs.push(this.authService.userChanged
       .subscribe(user => {
-        this.villageService.getAllVillagesByUser(user.userId);
+        this.villageService.getAllVillagesByUser(user.userId).subscribe(list => {
+          this.store.dispatch(fetchSettlement({id: list[0].villageId}));
+        });
       }));
   }
 

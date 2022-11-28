@@ -29,9 +29,10 @@ export class VillagesListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.componentSubs.push(
-      this.villageService.villagesList.subscribe(list => {
+      /*this.villageService.villagesList.subscribe(list => {
         this.villages = list;
-      }));
+      })*/
+    );
     this.route.params.subscribe(params => {
       this.currentVillageId = params['village-id'];
     });

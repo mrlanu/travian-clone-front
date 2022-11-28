@@ -3,6 +3,9 @@ import {Utils} from "../../../../shared/utils";
 import {VillageService} from "../../../../services/village.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../../../store/app.reducer";
+import {settlementSelector} from "../../../store/settlement.selectors";
 
 export class CombatUnit {
   constructor(
@@ -32,10 +35,10 @@ export class CombatUnitComponent implements OnInit, OnDestroy {
   enteredValue = '';
   componentSubs: Subscription[] = [];
 
-  constructor(private villageService: VillageService, private route: ActivatedRoute) { }
+  constructor(private villageService: VillageService, private route: ActivatedRoute, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
-    this.villageService.currentVillage.subscribe(village => {
+    this.store.select(settlementSelector).subscribe(village => {
       this.calculateMaxUnits(village!.storage);
     });
   }

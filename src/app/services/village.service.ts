@@ -1,15 +1,21 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {MapTile, ShortVillageInfo, VillageView} from "../models/village-dto.model";
+import {MapTile, ShortVillageInfo} from "../models/village-dto.model";
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Building} from "../village/all-buildings-list/all-buildings-list.component";
 import {OrderCombatUnit} from "../village/building-details/barracks/barracks.component";
 import {CombatUnit} from "../village/building-details/barracks/combat-unit/combat-unit.component";
-import {CombatGroupSendingContract, CombatGroupSendingRequest} from "../village/building-details/rally-point/rally-point.component";
+import {
+  CombatGroupSendingContract,
+  CombatGroupSendingRequest
+} from "../village/building-details/rally-point/rally-point.component";
 import {MapPart, TileDetail} from "../village/map/map.component";
 import {TroopMovementsBrief} from "../village/troop-movements-brief/troop-movements-brief.component";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../store/app.reducer";
+import {fetchSettlement} from "../village/store/settlement.actions";
 
 @Injectable({
   providedIn: 'root'
@@ -17,55 +23,17 @@ import {TroopMovementsBrief} from "../village/troop-movements-brief/troop-moveme
 export class VillageService {
   baseUrl = environment.baseUrl;
   villageId = '';
-  currentVillage = new BehaviorSubject<VillageView | null>(null);
-  villageChanged = new Subject<VillageView>();
   militaryOrdersChanged = new Subject<OrderCombatUnit[]>();
-  villagesList = new BehaviorSubject<ShortVillageInfo[]>([]);
+  //villagesList = new BehaviorSubject<ShortVillageInfo[]>([]);
   partOfWorldChanged = new Subject<MapTile[]>();
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private store: Store<fromAppStore.AppState>) { }
 
   getAllVillagesByUser(userId: string){
-    this.httpClient.get<ShortVillageInfo[]>(this.baseUrl + '/users/' + userId + '/villages')
-      .subscribe(list => {
+    return this.httpClient.get<ShortVillageInfo[]>(this.baseUrl + '/users/' + userId + '/villages');
+      /*.subscribe(list => {
         this.villagesList.next(list);
-      });
-  }
-
-  getVillageById(villageId: string) {
-    const url = `${this.baseUrl}/villages/${villageId}`;
-    this.httpClient.get<VillageView>(url).pipe(map(v => {
-      let producePerHour = new Map<string, number>();
-      let storage = new Map<string, number>();
-      let homeLegion = new Map<string, number>();
-
-      for(const [key, value] of Object.entries(v.producePerHour)){
-        producePerHour.set(key, value);
-      }
-      for(const [key, value] of Object.entries(v.storage)){
-        storage.set(key, value);
-      }
-      for(const [key, value] of Object.entries(v.homeLegion)){
-        // PHALANX -> Phalanx
-        homeLegion.set(VillageService.capitalizeFirstLater(key), value);
-      }
-      return new VillageView(
-        v.villageId, v.accountId, v.nation, v.name, v.x, v.y, v.villageType,
-        v.population, v.culture, v.approval, v.buildings, storage,
-        v.warehouseCapacity, v.granaryCapacity, homeLegion, v.homeUnits, producePerHour, v.eventsList
-      );
-    })).subscribe(village => {
-      console.log("Get village by ID: ", village)
-      this.villageId = village.villageId;
-      this.getAllVillagesByUser(village.accountId);
-      this.villageChanged.next(village);
-      this.currentVillage.next(village);
-    });
-  }
-
-  private static capitalizeFirstLater(str: string): string{
-    let allToLower = str.toLowerCase();
-    return allToLower.charAt(0).toUpperCase() + allToLower.slice(1);
+      });*/
   }
 
   updateVillageName(newName: string){
@@ -88,7 +56,7 @@ export class VillageService {
   deleteBuildingEvent(villageId: string, eventId: string){
     const url = `${this.baseUrl}/villages/${villageId}/events/${eventId}`;
     this.httpClient.delete<string>(url).subscribe(() => {
-      this.getVillageById(villageId);
+      this.store.dispatch(fetchSettlement({id: villageId}));
     });
   }
 
@@ -105,9 +73,9 @@ export class VillageService {
   orderCombatUnits(villageId: string, unitType: string, amount: number){
     const url = `${this.baseUrl}/villages/military`;
     this.httpClient.post(url, {'villageId': villageId, 'unitType': unitType, 'amount': amount})
-      .subscribe(res => {
+      .subscribe(() => {
       this.getAllOrdersCombatUnit(villageId);
-      this.getVillageById(villageId);
+        this.store.dispatch(fetchSettlement({id: villageId}));
     })
   }
 

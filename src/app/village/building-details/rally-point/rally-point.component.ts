@@ -1,10 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {VillageView} from "../../../models/village-dto.model";
 import {take} from "rxjs/operators";
 import {VillageService} from "../../../services/village.service";
 import {BuildingView} from "../building-details.component";
 import {TabsetComponent} from "ngx-bootstrap/tabs";
 import {ActivatedRoute} from "@angular/router";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../../store/app.reducer";
+import {fetchSettlement} from "../../store/settlement.actions";
+import {settlementSelector} from "../../store/settlement.selectors";
 
 export class CombatGroupSendingRequest {
   constructor(public villageId: string, public x: number, public y: number,
@@ -67,10 +70,10 @@ export class RallyPointComponent implements OnInit {
   };
   militaryUnitList: any;
 
-  constructor(private villageService: VillageService, private route: ActivatedRoute) { }
+  constructor(private villageService: VillageService, private route: ActivatedRoute,
+              private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
-    console.log("Rally point init");
     this.getRallyPointBuildingFromCurrentVillage();
     setTimeout(()=>{this.selectTab(this.route.snapshot.queryParams.tab)}, 100);
   }
@@ -90,13 +93,14 @@ export class RallyPointComponent implements OnInit {
   }
 
   onCountDone(){
-    this.villageService.getVillageById(this.villageId!);
+    this.store.dispatch(fetchSettlement({id: this.villageId!}));
+    //this.villageService.getVillageById(this.villageId!);
     this.getAllCombatGroups(false);
   }
 
   private getRallyPointBuildingFromCurrentVillage() {
-    this.villageService.currentVillage.pipe(take(1)).subscribe(
-      (village: VillageView | null) => {
+    this.store.select(settlementSelector).pipe(take(1)).subscribe(
+      village => {
         this.villageId = village?.villageId;
         this.buildingView = village!.buildings.find(f => f.name == "Rally-point")!;
         let res = new Map<string, number>();
@@ -110,14 +114,12 @@ export class RallyPointComponent implements OnInit {
           units: village!.homeUnits,
           nation: village!.nation
         };
-        //this.getAllCombatGroups(false);
       });
   }
 
   getAllCombatGroups(redirected: boolean) {
     this.villageService.getAllCombatGroups(this.villageId!).subscribe(res => {
       this.militaryUnitList = res;
-      console.log("Get List of military units: ", res);
       if (redirected){
         this.selectTab(1);
       }

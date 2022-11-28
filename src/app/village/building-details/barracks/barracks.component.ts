@@ -3,6 +3,10 @@ import {VillageService} from "../../../services/village.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 import {CombatUnit} from "./combat-unit/combat-unit.component";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../../store/app.reducer";
+import {settlementSelector} from "../../store/settlement.selectors";
+import {fetchSettlement} from "../../store/settlement.actions";
 
 export class OrderCombatUnit {
   constructor(public unit: string,
@@ -28,7 +32,7 @@ export class BarracksComponent implements OnInit {
   currentUnitTime = 0;
 
   @ViewChild('count') count: any;
-  constructor(private villageService: VillageService, private route: ActivatedRoute) { }
+  constructor(private villageService: VillageService, private route: ActivatedRoute, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
     this.villageId = this.route.parent?.snapshot.params['village-id'];
@@ -43,7 +47,7 @@ export class BarracksComponent implements OnInit {
           unit.defCavalry, unit.speed, unit.capacity, cost, unit.time, unit.description);
       })
     });
-    this.componentSubs.push(this.villageService.villageChanged.subscribe(village => {
+    this.componentSubs.push(this.store.select(settlementSelector).subscribe(village => {
       this.villageService.getAllOrdersCombatUnit(this.villageId);
     }));
     this.componentSubs.push(this.villageService.militaryOrdersChanged
@@ -57,7 +61,7 @@ export class BarracksComponent implements OnInit {
 
   onCountDone(){
     setTimeout(()=>{}, 500);
-    this.villageService.getVillageById(this.villageId);
+    this.store.dispatch(fetchSettlement({id: this.villageId}))
     this.count.reset(this.currentUnitTime);
   }
 

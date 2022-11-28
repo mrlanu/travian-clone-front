@@ -43,6 +43,10 @@ import { MapComponent } from './village/map/map.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import { TileDetailComponent } from './village/map/tile-detail/tile-detail.component';
 import { TroopMovementsBriefComponent } from './village/troop-movements-brief/troop-movements-brief.component';
+import {StoreModule} from "@ngrx/store";
+import {appReducer} from "./store/app.reducer";
+import {EffectsModule} from "@ngrx/effects";
+import {SettlementEffects} from "./village/store/settlement.effects";
 
 @NgModule({
   declarations: [
@@ -80,6 +84,7 @@ import { TroopMovementsBriefComponent } from './village/troop-movements-brief/tr
   imports: [
     BrowserModule,
     AppRoutingModule,
+    StoreModule.forRoot(appReducer),
     HttpClientModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
@@ -91,6 +96,7 @@ import { TroopMovementsBriefComponent } from './village/troop-movements-brief/tr
     MatSnackBarModule,
     MatGridListModule,
     TabsModule.forRoot(),
+    EffectsModule.forRoot([SettlementEffects])
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, BsModalService],
   bootstrap: [AppComponent]

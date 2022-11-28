@@ -1,8 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
-import {ActivatedRoute} from "@angular/router";
-import {VillageView} from "../../models/village-dto.model";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../store/app.reducer";
+import {fetchSettlement} from "../store/settlement.actions";
+import {settlementSelector} from "../store/settlement.selectors";
 
 export class TroopMovementsBrief {
   constructor(public count: number, public timeToArrive: number) {}
@@ -19,20 +21,14 @@ export class TroopMovementsBriefComponent implements OnInit, OnDestroy {
   movedTroopsList: Map<string, TroopMovementsBrief> | undefined;
   componentSubs: Subscription[] = [];
 
-  constructor(private villageService: VillageService, private route: ActivatedRoute) { }
+  constructor(private villageService: VillageService, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
-    this.componentSubs.push(this.villageService.villageChanged
-      .subscribe((v: VillageView) => {
-        this.villageId = v.villageId;
-        this.getTroopMovements(v.villageId)
+    this.componentSubs.push(this.store.select(settlementSelector)
+      .subscribe(v => {
+        this.villageId = v?.villageId;
+        this.getTroopMovements(v!.villageId)
       }));
-    /*this.route.parent?.params.subscribe(params => {
-      console.log("Params - ", params);
-      this.villageId = params['village-id'];
-      console.log("Id: ", this.villageId);
-      this.getTroopMovements();
-    });*/
   }
 
   private getTroopMovements(villageId: string) {
@@ -42,7 +38,7 @@ export class TroopMovementsBriefComponent implements OnInit, OnDestroy {
   }
 
   onCountDone() {
-    this.villageService.getVillageById(this.villageId!);
+    this.store.dispatch(fetchSettlement({id: this.villageId!}));
   }
 
   ngOnDestroy(): void {
@@ -50,6 +46,4 @@ export class TroopMovementsBriefComponent implements OnInit, OnDestroy {
       sub.unsubscribe();
     });
   }
-
-
 }
