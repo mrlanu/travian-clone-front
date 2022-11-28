@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Subject} from "rxjs";
+import {Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {MapTile, ShortVillageInfo} from "../models/village-dto.model";
+import {MapTile} from "../models/village-dto.model";
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Building} from "../village/all-buildings-list/all-buildings-list.component";
@@ -24,17 +24,9 @@ export class VillageService {
   baseUrl = environment.baseUrl;
   villageId = '';
   militaryOrdersChanged = new Subject<OrderCombatUnit[]>();
-  //villagesList = new BehaviorSubject<ShortVillageInfo[]>([]);
   partOfWorldChanged = new Subject<MapTile[]>();
 
   constructor(private httpClient: HttpClient, private store: Store<fromAppStore.AppState>) { }
-
-  getAllVillagesByUser(userId: string){
-    return this.httpClient.get<ShortVillageInfo[]>(this.baseUrl + '/users/' + userId + '/villages');
-      /*.subscribe(list => {
-        this.villagesList.next(list);
-      });*/
-  }
 
   updateVillageName(newName: string){
     const url = `${this.baseUrl}/villages/${this.villageId}/update-name`;
@@ -48,10 +40,10 @@ export class VillageService {
     return this.httpClient.put(url, {}, {responseType: "text", params: params});
   }
 
-  upgradeField(villageId: string, position: number) {
+  /*upgradeField(villageId: string, position: number) {
     const url = `${this.baseUrl}/villages/${villageId}/buildings/${position}/upgrade`;
     return this.httpClient.put<string>(url, {});
-  }
+  }*/
 
   deleteBuildingEvent(villageId: string, eventId: string){
     const url = `${this.baseUrl}/villages/${villageId}/events/${eventId}`;

@@ -13,4 +13,7 @@ export const fetchSettlementsList = createAction(
 export const setSettlementsList = createAction(
   '[Settlement] Set settlements list', props<{ list: ShortVillageInfo[] }>());
 
+export const upgradeBuilding = createAction(
+  '[Settlement] Upgrade building', props<{ villageId: string; position: number }>());
+
 export const errorSettlement = createAction('[Settlement] Error', props<{ error: string }>());

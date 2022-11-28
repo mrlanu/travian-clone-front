@@ -102,7 +102,7 @@ export class RallyPointComponent implements OnInit {
     this.store.select(settlementSelector).pipe(take(1)).subscribe(
       village => {
         this.villageId = village?.villageId;
-        this.buildingView = village!.buildings.find(f => f.name == "Rally-point")!;
+        this.buildingView = {...village!.buildings.find(f => f.name == "Rally-point")!};
         let res = new Map<string, number>();
         for (const [key, value] of Object.entries(this.buildingView!.resourcesToNextLevel)) {
           res.set(key, value);

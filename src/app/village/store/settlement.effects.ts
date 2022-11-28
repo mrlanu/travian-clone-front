@@ -34,6 +34,19 @@ export class SettlementEffects {
     )
   );
 
+  upgrade$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.upgradeBuilding),
+      exhaustMap(action =>
+        this.httpClient
+          .put<string>(`${environment.baseUrl}/villages/${action.villageId}/buildings/${action.position}/upgrade`, {})
+          .pipe(map(() => SettlementActions.fetchSettlement({ id: action.villageId })),
+            catchError(error => of(SettlementActions.errorSettlement({ error })))
+          )
+      )
+    )
+  );
+
   constructor(
     private httpClient: HttpClient,
     private actions$: Actions,

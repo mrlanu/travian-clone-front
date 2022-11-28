@@ -14,7 +14,6 @@ import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {TaskListComponent} from './village/task-list/task-list.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {LanuCountdownComponent} from './shared/lanu-countdown/lanu-countdown.component';
-import {BuildingConfirmComponent} from './modals/building-confirm/building-confirm.component';
 import {BsModalService, ModalModule} from "ngx-bootstrap/modal";
 import {BuildingsComponent} from './village/buildings/buildings.component';
 import {HeaderComponent} from './village/header/header.component';
@@ -32,17 +31,23 @@ import {BuildingItemComponent} from "./village/all-buildings-list/building-item/
 import {TabsModule} from "ngx-bootstrap/tabs";
 import {BarracksComponent} from './village/building-details/barracks/barracks.component';
 import {CombatUnitComponent} from './village/building-details/barracks/combat-unit/combat-unit.component';
-import { RallyPointComponent } from './village/building-details/rally-point/rally-point.component';
-import { BuildingDetailsContainerComponent } from './village/building-details/building-details-container/building-details-container.component';
-import { CombatGroupComponent } from './village/building-details/rally-point/combat-group/combat-group.component';
-import { HomeArmyComponent } from './village/home-army/home-army.component';
-import { TroopsSendComponent } from './village/building-details/rally-point/troops-send/troops-send.component';
-import { ConfirmTroopsSendComponent } from './village/building-details/rally-point/troops-send/confirm-troops-send/confirm-troops-send.component';
-import {MilitaryUnitContractComponent} from "./village/building-details/rally-point/military-unit-contract/military-unit-contract.component";
-import { MapComponent } from './village/map/map.component';
+import {RallyPointComponent} from './village/building-details/rally-point/rally-point.component';
+import {
+  BuildingDetailsContainerComponent
+} from './village/building-details/building-details-container/building-details-container.component';
+import {CombatGroupComponent} from './village/building-details/rally-point/combat-group/combat-group.component';
+import {HomeArmyComponent} from './village/home-army/home-army.component';
+import {TroopsSendComponent} from './village/building-details/rally-point/troops-send/troops-send.component';
+import {
+  ConfirmTroopsSendComponent
+} from './village/building-details/rally-point/troops-send/confirm-troops-send/confirm-troops-send.component';
+import {
+  MilitaryUnitContractComponent
+} from "./village/building-details/rally-point/military-unit-contract/military-unit-contract.component";
+import {MapComponent} from './village/map/map.component';
 import {MatGridListModule} from "@angular/material/grid-list";
-import { TileDetailComponent } from './village/map/tile-detail/tile-detail.component';
-import { TroopMovementsBriefComponent } from './village/troop-movements-brief/troop-movements-brief.component';
+import {TileDetailComponent} from './village/map/tile-detail/tile-detail.component';
+import {TroopMovementsBriefComponent} from './village/troop-movements-brief/troop-movements-brief.component';
 import {StoreModule} from "@ngrx/store";
 import {appReducer} from "./store/app.reducer";
 import {EffectsModule} from "@ngrx/effects";
@@ -57,7 +62,6 @@ import {SettlementEffects} from "./village/store/settlement.effects";
     ProducePerHourComponent,
     TaskListComponent,
     LanuCountdownComponent,
-    BuildingConfirmComponent,
     BuildingsComponent,
     HeaderComponent,
     BuildingDetailsComponent,
