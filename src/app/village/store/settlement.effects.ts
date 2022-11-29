@@ -1,11 +1,14 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {catchError, exhaustMap, map} from "rxjs/operators";
+import {catchError, exhaustMap, map, take, withLatestFrom} from "rxjs/operators";
 import * as SettlementActions from './settlement.actions';
 import {of} from "rxjs";
 import {ShortVillageInfo, VillageView} from "../../models/village-dto.model";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../store/app.reducer";
+import {settlementSelector} from "./settlement.selectors";
 
 @Injectable()
 export class SettlementEffects {
@@ -47,9 +50,25 @@ export class SettlementEffects {
     )
   );
 
+  updateName$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.updateName),
+      withLatestFrom(this.store.select(settlementSelector)),
+      exhaustMap(([a, settlement]) => {
+        let params = new HttpParams().set('name', a.newName);
+        return this.httpClient
+          .put(`${environment.baseUrl}/villages/${settlement!.villageId}/update-name`, {}, {responseType: "text", params: params})
+          .pipe(map(() => SettlementActions.fetchSettlementsList({userId: settlement!.accountId})),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      })
+    )
+  );
+
   constructor(
     private httpClient: HttpClient,
     private actions$: Actions,
+    private store: Store<fromAppStore.AppState>
   ) {}
 
   private mapView(village: VillageView): VillageView {

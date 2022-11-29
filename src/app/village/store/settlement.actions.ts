@@ -16,4 +16,7 @@ export const setSettlementsList = createAction(
 export const upgradeBuilding = createAction(
   '[Settlement] Upgrade building', props<{ villageId: string; position: number }>());
 
+export const updateName = createAction(
+  '[Settlement] Update name', props<{ newName: string}>());
+
 export const errorSettlement = createAction('[Settlement] Error', props<{ error: string }>());

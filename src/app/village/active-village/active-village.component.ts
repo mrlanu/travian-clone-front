@@ -7,7 +7,7 @@ import {AuthService} from "../../auth/auth.service";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
 import {settlementSelector} from "../store/settlement.selectors";
-import {fetchSettlement} from "../store/settlement.actions";
+import {updateName} from "../store/settlement.actions";
 
 
 @Component({
@@ -47,11 +47,7 @@ export class ActiveVillageComponent implements OnInit {
   }
 
   onEditName(){
-    this.componentSubs.push(this.villageService.updateVillageName(this.ngTest)
-      .subscribe(name => {
-      this.ngTest = name;
-      this.store.dispatch(fetchSettlement({id: this.village!.villageId}))
-    }));
+    this.store.dispatch(updateName({newName: this.ngTest}));
   }
 
   ngOnDestroy(): void {

@@ -6,6 +6,8 @@ import {Utils} from "../../shared/utils";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
 import {upgradeBuilding} from "../store/settlement.actions";
+import {settlementSelector} from "../store/settlement.selectors";
+import {take} from "rxjs/operators";
 
 export interface BuildingView {
   position: number;
@@ -45,9 +47,11 @@ export class BuildingDetailsComponent implements OnInit {
   }
 
   onUpgradeClick(){
-    let villageId = this.route.parent?.snapshot.params['village-id'];
-    this.store.dispatch(upgradeBuilding({villageId, position: this.buildingView.position}));
-    this.router.navigate(['/villages', villageId, 'fields']);
+    this.store.select(settlementSelector).pipe(take(1)).subscribe(value => {
+      this.store.dispatch(upgradeBuilding({villageId: value?.villageId!, position: this.buildingView.position}));
+      this.router.navigate(['/villages', value!.villageId, 'fields']);
+    });
+
     /*this.villageService.upgradeField(villageId, this.buildingView.position!).subscribe(resp => {
       this.store.dispatch(fetchSettlement({id: villageId}));
       this.router.navigate(['/villages', villageId, 'fields']);

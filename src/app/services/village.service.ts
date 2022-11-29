@@ -28,22 +28,11 @@ export class VillageService {
 
   constructor(private httpClient: HttpClient, private store: Store<fromAppStore.AppState>) { }
 
-  updateVillageName(newName: string){
-    const url = `${this.baseUrl}/villages/${this.villageId}/update-name`;
-    let params = new HttpParams().set('name', newName);
-    return this.httpClient.put(url, {}, {responseType: "text", params: params});
-  }
-
   createNewBuilding(villageId: string, position: number, kind: string){
     const url = `${this.baseUrl}/villages/${villageId}/buildings/${position}/new`;
     let params = new HttpParams().set('kind', kind);
     return this.httpClient.put(url, {}, {responseType: "text", params: params});
   }
-
-  /*upgradeField(villageId: string, position: number) {
-    const url = `${this.baseUrl}/villages/${villageId}/buildings/${position}/upgrade`;
-    return this.httpClient.put<string>(url, {});
-  }*/
 
   deleteBuildingEvent(villageId: string, eventId: string){
     const url = `${this.baseUrl}/villages/${villageId}/events/${eventId}`;
