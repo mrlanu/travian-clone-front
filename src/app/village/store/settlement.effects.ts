@@ -9,6 +9,7 @@ import {environment} from "../../../environments/environment";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
 import {settlementSelector} from "./settlement.selectors";
+import {Building} from "../all-buildings-list/all-buildings-list.component";
 
 @Injectable()
 export class SettlementEffects {
@@ -65,6 +66,21 @@ export class SettlementEffects {
     )
   );
 
+  availableBuildings$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.fetchAvailableBuildings),
+      withLatestFrom(this.store.select(settlementSelector)),
+      exhaustMap(([_, settlement]) =>
+        this.httpClient
+          .get<Building[]>(`${environment.baseUrl}/villages/${settlement!.villageId}/buildings`)
+          .pipe(map((buildings) =>
+              SettlementActions.setAvailableBuildings({buildings: this.mapBuildings(buildings)})),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
   constructor(
     private httpClient: HttpClient,
     private actions$: Actions,
@@ -91,6 +107,19 @@ export class SettlementEffects {
       village.buildings, storage, village.warehouseCapacity, village.granaryCapacity, homeLegion,
       village.homeUnits, producePerHour, village.eventsList
     );
+  }
+
+  private mapBuildings(buildingsList: Building[]): Building[] {
+    return  buildingsList.map(b => {
+      let cost = new Map<string, number>();
+      for(const [key, value] of Object.entries(b.cost)){
+        cost.set(key, value);
+      }
+      let req = b.requirements.map(r => {
+        return {...r};
+      });
+      return new Building(b.name, b.kind, b.type, b.description, cost, b.time, req, b.available);
+    });
   }
 
   private capitalizeFirstLater(str: string): string{

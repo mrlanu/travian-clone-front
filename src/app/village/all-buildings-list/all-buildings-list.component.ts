@@ -2,6 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
 import {ActivatedRoute} from "@angular/router";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../store/app.reducer";
+import {availableBuildingsSelector} from "../store/settlement.selectors";
+import {fetchAvailableBuildings} from "../store/settlement.actions";
 
 export class Building {
   constructor(public name: string,
@@ -25,24 +29,16 @@ export class AllBuildingsListComponent implements OnInit, OnDestroy {
   buildingList: Building[] = [];
   componentSubs: Subscription[] = [];
 
-  constructor(private villageService: VillageService, private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
     this.villageId = this.route.parent?.snapshot.params['village-id'];
     this.componentSubs.push(
-      this.villageService.getListOfAllNewBuildings(this.villageId).subscribe(
-        (buildings: Building[]) => {
-          this.buildingList = buildings.map(b => {
-            let cost = new Map<string, number>();
-            for(const [key, value] of Object.entries(b.cost)){
-              cost.set(key, value);
-            }
-            let req = b.requirements.map(r => {
-              return {...r};
-            });
-            return new Building(b.name, b.kind, b.type, b.description, cost, b.time, req, b.available);
-          });
-        }));
+      this.store.select(availableBuildingsSelector).subscribe(
+        buildings => this.buildingList = buildings
+      )
+    );
+    this.store.dispatch(fetchAvailableBuildings());
   }
 
   ngOnDestroy(): void {

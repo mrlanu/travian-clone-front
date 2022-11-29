@@ -11,3 +11,9 @@ export const settlementsListSelector = createSelector(
   (state: fromApp.AppState) => state.settlement,
   (st: fromSettlement.State) => st.allSettlements
 );
+
+
+export const availableBuildingsSelector = createSelector(
+  (state: fromApp.AppState) => state.settlement,
+  (st: fromSettlement.State) => st.availableBuildings
+);

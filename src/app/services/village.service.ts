@@ -4,7 +4,6 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {MapTile} from "../models/village-dto.model";
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
-import {Building} from "../village/all-buildings-list/all-buildings-list.component";
 import {OrderCombatUnit} from "../village/building-details/barracks/barracks.component";
 import {CombatUnit} from "../village/building-details/barracks/combat-unit/combat-unit.component";
 import {
@@ -39,11 +38,6 @@ export class VillageService {
     this.httpClient.delete<string>(url).subscribe(() => {
       this.store.dispatch(fetchSettlement({id: villageId}));
     });
-  }
-
-  getListOfAllNewBuildings(villageId: string){
-    const url = `${this.baseUrl}/villages/${villageId}/buildings`;
-    return this.httpClient.get<Building[]>(url);
   }
 
   getAllResearchedUnits(villageId: string){
