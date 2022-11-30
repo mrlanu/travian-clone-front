@@ -19,7 +19,7 @@ export class SettlementEffects {
       exhaustMap(action =>
         this.httpClient
           .get<VillageView>(`${environment.baseUrl}/villages/${action.id}`)
-          .pipe(map(v => SettlementActions.setSettlement({ settlement: this.mapView(v) })),
+          .pipe(map(v => SettlementActions.setSettlement({ settlement: v })),
           catchError(error => of(SettlementActions.errorSettlement({ error })))
         )
       )
@@ -118,28 +118,6 @@ export class SettlementEffects {
     private store: Store<fromAppStore.AppState>
   ) {}
 
-  private mapView(village: VillageView): VillageView {
-    let producePerHour = new Map<string, number>();
-    let storage = new Map<string, number>();
-    let homeLegion = new Map<string, number>();
-
-    for(const [key, value] of Object.entries(village.producePerHour)){
-      producePerHour.set(key, value);
-    }
-    for(const [key, value] of Object.entries(village.storage)){
-      storage.set(key, value);
-    }
-    for(const [key, value] of Object.entries(village.homeLegion)){
-      // PHALANX -> Phalanx
-      homeLegion.set(this.capitalizeFirstLater(key), value);
-    }
-    return  new VillageView(village.villageId, village.accountId, village.nation, village.name,
-      village.x, village.y, village.villageType, village.population, village.culture, village.approval,
-      village.buildings, storage, village.warehouseCapacity, village.granaryCapacity, homeLegion,
-      village.homeUnits, producePerHour, village.eventsList
-    );
-  }
-
   private mapBuildings(buildingsList: Building[]): Building[] {
     return  buildingsList.map(b => {
       let cost = new Map<string, number>();
@@ -151,10 +129,5 @@ export class SettlementEffects {
       });
       return new Building(b.name, b.kind, b.type, b.description, cost, b.time, req, b.available);
     });
-  }
-
-  private capitalizeFirstLater(str: string): string{
-    let allToLower = str.toLowerCase();
-    return allToLower.charAt(0).toUpperCase() + allToLower.slice(1);
   }
 }

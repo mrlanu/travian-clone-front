@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Subject} from "rxjs";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {MapTile} from "../models/village-dto.model";
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
@@ -26,13 +26,6 @@ export class VillageService {
   partOfWorldChanged = new Subject<MapTile[]>();
 
   constructor(private httpClient: HttpClient, private store: Store<fromAppStore.AppState>) { }
-
-  /*deleteBuildingEvent(villageId: string, eventId: string){
-    const url = `${this.baseUrl}/villages/${villageId}/events/${eventId}`;
-    this.httpClient.delete<string>(url).subscribe(() => {
-      this.store.dispatch(fetchSettlement({id: villageId}));
-    });
-  }*/
 
   getAllResearchedUnits(villageId: string){
     const url = `${this.baseUrl}/villages/${villageId}/military/researched`;

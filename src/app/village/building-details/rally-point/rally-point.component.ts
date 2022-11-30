@@ -62,7 +62,7 @@ export class RallyPointComponent implements OnInit {
   @ViewChild('staticTabs', { static: false }) staticTabs?: TabsetComponent;
 
   villageId: string | undefined;
-  buildingView!: BuildingView
+  buildingView!: BuildingView;
   homeLegion: HomeLegion = {
     villageId: '',
     units: [0,0,0,0,0,0,0,0,0,0,0],
