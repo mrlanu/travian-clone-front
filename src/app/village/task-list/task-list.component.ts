@@ -6,7 +6,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
 import {settlementSelector} from "../store/settlement.selectors";
-import {fetchSettlement} from "../store/settlement.actions";
+import {deleteBuildEvent, fetchSettlement} from "../store/settlement.actions";
 
 @Component({
   selector: 'app-task-list',
@@ -23,7 +23,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
   constructor(private villageService: VillageService, private store: Store<fromAppStore.AppState>) { }
 
   onEventDelete(eventId: string){
-    this.villageService.deleteBuildingEvent(this.village.villageId, eventId);
+    this.store.dispatch(deleteBuildEvent({eventId}));
   }
 
   ngOnInit(): void {

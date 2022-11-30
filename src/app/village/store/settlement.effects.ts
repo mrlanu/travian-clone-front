@@ -83,6 +83,20 @@ export class SettlementEffects {
     )
   );
 
+  deleteBuildEvent$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.deleteBuildEvent),
+      withLatestFrom(this.store.select(settlementIdSellector)),
+      exhaustMap(([action, settlementId]) =>
+        this.httpClient
+          .delete<string>(`${environment.baseUrl}/villages/${settlementId}/events/${action.eventId}`, {})
+          .pipe(map(() => SettlementActions.fetchSettlement({ id: settlementId! })),
+            catchError(error => of(SettlementActions.errorSettlement({ error })))
+          )
+      )
+    )
+  );
+
   availableBuildings$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettlementActions.fetchAvailableBuildings),

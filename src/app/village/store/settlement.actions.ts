@@ -20,6 +20,9 @@ export const buildNewBuilding = createAction(
 export const upgradeBuilding = createAction(
   '[Settlement] Upgrade building', props<{ position: number }>());
 
+export const deleteBuildEvent = createAction(
+  '[Settlement] Delete build event', props<{ eventId: string }>());
+
 export const updateName = createAction(
   '[Settlement] Update name', props<{ newName: string}>());
 
