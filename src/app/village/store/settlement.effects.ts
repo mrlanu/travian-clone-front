@@ -8,7 +8,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
-import {settlementSelector} from "./settlement.selectors";
+import {settlementIdSellector, settlementSelector} from "./settlement.selectors";
 import {Building} from "../all-buildings-list/all-buildings-list.component";
 
 @Injectable()
@@ -38,13 +38,30 @@ export class SettlementEffects {
     )
   );
 
+  newBuilding$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.buildNewBuilding),
+      withLatestFrom(this.store.select(settlementIdSellector)),
+      exhaustMap(([action, settlementId]) => {
+        let params = new HttpParams().set('kind', action.kind);
+        return this.httpClient
+          .put(`${environment.baseUrl}/villages/${settlementId}/buildings/${action.position}/new`,
+            {}, {responseType: "text", params: params})
+          .pipe(map(() => SettlementActions.fetchSettlement({ id: settlementId! })),
+            catchError(error => of(SettlementActions.errorSettlement({ error })))
+          )
+      })
+    )
+  );
+
   upgrade$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettlementActions.upgradeBuilding),
-      exhaustMap(action =>
+      withLatestFrom(this.store.select(settlementIdSellector)),
+      exhaustMap(([action, settlementId]) =>
         this.httpClient
-          .put<string>(`${environment.baseUrl}/villages/${action.villageId}/buildings/${action.position}/upgrade`, {})
-          .pipe(map(() => SettlementActions.fetchSettlement({ id: action.villageId })),
+          .put<string>(`${environment.baseUrl}/villages/${settlementId}/buildings/${action.position}/upgrade`, {})
+          .pipe(map(() => SettlementActions.fetchSettlement({ id: settlementId! })),
             catchError(error => of(SettlementActions.errorSettlement({ error })))
           )
       )

@@ -2,7 +2,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Building} from "../all-buildings-list.component";
 import {Utils} from "../../../shared/utils";
 import {ActivatedRoute, Router} from "@angular/router";
-import {VillageService} from "../../../services/village.service";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../../store/app.reducer";
+import {buildNewBuilding} from "../../store/settlement.actions";
 
 @Component({
   selector: 'app-building-item',
@@ -13,7 +15,7 @@ export class BuildingItemComponent implements OnInit {
 
   @Input() building!: Building;
 
-  constructor(private villageService: VillageService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private store: Store<fromAppStore.AppState>, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {}
 
@@ -24,9 +26,8 @@ export class BuildingItemComponent implements OnInit {
   onBuildingSelect(kind: string){
     const selectedPosition = this.route.snapshot.params['position'];
     const villageId = this.route.parent!.snapshot.params['village-id'];
-    this.villageService.createNewBuilding(villageId, selectedPosition, kind).subscribe(res => {
-      this.router.navigate(['/villages', villageId, 'buildings']);
-    });
+    this.store.dispatch(buildNewBuilding({position: selectedPosition, kind}));
+    this.router.navigate(['/villages', villageId, 'buildings']);
   }
 
 }

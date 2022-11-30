@@ -48,7 +48,7 @@ export class BuildingDetailsComponent implements OnInit {
 
   onUpgradeClick(){
     this.store.select(settlementSelector).pipe(take(1)).subscribe(value => {
-      this.store.dispatch(upgradeBuilding({villageId: value?.villageId!, position: this.buildingView.position}));
+      this.store.dispatch(upgradeBuilding({position: this.buildingView.position}));
       this.router.navigate(['/villages', value!.villageId, 'fields']);
     });
 

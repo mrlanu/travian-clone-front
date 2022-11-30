@@ -7,6 +7,11 @@ export const settlementSelector = createSelector(
   (st: fromSettlement.State) => st.current
 );
 
+export const settlementIdSellector = createSelector(
+  (state: fromApp.AppState) => state.settlement,
+  (st: fromSettlement.State) => st.current?.villageId
+);
+
 export const settlementsListSelector = createSelector(
   (state: fromApp.AppState) => state.settlement,
   (st: fromSettlement.State) => st.allSettlements

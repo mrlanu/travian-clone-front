@@ -27,11 +27,11 @@ export class VillageService {
 
   constructor(private httpClient: HttpClient, private store: Store<fromAppStore.AppState>) { }
 
-  createNewBuilding(villageId: string, position: number, kind: string){
+  /*createNewBuilding(villageId: string, position: number, kind: string){
     const url = `${this.baseUrl}/villages/${villageId}/buildings/${position}/new`;
     let params = new HttpParams().set('kind', kind);
     return this.httpClient.put(url, {}, {responseType: "text", params: params});
-  }
+  }*/
 
   deleteBuildingEvent(villageId: string, eventId: string){
     const url = `${this.baseUrl}/villages/${villageId}/events/${eventId}`;
