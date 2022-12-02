@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
@@ -11,10 +11,10 @@ import {Router} from "@angular/router";
 })
 export class SignupComponent implements OnInit, OnDestroy {
 
-  signUpForm = new FormGroup({
-    'email': new FormControl('', {validators: [Validators.required]}),
-    'username': new FormControl('', {validators: [Validators.required]}),
-    'password': new FormControl('', {validators: [Validators.required]})
+  signUpForm = new UntypedFormGroup({
+    'email': new UntypedFormControl('', {validators: [Validators.required]}),
+    'username': new UntypedFormControl('', {validators: [Validators.required]}),
+    'password': new UntypedFormControl('', {validators: [Validators.required]})
   });
   componentSubs: Subscription[] = [];
   isLoading = false;

@@ -1,4 +1,4 @@
-<div *ngIf="movedTroopsList" class="card shadow" style="min-width: 250px; max-width: 300px">
+<div *ngIf="movedTroopsList && movedTroopsList.size > 0" class="card shadow" style="min-width: 250px; max-width: 300px">
   <div class="card-body" fxLayout="column">
     <div *ngIf="movedTroopsList.get('Outgoing Reinforcements')!.count > 0 || movedTroopsList.get('Outgoing Attacks')!.count > 0">Outgoing:
       <div *ngIf="movedTroopsList.get('Outgoing Reinforcements')!.count > 0" fxLayout fxLayoutAlign="space-between" fxLayoutGap="0.5rem">

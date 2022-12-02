@@ -1,8 +1,10 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Utils} from "../../../../shared/utils";
-import {VillageService} from "../../../../services/village.service";
-import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../../../store/app.reducer";
+import {settlementSelector} from "../../../store/settlement.selectors";
+import {orderCombatUnits} from "../../../store/settlement.actions";
 
 export class CombatUnit {
   constructor(
@@ -31,11 +33,13 @@ export class CombatUnitComponent implements OnInit, OnDestroy {
   maxUnits = '0';
   enteredValue = '';
   componentSubs: Subscription[] = [];
+  currentSettlementId = '';
 
-  constructor(private villageService: VillageService, private route: ActivatedRoute) { }
+  constructor(private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
-    this.villageService.currentVillage.subscribe(village => {
+    this.store.select(settlementSelector).subscribe(village => {
+      this.currentSettlementId = village?.villageId!;
       this.calculateMaxUnits(village!.storage);
     });
   }
@@ -45,9 +49,8 @@ export class CombatUnitComponent implements OnInit, OnDestroy {
   }
 
   orderUnits(amount: string){
-    let villageId = this.route.parent?.snapshot.params['village-id'];
     this.amountInput!.nativeElement.value = '';
-    this.villageService.orderCombatUnits(villageId, 'PHALANX', +amount);
+    this.store.dispatch(orderCombatUnits({unitType: 'PHALANX', amount: +amount}))
   }
 
   private calculateMaxUnits(storage: Map<string, number>) {

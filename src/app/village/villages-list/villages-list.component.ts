@@ -2,8 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {faEye} from "@fortawesome/free-solid-svg-icons";
 import {ShortVillageInfo} from "../../models/village-dto.model";
 import {Subscription} from "rxjs";
-import {VillageService} from "../../services/village.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../store/app.reducer";
+import {settlementsListSelector} from "../store/settlement.selectors";
 
 
 @Component({
@@ -24,14 +26,15 @@ export class VillagesListComponent implements OnInit, OnDestroy {
 
   currentVillageId = '';
 
-  constructor(private villageService: VillageService, private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private store: Store<fromAppStore.AppState>) {
   }
 
   ngOnInit(): void {
     this.componentSubs.push(
-      this.villageService.villagesList.subscribe(list => {
+      this.store.select(settlementsListSelector).subscribe(list => {
         this.villages = list;
-      }));
+      })
+    );
     this.route.params.subscribe(params => {
       this.currentVillageId = params['village-id'];
     });
@@ -41,7 +44,6 @@ export class VillagesListComponent implements OnInit, OnDestroy {
     const lastWord = this.router.url.split('/')[3];
     this.router.navigate(['/villages', villageId, lastWord]);
   }
-
 
   ngOnDestroy(): void {
     this.componentSubs.forEach(sub => {

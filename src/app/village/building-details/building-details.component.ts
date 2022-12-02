@@ -1,9 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
-import {VillageService} from "../../services/village.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UiService} from "../../services/ui.service";
 import {Utils} from "../../shared/utils";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../store/app.reducer";
+import {upgradeBuilding} from "../store/settlement.actions";
+import {settlementSelector} from "../store/settlement.selectors";
+import {take} from "rxjs/operators";
 
 export interface BuildingView {
   position: number;
@@ -31,8 +35,8 @@ export class BuildingDetailsComponent implements OnInit {
 
   componentSubs: Subscription[] = [];
 
-  constructor(private villageService: VillageService, private route: ActivatedRoute,
-              private router: Router, private uiService: UiService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private uiService: UiService,
+              private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
 
@@ -43,13 +47,18 @@ export class BuildingDetailsComponent implements OnInit {
   }
 
   onUpgradeClick(){
-    let villageId = this.route.parent?.snapshot.params['village-id'];
-    this.villageService.upgradeField(villageId, this.buildingView.position!).subscribe(resp => {
+    this.store.select(settlementSelector).pipe(take(1)).subscribe(value => {
+      this.store.dispatch(upgradeBuilding({position: this.buildingView.position}));
+      this.router.navigate(['/villages', value!.villageId, 'fields']);
+    });
+
+    /*this.villageService.upgradeField(villageId, this.buildingView.position!).subscribe(resp => {
+      this.store.dispatch(fetchSettlement({id: villageId}));
       this.router.navigate(['/villages', villageId, 'fields']);
     }, error => {
       this.uiService.showSnackbar('Error occurred', null, 4000);
       this.router.navigate(['/villages', villageId, 'fields']);
-    });
+    });*/
   }
 
 }

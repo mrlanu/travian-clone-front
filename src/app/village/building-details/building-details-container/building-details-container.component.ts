@@ -4,6 +4,10 @@ import {Subscription} from "rxjs";
 import {VillageService} from "../../../services/village.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BuildingView} from "../building-details.component";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../../store/app.reducer";
+import {settlementSelector} from "../../store/settlement.selectors";
+import {fetchSettlement} from "../../store/settlement.actions";
 
 @Component({
   selector: 'app-building-details-container',
@@ -19,24 +23,24 @@ export class BuildingDetailsContainerComponent implements OnInit, OnDestroy {
   componentSubs: Subscription[] = [];
 
   constructor(private villageService: VillageService, private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
     this.path = this.router.url.split('/')[3];
     this.componentSubs.push(
-      this.villageService.villageChanged.subscribe(
-        (village: VillageView) => {
-          this.village = village;
-          this.buildingView = village.buildings.find(f => {
+      this.store.select(settlementSelector).subscribe(
+        village => {
+          this.village = village!;
+          this.buildingView = {...village!.buildings.find(f => {
             return f.position == +this.route.snapshot.params['position'];
-          })!;
+          })!};
           let res = new Map<string, number>();
           for(const [key, value] of Object.entries(this.buildingView!.resourcesToNextLevel)){
             res.set(key, value);
           }
-          this.buildingView!.resourcesToNextLevel = res;
+          this.buildingView.resourcesToNextLevel = res;
         }));
-    this.villageService.getVillageById(this.route.parent?.snapshot.params['village-id']);
+    this.store.dispatch(fetchSettlement());
   }
 
   ngOnDestroy(): void {

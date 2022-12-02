@@ -1,8 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
-import {ActivatedRoute} from "@angular/router";
-import {VillageView} from "../../models/village-dto.model";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../store/app.reducer";
+import {fetchMovementsBrief, fetchSettlement} from "../store/settlement.actions";
+import {movementsBriefSelector} from "../store/settlement.selectors";
 
 export class TroopMovementsBrief {
   constructor(public count: number, public timeToArrive: number) {}
@@ -15,34 +17,20 @@ export class TroopMovementsBrief {
 })
 export class TroopMovementsBriefComponent implements OnInit, OnDestroy {
 
-  villageId: string | null | undefined;
   movedTroopsList: Map<string, TroopMovementsBrief> | undefined;
   componentSubs: Subscription[] = [];
 
-  constructor(private villageService: VillageService, private route: ActivatedRoute) { }
+  constructor(private villageService: VillageService, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
-    this.componentSubs.push(this.villageService.villageChanged
-      .subscribe((v: VillageView) => {
-        this.villageId = v.villageId;
-        this.getTroopMovements(v.villageId)
-      }));
-    /*this.route.parent?.params.subscribe(params => {
-      console.log("Params - ", params);
-      this.villageId = params['village-id'];
-      console.log("Id: ", this.villageId);
-      this.getTroopMovements();
-    });*/
-  }
-
-  private getTroopMovements(villageId: string) {
-    this.villageService.getTroopMovements(villageId).subscribe(res => {
-      this.movedTroopsList = res;
-    });
+    this.componentSubs.push(this.store.select(movementsBriefSelector).subscribe(brief => {
+        this.movedTroopsList = brief;
+    }));
+    this.store.dispatch(fetchMovementsBrief());
   }
 
   onCountDone() {
-    this.villageService.getVillageById(this.villageId!);
+    this.store.dispatch(fetchSettlement());
   }
 
   ngOnDestroy(): void {
@@ -50,6 +38,4 @@ export class TroopMovementsBriefComponent implements OnInit, OnDestroy {
       sub.unsubscribe();
     });
   }
-
-
 }

@@ -2,6 +2,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {VillageService} from "../../services/village.service";
 import {VillageView} from "../../models/village-dto.model";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../store/app.reducer";
+import {settlementSelector} from "../store/settlement.selectors";
 
 @Component({
   selector: 'app-produce-per-hour',
@@ -18,11 +21,11 @@ export class ProducePerHourComponent implements OnInit, OnDestroy {
 
   componentSubs: Subscription[] = [];
 
-  constructor(private villageService: VillageService) { }
+  constructor(private villageService: VillageService, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
-    this.componentSubs.push(this.villageService.villageChanged
-      .subscribe((v: VillageView) => {
+    this.componentSubs.push(this.store.select(settlementSelector)
+      .subscribe(v => {
         this.village = v;
         this.assignResources();
       }));

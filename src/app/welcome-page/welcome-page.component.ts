@@ -1,8 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {UiService} from '../services/ui.service';
-import {AuthService} from "../auth/auth.service";
-/*import {UiService} from '../../shared/ui.service';*/
 
 @Component({
   selector: 'app-welcome-page',

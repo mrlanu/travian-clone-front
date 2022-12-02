@@ -1,15 +1,26 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {VillageView} from "../../../models/village-dto.model";
 import {take} from "rxjs/operators";
 import {VillageService} from "../../../services/village.service";
 import {BuildingView} from "../building-details.component";
 import {TabsetComponent} from "ngx-bootstrap/tabs";
 import {ActivatedRoute} from "@angular/router";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../../store/app.reducer";
+import {fetchCombatGroups, fetchSettlement} from "../../store/settlement.actions";
+import {combatGroupsSelector, settlementSelector} from "../../store/settlement.selectors";
+import {CombatGroup} from "./combat-group/combat-group.component";
 
 export class CombatGroupSendingRequest {
   constructor(public villageId: string, public x: number, public y: number,
               public mission: string, public waves: WaveModels[]) {
   }
+}
+
+export interface CombatGroupsMap {
+  HOME: CombatGroup[],
+  IN: CombatGroup[],
+  OUT: CombatGroup[],
+  AWAY: CombatGroup[],
 }
 
 export interface WaveModels {
@@ -59,20 +70,24 @@ export class RallyPointComponent implements OnInit {
   @ViewChild('staticTabs', { static: false }) staticTabs?: TabsetComponent;
 
   villageId: string | undefined;
-  buildingView!: BuildingView
+  buildingView!: BuildingView;
   homeLegion: HomeLegion = {
     villageId: '',
     units: [0,0,0,0,0,0,0,0,0,0,0],
     nation: 'GALLS'
   };
-  militaryUnitList: any;
+  militaryUnitList: CombatGroupsMap | undefined;
 
-  constructor(private villageService: VillageService, private route: ActivatedRoute) { }
+  constructor(private villageService: VillageService, private route: ActivatedRoute,
+              private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
-    console.log("Rally point init");
+    this.store.dispatch(fetchSettlement());
     this.getRallyPointBuildingFromCurrentVillage();
     setTimeout(()=>{this.selectTab(this.route.snapshot.queryParams.tab)}, 100);
+    this.store.select(combatGroupsSelector).subscribe(groups => {
+      this.militaryUnitList = groups;
+    });
   }
 
   onSendingSelect(){
@@ -90,15 +105,15 @@ export class RallyPointComponent implements OnInit {
   }
 
   onCountDone(){
-    this.villageService.getVillageById(this.villageId!);
+    this.store.dispatch(fetchSettlement());
     this.getAllCombatGroups(false);
   }
 
   private getRallyPointBuildingFromCurrentVillage() {
-    this.villageService.currentVillage.pipe(take(1)).subscribe(
-      (village: VillageView | null) => {
+    this.store.select(settlementSelector).pipe(take(1)).subscribe(
+      village => {
         this.villageId = village?.villageId;
-        this.buildingView = village!.buildings.find(f => f.name == "Rally-point")!;
+        this.buildingView = {...village!.buildings.find(f => f.name == "Rally-point")!};
         let res = new Map<string, number>();
         for (const [key, value] of Object.entries(this.buildingView!.resourcesToNextLevel)) {
           res.set(key, value);
@@ -107,20 +122,16 @@ export class RallyPointComponent implements OnInit {
 
         this.homeLegion = {
           villageId: village!.villageId,
-          units: village!.homeUnits,
+          units: [...village!.homeUnits],
           nation: village!.nation
         };
-        //this.getAllCombatGroups(false);
       });
   }
 
   getAllCombatGroups(redirected: boolean) {
-    this.villageService.getAllCombatGroups(this.villageId!).subscribe(res => {
-      this.militaryUnitList = res;
-      console.log("Get List of military units: ", res);
-      if (redirected){
+    this.store.dispatch(fetchCombatGroups());
+      if (redirected) {
         this.selectTab(1);
       }
-    });
   }
 }

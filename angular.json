@@ -110,5 +110,7 @@
       }
     }
   },
-  "defaultProject": "travian-clone-front"
+  "cli": {
+    "analytics": false
+  }
 }

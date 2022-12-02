@@ -1,11 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {AuthService} from '../auth.service';
 import {Router} from "@angular/router";
 import {User} from "../user.model";
 import {VillageService} from "../../services/village.service";
-import {filter} from "rxjs/operators";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../store/app.reducer";
+import {clear, fetchSettlementFirstTime, fetchSettlementsList} from "../../village/store/settlement.actions";
+import {settlementSelector, settlementsListSelector} from "../../village/store/settlement.selectors";
 
 @Component({
   selector: 'app-login',
@@ -15,31 +18,46 @@ import {filter} from "rxjs/operators";
 export class LoginComponent implements OnInit, OnDestroy {
 
   user: User | undefined;
-  loginForm = new FormGroup({
-    email: new FormControl('wer@yahoo.com',
+  loginForm = new UntypedFormGroup({
+    email: new UntypedFormControl('wer@yahoo.com',
       {validators: [Validators.required]}),
-    password: new FormControl('12345',
+    password: new UntypedFormControl('12345',
       {validators: [Validators.required]})
   });
   isLoading = false;
   componentSubs: Subscription[] = [];
 
-  constructor(private authService: AuthService, private router: Router, private villageService: VillageService) { }
+  constructor(private authService: AuthService, private router: Router, private villageService: VillageService,
+              private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit() {
     this.componentSubs.push(this.authService.isLoadingChanged
       .subscribe(result => {
         this.isLoading = result;
       }));
-    this.componentSubs.push(this.villageService.villagesList
-      .pipe(filter(l => l.length != 0)) // because used BehaviorSubject firs value is []
-      .subscribe(list => {
-        this.router.navigate(['/villages', list[0].villageId, 'fields']);
-      }));
+
+    //when user successfully logged in fetching all his settlements
     this.componentSubs.push(this.authService.userChanged
       .subscribe(user => {
-        this.villageService.getAllVillagesByUser(user.userId);
-      }));
+        this.store.dispatch(clear());
+        this.store.dispatch(fetchSettlementsList({userId: user.userId}));
+      })
+    );
+
+    //waiting for not empty list of those settlements
+    this.componentSubs.push(this.store.select(settlementsListSelector).subscribe(list => {
+      if (list.length > 0){
+        //when that list of settlements arrived fetching the firs settlement from there
+        this.store.dispatch(fetchSettlementFirstTime({id: list[0].villageId}));
+      }
+    }));
+
+    //waiting for that fetched settlement and then navigate to it
+    this.componentSubs.push(this.store.select(settlementSelector).subscribe(village => {
+      if (village){
+        this.router.navigate(['/villages', village.villageId, 'fields']);
+      }
+    }));
   }
 
   onRegister() {
