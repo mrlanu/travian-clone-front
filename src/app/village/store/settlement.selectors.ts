@@ -69,3 +69,8 @@ export const researchedUnitsSelector = createSelector(
     });
   }
 );
+
+export const combatGroupsSelector = createSelector(
+  settlement,
+  (state: fromSettlement.State) => state.combatGroups
+);

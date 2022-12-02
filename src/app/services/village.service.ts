@@ -23,11 +23,6 @@ export class VillageService {
 
   constructor(private httpClient: HttpClient, private store: Store<fromAppStore.AppState>) { }
 
-  getAllCombatGroups(villageId: string) {
-    const url = `${this.baseUrl}/villages/${villageId}/combat-group`;
-    return this.httpClient.get<any>(url);
-  }
-
   getTroopMovements(villageId: string) {
     const url = `${this.baseUrl}/villages/${villageId}/troop-movements`;
     return this.httpClient.get(url)

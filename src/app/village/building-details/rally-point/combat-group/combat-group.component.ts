@@ -1,9 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Utils} from "../../../../shared/utils";
-import {VillageView} from "../../../../models/village-dto.model";
 import {VillageService} from "../../../../services/village.service";
 import {Subscription} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../../store/app.reducer";
 import {settlementSelector} from "../../../store/settlement.selectors";

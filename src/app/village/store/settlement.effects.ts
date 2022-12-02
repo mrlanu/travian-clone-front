@@ -144,6 +144,21 @@ export class SettlementEffects {
     )
   );
 
+  combatGroups$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.fetchCombatGroups),
+      withLatestFrom(this.store.select(settlementIdSelector)),
+      exhaustMap(([_, settlementId]) =>
+        this.httpClient
+          .get<any>(`${environment.baseUrl}/villages/${settlementId}/combat-group`)
+          .pipe(map((groups) =>
+              SettlementActions.setCombatGroups({groups})),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
   constructor(
     private httpClient: HttpClient,
     private actions$: Actions,

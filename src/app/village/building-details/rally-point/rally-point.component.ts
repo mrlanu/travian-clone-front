@@ -1,18 +1,26 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {take} from "rxjs/operators";
+import {skip, take} from "rxjs/operators";
 import {VillageService} from "../../../services/village.service";
 import {BuildingView} from "../building-details.component";
 import {TabsetComponent} from "ngx-bootstrap/tabs";
 import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
-import {fetchSettlement} from "../../store/settlement.actions";
-import {settlementSelector} from "../../store/settlement.selectors";
+import {fetchCombatGroups, fetchSettlement} from "../../store/settlement.actions";
+import {combatGroupsSelector, settlementSelector} from "../../store/settlement.selectors";
+import {CombatGroup} from "./combat-group/combat-group.component";
 
 export class CombatGroupSendingRequest {
   constructor(public villageId: string, public x: number, public y: number,
               public mission: string, public waves: WaveModels[]) {
   }
+}
+
+export interface CombatGroupsMap {
+  HOME: CombatGroup[],
+  IN: CombatGroup[],
+  OUT: CombatGroup[],
+  AWAY: CombatGroup[],
 }
 
 export interface WaveModels {
@@ -68,7 +76,7 @@ export class RallyPointComponent implements OnInit {
     units: [0,0,0,0,0,0,0,0,0,0,0],
     nation: 'GALLS'
   };
-  militaryUnitList: any;
+  militaryUnitList: CombatGroupsMap | undefined;
 
   constructor(private villageService: VillageService, private route: ActivatedRoute,
               private store: Store<fromAppStore.AppState>) { }
@@ -76,6 +84,9 @@ export class RallyPointComponent implements OnInit {
   ngOnInit(): void {
     this.getRallyPointBuildingFromCurrentVillage();
     setTimeout(()=>{this.selectTab(this.route.snapshot.queryParams.tab)}, 100);
+    this.store.select(combatGroupsSelector).subscribe(groups => {
+      this.militaryUnitList = groups;
+    });
   }
 
   onSendingSelect(){
@@ -94,7 +105,6 @@ export class RallyPointComponent implements OnInit {
 
   onCountDone(){
     this.store.dispatch(fetchSettlement({id: this.villageId!}));
-    //this.villageService.getVillageById(this.villageId!);
     this.getAllCombatGroups(false);
   }
 
@@ -111,18 +121,16 @@ export class RallyPointComponent implements OnInit {
 
         this.homeLegion = {
           villageId: village!.villageId,
-          units: village!.homeUnits,
+          units: [...village!.homeUnits],
           nation: village!.nation
         };
       });
   }
 
   getAllCombatGroups(redirected: boolean) {
-    this.villageService.getAllCombatGroups(this.villageId!).subscribe(res => {
-      this.militaryUnitList = res;
-      if (redirected){
+    this.store.dispatch(fetchCombatGroups());
+      if (redirected) {
         this.selectTab(1);
       }
-    });
   }
 }
