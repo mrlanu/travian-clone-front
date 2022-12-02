@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {TileDetail} from "../map.component";
 import {BsModalRef} from "ngx-bootstrap/modal";
 import {Router} from "@angular/router";
-import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-tile-detail',

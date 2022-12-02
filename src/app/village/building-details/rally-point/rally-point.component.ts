@@ -82,6 +82,7 @@ export class RallyPointComponent implements OnInit {
               private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
+    this.store.dispatch(fetchSettlement());
     this.getRallyPointBuildingFromCurrentVillage();
     setTimeout(()=>{this.selectTab(this.route.snapshot.queryParams.tab)}, 100);
     this.store.select(combatGroupsSelector).subscribe(groups => {

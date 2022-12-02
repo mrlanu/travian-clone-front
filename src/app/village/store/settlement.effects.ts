@@ -12,6 +12,7 @@ import {settlementIdSelector, settlementSelector} from "./settlement.selectors";
 import {Building} from "../all-buildings-list/all-buildings-list.component";
 import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
 import {TroopMovementsBrief} from "../troop-movements-brief/troop-movements-brief.component";
+import {CombatGroupSendingContract} from "../building-details/rally-point/rally-point.component";
 
 @Injectable()
 export class SettlementEffects {
@@ -188,6 +189,38 @@ export class SettlementEffects {
               result.set(key, new TroopMovementsBrief(value.count, value.timeToArrive));
             }
             return SettlementActions.setMovementsBrief({brief: result})}),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
+  checkSendingContract$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.checkSendingContract),
+      exhaustMap(action =>
+        this.httpClient
+          .post<CombatGroupSendingContract>(`${environment.baseUrl}/villages/check-troops-send`, action.attackRequest)
+          .pipe(map((mU) => {
+              let result = new CombatGroupSendingContract(mU.id, mU.nation, mU.move, mU.mission, mU.originVillageId,
+                mU.originVillageName, mU.originPlayerName, mU.originVillageCoordinates, mU.currentLocationVillageId,
+                mU.targetVillageId, mU.targetVillageName, mU.targetPlayerName, mU.targetVillageCoordinates,
+                mU.units, mU.arrivalTime ? new Date(mU.arrivalTime) : null, mU.duration, mU.expensesPerHour)
+              return SettlementActions.setSendingContract({contract: result})}),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
+  confirmTroopsSending$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.confirmTroopsSending),
+      exhaustMap(action =>
+        this.httpClient
+          .post<boolean>(`${environment.baseUrl}/villages/troops-send`, action.contract)
+          .pipe(map((result) =>
+              SettlementActions.troopsSent({result})),
             catchError(error => of(SettlementActions.errorSettlement({error})))
           )
       )

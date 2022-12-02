@@ -2,7 +2,11 @@ import { createAction, props } from '@ngrx/store';
 import {ShortVillageInfo, VillageView} from "../../models/village-dto.model";
 import {Building} from "../all-buildings-list/all-buildings-list.component";
 import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
-import {CombatGroupsMap} from "../building-details/rally-point/rally-point.component";
+import {
+  CombatGroupSendingContract,
+  CombatGroupSendingRequest,
+  CombatGroupsMap
+} from "../building-details/rally-point/rally-point.component";
 import {TroopMovementsBrief} from "../troop-movements-brief/troop-movements-brief.component";
 
 export const clear = createAction(
@@ -61,5 +65,17 @@ export const fetchMovementsBrief = createAction(
 
 export const setMovementsBrief = createAction(
   '[Settlement] Set movements brief', props<{ brief: Map<string, TroopMovementsBrief>; }>());
+
+export const checkSendingContract = createAction(
+  '[Settlement] Check sending contract', props<{ attackRequest: CombatGroupSendingRequest}>());
+
+export const setSendingContract = createAction(
+  '[Settlement] Set sending contract', props<{ contract: CombatGroupSendingContract}>());
+
+export const confirmTroopsSending = createAction(
+  '[Settlement] Confirm troops sending', props<{ contract: CombatGroupSendingContract}>());
+
+export const troopsSent = createAction(
+  '[Settlement] Is troops sent', props<{ result: boolean}>());
 
 export const errorSettlement = createAction('[Settlement] Error', props<{ error: string }>());

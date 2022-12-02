@@ -3,7 +3,7 @@ import * as SettlementActions from './settlement.actions';
 import {ShortVillageInfo, VillageView} from "../../models/village-dto.model";
 import {Building} from "../all-buildings-list/all-buildings-list.component";
 import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
-import {CombatGroupsMap} from "../building-details/rally-point/rally-point.component";
+import {CombatGroupSendingContract, CombatGroupsMap} from "../building-details/rally-point/rally-point.component";
 import {TroopMovementsBrief} from "../troop-movements-brief/troop-movements-brief.component";
 
 export interface State {
@@ -13,6 +13,8 @@ export interface State {
   researchedUnits: CombatUnit[];
   combatGroups: CombatGroupsMap;
   movementsBrief: Map<string, TroopMovementsBrief>;
+  sendingContract: CombatGroupSendingContract | null,
+  isTroopsSent: boolean
 }
 
 export const initialState: State = {
@@ -24,6 +26,8 @@ export const initialState: State = {
     IN: [], OUT: [], AWAY: [], HOME: []
   },
   movementsBrief: new Map(),
+  sendingContract: null,
+  isTroopsSent: false
 };
 
 export const settlementReducer = createReducer(
@@ -45,6 +49,12 @@ export const settlementReducer = createReducer(
   )),
   on(SettlementActions.setMovementsBrief, (state, {brief}) => (
     { ...state, movementsBrief: brief }
+  )),
+  on(SettlementActions.setSendingContract, (state, {contract}) => (
+    { ...state, sendingContract: contract }
+  )),
+  on(SettlementActions.troopsSent, (state, {result}) => (
+    { ...state, isTroopsSent: result }
   )),
   on(SettlementActions.clear, () => (
     { ...initialState }

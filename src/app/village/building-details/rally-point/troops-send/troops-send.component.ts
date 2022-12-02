@@ -5,8 +5,12 @@ import {VillageService} from "../../../../services/village.service";
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {ConfirmTroopsSendComponent} from "./confirm-troops-send/confirm-troops-send.component";
 import {ActivatedRoute} from "@angular/router";
-import {take} from "rxjs/operators";
+import {skip, take} from "rxjs/operators";
 import {HomeLegion, CombatGroupSendingContract, CombatGroupSendingRequest} from "../rally-point.component";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../../../store/app.reducer";
+import {checkSendingContract, confirmTroopsSending, troopsSent} from "../../../store/settlement.actions";
+import {isTroopsSentSelector, sendingContractSelector} from "../../../store/settlement.selectors";
 
 export enum ECombatUnitMission {
   HOME="Own army",
@@ -39,7 +43,8 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
 
   constructor(private villageService: VillageService,
               private route: ActivatedRoute,
-              private modalService: BsModalService) {
+              private modalService: BsModalService,
+              private store: Store<fromAppStore.AppState>) {
     this.attackForm = new UntypedFormGroup({
       villageId: new UntypedFormControl({value: ''}),
       x: new UntypedFormControl({value: this.route.snapshot.queryParams.x, disabled: true}, Validators.required),
@@ -147,11 +152,11 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
       waves: this.attack.waves,
     };
 
-    this.villageService.checkTroopsSendingRequest(this.attack).subscribe(response => {
-      this.openModalWithComponent(response);
-    }, error => {
-      console.log(error.error);
-    });
+    this.store.select(sendingContractSelector).pipe(skip(1), take(1)).subscribe(contract => {
+      this.openModalWithComponent(contract!);
+    })
+
+    this.store.dispatch(checkSendingContract({attackRequest: this.attack}));
   }
 
   checkAvailableTroops(id: number, inputName: any, amountEvent: any) {
@@ -187,7 +192,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
   }
 
   resetForm(){
-    this.attack.waves = [];
+    //this.attack.waves = [];
     /*this.militaryUnit.units = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];*/
     this.attackForm.reset({
       x: '', y: '',
@@ -218,10 +223,10 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
     return new Array(i);
   }
 
-  openModalWithComponent(militaryUnitContract: CombatGroupSendingContract) {
+  openModalWithComponent(contract: CombatGroupSendingContract) {
     const initialState: ModalOptions = {
       initialState: {
-        militaryUnitContract: militaryUnitContract,
+        militaryUnitContract: contract,
         title: 'Confirm sending ',
         position: this.route.snapshot.params['position']
       }
@@ -229,7 +234,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
     this.bsModalRef = this.modalService.show(ConfirmTroopsSendComponent, initialState);
     this.bsModalRef.onHide?.pipe(take(1)).subscribe((reason: string | any) => {
       if (reason === 'confirm'){
-        this.confirmSending(militaryUnitContract);
+        this.confirmSending(contract);
       }
       if (reason === 'cancel'){
         this.cancelSending();
@@ -246,13 +251,19 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
     this.resetForm();
   }
 
-  private confirmSending(militaryUnit: CombatGroupSendingContract) {
-    this.villageService.sendConfirmedTroops(militaryUnit).subscribe(result => {
-      this.bsModalRef?.hide();
-      this.resetForm();
-      this.confirmClick.emit('confirm');
-    }, error => {
-      console.log('Error: ', error);
-    });
+  private confirmSending(contract: CombatGroupSendingContract) {
+    this.store.select(isTroopsSentSelector).pipe(skip(1), take(1)).subscribe(result => {
+      if (result){
+        console.log('Troops has been sent');
+        this.bsModalRef?.hide();
+        this.resetForm();
+        this.confirmClick.emit('confirm');
+        //reset store after sending was success
+        this.store.dispatch(troopsSent({result: false}));
+      } else {
+        console.log('Error while troops sending');
+      }
+    })
+    this.store.dispatch(confirmTroopsSending({contract}));
   }
 }

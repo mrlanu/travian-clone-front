@@ -80,3 +80,13 @@ export const movementsBriefSelector = createSelector(
   settlement,
   (state: fromSettlement.State) => state.movementsBrief
 );
+
+export const sendingContractSelector = createSelector(
+  settlement,
+  (state: fromSettlement.State) => state.sendingContract
+);
+
+export const isTroopsSentSelector = createSelector(
+  settlement,
+  (state: fromSettlement.State) => state.isTroopsSent
+);
