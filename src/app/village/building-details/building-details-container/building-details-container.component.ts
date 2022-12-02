@@ -40,7 +40,7 @@ export class BuildingDetailsContainerComponent implements OnInit, OnDestroy {
           }
           this.buildingView.resourcesToNextLevel = res;
         }));
-    this.store.dispatch(fetchSettlement({id: this.route.parent?.snapshot.params['village-id']}));
+    this.store.dispatch(fetchSettlement());
   }
 
   ngOnDestroy(): void {

@@ -11,18 +11,34 @@ import * as fromAppStore from "../../store/app.reducer";
 import {settlementIdSelector, settlementSelector} from "./settlement.selectors";
 import {Building} from "../all-buildings-list/all-buildings-list.component";
 import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
+import {TroopMovementsBrief} from "../troop-movements-brief/troop-movements-brief.component";
 
 @Injectable()
 export class SettlementEffects {
-  settlement$ = createEffect(() =>
+  settlementFirstTime$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SettlementActions.fetchSettlement),
+      ofType(SettlementActions.fetchSettlementFirstTime),
       exhaustMap(action =>
         this.httpClient
           .get<VillageView>(`${environment.baseUrl}/villages/${action.id}`)
           .pipe(map(v => SettlementActions.setSettlement({ settlement: v })),
           catchError(error => of(SettlementActions.errorSettlement({ error })))
         )
+      )
+    )
+  );
+
+  settlement$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.fetchSettlement),
+      withLatestFrom(this.store.select(settlementSelector)),
+      exhaustMap(([_, settlement]) =>
+        this.httpClient
+          .get<VillageView>(`${environment.baseUrl}/villages/${settlement!.villageId}`)
+          .pipe(map((settlement) =>
+              SettlementActions.setSettlement({settlement: settlement})),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
       )
     )
   );
@@ -48,7 +64,7 @@ export class SettlementEffects {
         return this.httpClient
           .put(`${environment.baseUrl}/villages/${settlementId}/buildings/${action.position}/new`,
             {}, {responseType: "text", params: params})
-          .pipe(map(() => SettlementActions.fetchSettlement({ id: settlementId! })),
+          .pipe(map(() => SettlementActions.fetchSettlementFirstTime({ id: settlementId! })),
             catchError(error => of(SettlementActions.errorSettlement({ error })))
           )
       })
@@ -62,7 +78,7 @@ export class SettlementEffects {
       exhaustMap(([action, settlementId]) =>
         this.httpClient
           .put<string>(`${environment.baseUrl}/villages/${settlementId}/buildings/${action.position}/upgrade`, {})
-          .pipe(map(() => SettlementActions.fetchSettlement({ id: settlementId! })),
+          .pipe(map(() => SettlementActions.fetchSettlementFirstTime({ id: settlementId! })),
             catchError(error => of(SettlementActions.errorSettlement({ error })))
           )
       )
@@ -91,7 +107,7 @@ export class SettlementEffects {
       exhaustMap(([action, settlementId]) =>
         this.httpClient
           .delete<string>(`${environment.baseUrl}/villages/${settlementId}/events/${action.eventId}`, {})
-          .pipe(map(() => SettlementActions.fetchSettlement({ id: settlementId! })),
+          .pipe(map(() => SettlementActions.fetchSettlementFirstTime({ id: settlementId! })),
             catchError(error => of(SettlementActions.errorSettlement({ error })))
           )
       )
@@ -153,6 +169,25 @@ export class SettlementEffects {
           .get<any>(`${environment.baseUrl}/villages/${settlementId}/combat-group`)
           .pipe(map((groups) =>
               SettlementActions.setCombatGroups({groups})),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
+  movementsBrief$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.fetchMovementsBrief),
+      withLatestFrom(this.store.select(settlementIdSelector)),
+      exhaustMap(([_, settlementId]) =>
+        this.httpClient
+          .get(`${environment.baseUrl}/villages/${settlementId}/troop-movements`)
+          .pipe(map((brief) => {
+            let result = new Map<string, TroopMovementsBrief>();
+            for(const [key, value] of Object.entries(brief)){
+              result.set(key, new TroopMovementsBrief(value.count, value.timeToArrive));
+            }
+            return SettlementActions.setMovementsBrief({brief: result})}),
             catchError(error => of(SettlementActions.errorSettlement({error})))
           )
       )

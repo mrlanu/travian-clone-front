@@ -27,8 +27,6 @@ export class BarracksComponent implements OnInit {
   constructor(private route: ActivatedRoute, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
-    this.villageId = this.route.parent?.snapshot.params['village-id'];
-
     this.componentSubs.push(this.store.select(researchedUnitsSelector).subscribe(units => {
         this.militaryUnitsList = units;
       })
@@ -45,7 +43,7 @@ export class BarracksComponent implements OnInit {
 
   onCountDone(){
     setTimeout(()=>{}, 500);
-    this.store.dispatch(fetchSettlement({id: this.villageId}));
+    this.store.dispatch(fetchSettlement());
     this.count.reset(this.currentUnitTime);
   }
 

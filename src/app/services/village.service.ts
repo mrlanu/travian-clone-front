@@ -9,9 +9,6 @@ import {
   CombatGroupSendingRequest
 } from "../village/building-details/rally-point/rally-point.component";
 import {MapPart, TileDetail} from "../village/map/map.component";
-import {TroopMovementsBrief} from "../village/troop-movements-brief/troop-movements-brief.component";
-import {Store} from "@ngrx/store";
-import * as fromAppStore from "../store/app.reducer";
 
 @Injectable({
   providedIn: 'root'
@@ -21,19 +18,7 @@ export class VillageService {
   villageId = '';
   partOfWorldChanged = new Subject<MapTile[]>();
 
-  constructor(private httpClient: HttpClient, private store: Store<fromAppStore.AppState>) { }
-
-  getTroopMovements(villageId: string) {
-    const url = `${this.baseUrl}/villages/${villageId}/troop-movements`;
-    return this.httpClient.get(url)
-      .pipe(map(o => {
-        let result = new Map<string, TroopMovementsBrief>();
-        for(const [key, value] of Object.entries(o)){
-        result.set(key, new TroopMovementsBrief(value.count, value.timeToArrive));
-      }
-      return result;
-    }));
-  }
+  constructor(private httpClient: HttpClient) { }
 
   checkTroopsSendingRequest(attackRequest: CombatGroupSendingRequest){
     const url = `${this.baseUrl}/villages/check-troops-send`;

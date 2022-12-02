@@ -7,7 +7,7 @@ import {User} from "../user.model";
 import {VillageService} from "../../services/village.service";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
-import {clear, fetchSettlement, fetchSettlementsList} from "../../village/store/settlement.actions";
+import {clear, fetchSettlementFirstTime, fetchSettlementsList} from "../../village/store/settlement.actions";
 import {settlementSelector, settlementsListSelector} from "../../village/store/settlement.selectors";
 
 @Component({
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.componentSubs.push(this.authService.userChanged
       .subscribe(user => {
         this.store.dispatch(clear());
-        return this.store.dispatch(fetchSettlementsList({userId: user.userId}));
+        this.store.dispatch(fetchSettlementsList({userId: user.userId}));
       })
     );
 
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.componentSubs.push(this.store.select(settlementsListSelector).subscribe(list => {
       if (list.length > 0){
         //when that list of settlements arrived fetching the firs settlement from there
-        this.store.dispatch(fetchSettlement({id: list[0].villageId}));
+        this.store.dispatch(fetchSettlementFirstTime({id: list[0].villageId}));
       }
     }));
 

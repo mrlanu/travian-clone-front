@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {skip, take} from "rxjs/operators";
+import {take} from "rxjs/operators";
 import {VillageService} from "../../../services/village.service";
 import {BuildingView} from "../building-details.component";
 import {TabsetComponent} from "ngx-bootstrap/tabs";
@@ -104,7 +104,7 @@ export class RallyPointComponent implements OnInit {
   }
 
   onCountDone(){
-    this.store.dispatch(fetchSettlement({id: this.villageId!}));
+    this.store.dispatch(fetchSettlement());
     this.getAllCombatGroups(false);
   }
 

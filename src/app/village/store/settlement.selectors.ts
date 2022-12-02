@@ -74,3 +74,9 @@ export const combatGroupsSelector = createSelector(
   settlement,
   (state: fromSettlement.State) => state.combatGroups
 );
+
+
+export const movementsBriefSelector = createSelector(
+  settlement,
+  (state: fromSettlement.State) => state.movementsBrief
+);

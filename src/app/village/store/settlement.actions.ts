@@ -3,6 +3,7 @@ import {ShortVillageInfo, VillageView} from "../../models/village-dto.model";
 import {Building} from "../all-buildings-list/all-buildings-list.component";
 import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
 import {CombatGroupsMap} from "../building-details/rally-point/rally-point.component";
+import {TroopMovementsBrief} from "../troop-movements-brief/troop-movements-brief.component";
 
 export const clear = createAction(
   '[Game] Clear');
@@ -10,8 +11,11 @@ export const clear = createAction(
 export const setSettlement = createAction(
   '[Settlement] Set', props<{ settlement: VillageView }>());
 
+export const fetchSettlementFirstTime = createAction(
+  '[Settlement] Fetch first time', props<{ id: string; }>());
+
 export const fetchSettlement = createAction(
-  '[Settlement] Fetch', props<{ id: string; }>());
+  '[Settlement] Fetch');
 
 export const fetchSettlementsList = createAction(
   '[Settlement] Fetch List', props<{ userId: string; }>());
@@ -51,5 +55,11 @@ export const fetchCombatGroups = createAction(
 
 export const setCombatGroups = createAction(
   '[Settlement] Set combat groups', props<{ groups: CombatGroupsMap; }>());
+
+export const fetchMovementsBrief = createAction(
+  '[Settlement] Fetch movements brief');
+
+export const setMovementsBrief = createAction(
+  '[Settlement] Set movements brief', props<{ brief: Map<string, TroopMovementsBrief>; }>());
 
 export const errorSettlement = createAction('[Settlement] Error', props<{ error: string }>());
