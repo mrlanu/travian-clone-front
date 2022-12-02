@@ -2,6 +2,7 @@ import {createSelector} from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
 import * as fromSettlement from "./settlement.reducer";
 import {VillageView} from "../../models/village-dto.model";
+import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
 
 const settlement = (state: fromApp.AppState) => state.settlement;
 
@@ -27,7 +28,7 @@ export const settlementSelector = createSelector(
       return  new VillageView(village.villageId, village.accountId, village.nation, village.name,
         village.x, village.y, village.villageType, village.population, village.culture, village.approval,
         village.buildings, storage, village.warehouseCapacity, village.granaryCapacity, homeLegion,
-        village.homeUnits, producePerHour, village.eventsList
+        village.homeUnits, producePerHour, village.eventsList, village.unitOrders
       );
     } else {
       return undefined;
@@ -40,7 +41,7 @@ export const capitalizeFirstLater = (str: string) => {
   return allToLower.charAt(0).toUpperCase() + allToLower.slice(1);
 }
 
-export const settlementIdSellector = createSelector(
+export const settlementIdSelector = createSelector(
   settlement,
   (state: fromSettlement.State) => state.current?.villageId
 );
@@ -53,4 +54,18 @@ export const settlementsListSelector = createSelector(
 export const availableBuildingsSelector = createSelector(
   settlement,
   (state: fromSettlement.State) => state.availableBuildings
+);
+
+export const researchedUnitsSelector = createSelector(
+  settlement,
+  (state: fromSettlement.State) => {
+    return state.researchedUnits.map(unit => {
+      let cost = new Map<string, number>();
+      for(const [key, value] of Object.entries(unit.cost)){
+        cost.set(key, value);
+      }
+      return new CombatUnit(unit.name, unit.level, unit.attack, unit.defInfantry,
+        unit.defCavalry, unit.speed, unit.capacity, cost, unit.time, unit.description);
+    });
+  }
 );

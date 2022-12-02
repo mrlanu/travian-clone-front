@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {catchError, exhaustMap, map, take, withLatestFrom} from "rxjs/operators";
+import {catchError, exhaustMap, map, withLatestFrom} from "rxjs/operators";
 import * as SettlementActions from './settlement.actions';
 import {of} from "rxjs";
 import {ShortVillageInfo, VillageView} from "../../models/village-dto.model";
@@ -8,8 +8,9 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
-import {settlementIdSellector, settlementSelector} from "./settlement.selectors";
+import {settlementIdSelector, settlementSelector} from "./settlement.selectors";
 import {Building} from "../all-buildings-list/all-buildings-list.component";
+import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
 
 @Injectable()
 export class SettlementEffects {
@@ -41,7 +42,7 @@ export class SettlementEffects {
   newBuilding$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettlementActions.buildNewBuilding),
-      withLatestFrom(this.store.select(settlementIdSellector)),
+      withLatestFrom(this.store.select(settlementIdSelector)),
       exhaustMap(([action, settlementId]) => {
         let params = new HttpParams().set('kind', action.kind);
         return this.httpClient
@@ -57,7 +58,7 @@ export class SettlementEffects {
   upgrade$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettlementActions.upgradeBuilding),
-      withLatestFrom(this.store.select(settlementIdSellector)),
+      withLatestFrom(this.store.select(settlementIdSelector)),
       exhaustMap(([action, settlementId]) =>
         this.httpClient
           .put<string>(`${environment.baseUrl}/villages/${settlementId}/buildings/${action.position}/upgrade`, {})
@@ -86,7 +87,7 @@ export class SettlementEffects {
   deleteBuildEvent$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettlementActions.deleteBuildEvent),
-      withLatestFrom(this.store.select(settlementIdSellector)),
+      withLatestFrom(this.store.select(settlementIdSelector)),
       exhaustMap(([action, settlementId]) =>
         this.httpClient
           .delete<string>(`${environment.baseUrl}/villages/${settlementId}/events/${action.eventId}`, {})
@@ -106,6 +107,37 @@ export class SettlementEffects {
           .get<Building[]>(`${environment.baseUrl}/villages/${settlement!.villageId}/buildings`)
           .pipe(map((buildings) =>
               SettlementActions.setAvailableBuildings({buildings: this.mapBuildings(buildings)})),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
+  researchedUnits$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.fetchResearchedUnits),
+      withLatestFrom(this.store.select(settlementIdSelector)),
+      exhaustMap(([_, settlementId]) =>
+        this.httpClient
+          .get<CombatUnit[]>(`${environment.baseUrl}/villages/${settlementId}/military/researched`)
+          .pipe(map((units) =>
+              SettlementActions.setResearchedUnits({units})),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
+  orderCombatUnits$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.orderCombatUnits),
+      withLatestFrom(this.store.select(settlementIdSelector)),
+      exhaustMap(([action, settlementId]) =>
+        this.httpClient
+          .post<VillageView>(`${environment.baseUrl}/villages/military`,
+            {'villageId': settlementId, 'unitType': action.unitType, 'amount': action.amount})
+          .pipe(map((settlement) =>
+              SettlementActions.setSettlement({settlement})),
             catchError(error => of(SettlementActions.errorSettlement({error})))
           )
       )

@@ -1,20 +1,12 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {VillageService} from "../../../services/village.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 import {CombatUnit} from "./combat-unit/combat-unit.component";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
-import {settlementSelector} from "../../store/settlement.selectors";
-import {fetchSettlement} from "../../store/settlement.actions";
-
-export class OrderCombatUnit {
-  constructor(public unit: string,
-              public amount: number,
-              public duration: number,
-              public eachDuration: number,
-              public endOrder: Date) {}
-}
+import {researchedUnitsSelector, settlementSelector} from "../../store/settlement.selectors";
+import {fetchResearchedUnits, fetchSettlement} from "../../store/settlement.actions";
+import {OrderCombatUnit} from "../../../models/village-dto.model";
 
 @Component({
   selector: 'app-barracks',
@@ -32,36 +24,28 @@ export class BarracksComponent implements OnInit {
   currentUnitTime = 0;
 
   @ViewChild('count') count: any;
-  constructor(private villageService: VillageService, private route: ActivatedRoute, private store: Store<fromAppStore.AppState>) { }
+  constructor(private route: ActivatedRoute, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
     this.villageId = this.route.parent?.snapshot.params['village-id'];
-    this.villageService.getAllResearchedUnits(this.villageId)
-      .subscribe((res) => {
-      this.militaryUnitsList = res.map(unit => {
-        let cost = new Map<string, number>();
-        for(const [key, value] of Object.entries(unit.cost)){
-          cost.set(key, value);
-        }
-        return new CombatUnit(unit.name, unit.level, unit.attack, unit.defInfantry,
-          unit.defCavalry, unit.speed, unit.capacity, cost, unit.time, unit.description);
+
+    this.componentSubs.push(this.store.select(researchedUnitsSelector).subscribe(units => {
+        this.militaryUnitsList = units;
       })
-    });
-    this.componentSubs.push(this.store.select(settlementSelector).subscribe(village => {
-      this.villageService.getAllOrdersCombatUnit(this.villageId);
+    );
+
+    this.componentSubs.push(this.store.select(settlementSelector).subscribe(settlement => {
+      const orders = settlement!.unitOrders;
+      this.militaryOrders = orders;
+      this.currentUnitTime = orders.length > 0 ?
+        orders[0].duration % orders[0].eachDuration : 0;
     }));
-    this.componentSubs.push(this.villageService.militaryOrdersChanged
-      .subscribe(response => {
-        this.militaryOrders = response;
-        this.currentUnitTime = response.length > 0 ?
-          response[0].duration % response[0].eachDuration : 0;
-      }));
-    this.villageService.getAllOrdersCombatUnit(this.villageId);
+    this.store.dispatch(fetchResearchedUnits());
   }
 
   onCountDone(){
     setTimeout(()=>{}, 500);
-    this.store.dispatch(fetchSettlement({id: this.villageId}))
+    this.store.dispatch(fetchSettlement({id: this.villageId}));
     this.count.reset(this.currentUnitTime);
   }
 

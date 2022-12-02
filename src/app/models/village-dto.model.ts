@@ -17,8 +17,17 @@ export class VillageView {
               public homeLegion: Map<string, number>,
               public homeUnits: number[],
               public producePerHour: Map<string, number>,
-              public eventsList: EventView[]) {
+              public eventsList: EventView[],
+              public unitOrders: OrderCombatUnit[]) {
   }
+}
+
+export class OrderCombatUnit {
+  constructor(public unit: string,
+              public amount: number,
+              public duration: number,
+              public eachDuration: number,
+              public endOrder: Date) {}
 }
 
 export interface ShortVillageInfo{

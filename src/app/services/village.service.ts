@@ -4,8 +4,6 @@ import {HttpClient} from "@angular/common/http";
 import {MapTile} from "../models/village-dto.model";
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
-import {OrderCombatUnit} from "../village/building-details/barracks/barracks.component";
-import {CombatUnit} from "../village/building-details/barracks/combat-unit/combat-unit.component";
 import {
   CombatGroupSendingContract,
   CombatGroupSendingRequest
@@ -14,7 +12,6 @@ import {MapPart, TileDetail} from "../village/map/map.component";
 import {TroopMovementsBrief} from "../village/troop-movements-brief/troop-movements-brief.component";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../store/app.reducer";
-import {fetchSettlement} from "../village/store/settlement.actions";
 
 @Injectable({
   providedIn: 'root'
@@ -22,34 +19,9 @@ import {fetchSettlement} from "../village/store/settlement.actions";
 export class VillageService {
   baseUrl = environment.baseUrl;
   villageId = '';
-  militaryOrdersChanged = new Subject<OrderCombatUnit[]>();
   partOfWorldChanged = new Subject<MapTile[]>();
 
   constructor(private httpClient: HttpClient, private store: Store<fromAppStore.AppState>) { }
-
-  getAllResearchedUnits(villageId: string){
-    const url = `${this.baseUrl}/villages/${villageId}/military/researched`;
-    return this.httpClient.get<CombatUnit[]>(url);
-  }
-
-  orderCombatUnits(villageId: string, unitType: string, amount: number){
-    const url = `${this.baseUrl}/villages/military`;
-    this.httpClient.post(url, {'villageId': villageId, 'unitType': unitType, 'amount': amount})
-      .subscribe(() => {
-      this.getAllOrdersCombatUnit(villageId);
-        this.store.dispatch(fetchSettlement({id: villageId}));
-    })
-  }
-
-  getAllOrdersCombatUnit(villageId: string){
-    const url = `${this.baseUrl}/villages/${villageId}/military-orders`;
-    this.httpClient.get<OrderCombatUnit[]>(url).subscribe(res => {
-      let militaryOrders: OrderCombatUnit[] = res.map(order => {
-        return new OrderCombatUnit(order.unit, order.amount, order.duration, order.eachDuration, order.endOrder);
-      });
-      this.militaryOrdersChanged.next(militaryOrders);
-    });
-  }
 
   getAllCombatGroups(villageId: string) {
     const url = `${this.baseUrl}/villages/${villageId}/combat-group`;

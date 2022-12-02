@@ -5,10 +5,9 @@ import {AuthService} from '../auth.service';
 import {Router} from "@angular/router";
 import {User} from "../user.model";
 import {VillageService} from "../../services/village.service";
-import {filter} from "rxjs/operators";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
-import {fetchSettlement, fetchSettlementsList} from "../../village/store/settlement.actions";
+import {clear, fetchSettlement, fetchSettlementsList} from "../../village/store/settlement.actions";
 import {settlementSelector, settlementsListSelector} from "../../village/store/settlement.selectors";
 
 @Component({
@@ -39,7 +38,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     //when user successfully logged in fetching all his settlements
     this.componentSubs.push(this.authService.userChanged
-      .subscribe(user => this.store.dispatch(fetchSettlementsList({userId: user.userId})))
+      .subscribe(user => {
+        this.store.dispatch(clear());
+        return this.store.dispatch(fetchSettlementsList({userId: user.userId}));
+      })
     );
 
     //waiting for not empty list of those settlements

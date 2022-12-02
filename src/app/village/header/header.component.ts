@@ -1,5 +1,14 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {faSeedling, faHome, faGlobe, faChartLine, faBook, faEnvelope, faSmileWink, faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
+import {Component, OnInit} from '@angular/core';
+import {
+  faBook,
+  faChartLine,
+  faEnvelope,
+  faGlobe,
+  faHome,
+  faSeedling,
+  faSignOutAlt,
+  faSmileWink
+} from "@fortawesome/free-solid-svg-icons";
 import {ActivatedRoute} from "@angular/router";
 import {AuthService} from "../../auth/auth.service";
 
