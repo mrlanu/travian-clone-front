@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {take} from "rxjs/operators";
+import {skip, take} from "rxjs/operators";
 import {VillageService} from "../../../services/village.service";
 import {BuildingView} from "../building-details.component";
 import {TabsetComponent} from "ngx-bootstrap/tabs";
@@ -70,7 +70,7 @@ export class RallyPointComponent implements OnInit {
   @ViewChild('staticTabs', { static: false }) staticTabs?: TabsetComponent;
 
   villageId: string | undefined;
-  buildingView!: BuildingView;
+  buildingView: BuildingView | undefined;
   homeLegion: HomeLegion = {
     villageId: '',
     units: [0,0,0,0,0,0,0,0,0,0,0],
@@ -82,8 +82,10 @@ export class RallyPointComponent implements OnInit {
               private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
+    this.store.select(settlementSelector).pipe(skip(1)).subscribe(settlement => {
+      this.getRallyPointBuildingFromCurrentVillage();
+    });
     this.store.dispatch(fetchSettlement());
-    this.getRallyPointBuildingFromCurrentVillage();
     setTimeout(()=>{this.selectTab(this.route.snapshot.queryParams.tab)}, 100);
     this.store.select(combatGroupsSelector).subscribe(groups => {
       this.militaryUnitList = groups;
@@ -112,6 +114,7 @@ export class RallyPointComponent implements OnInit {
   private getRallyPointBuildingFromCurrentVillage() {
     this.store.select(settlementSelector).pipe(take(1)).subscribe(
       village => {
+        console.log('Village from rally: ', village);
         this.villageId = village?.villageId;
         this.buildingView = {...village!.buildings.find(f => f.name == "Rally-point")!};
         let res = new Map<string, number>();
@@ -125,6 +128,7 @@ export class RallyPointComponent implements OnInit {
           units: [...village!.homeUnits],
           nation: village!.nation
         };
+        console.log('Legion: ', this.homeLegion);
       });
   }
 

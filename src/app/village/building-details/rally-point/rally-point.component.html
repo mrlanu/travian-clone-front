@@ -1,12 +1,12 @@
 <div class="card text-center" style="position: absolute; top: 50px; width: 100%">
   <div class="card-header" fxLayout fxLayoutAlign="space-between baseline">
-    <h5 class="modal-title">{{ buildingView.name | uppercase }} Level: {{ buildingView.level }}</h5>
+    <h5 class="modal-title">{{ buildingView?.name | uppercase }} Level: {{ buildingView?.level }}</h5>
     <button type="button" class="btn-close" routerLink="/villages/{{ villageId }}/buildings"></button>
   </div>
   <div class="card-body" style="min-height: 500px">
     <tabset [justified]="true"  #staticTabs>
       <tab heading="MANAGEMENT">
-        <div class="tabset__tab">
+        <div class="tabset__tab" *ngIf="buildingView">
           <app-building-details [buildingView]="buildingView"></app-building-details>
         </div>
       </tab>
