@@ -1,0 +1,102 @@
+<div class="card text-center" style="position: absolute; top: 50px; width: 100%">
+  <div class="card-header" fxLayout fxLayoutAlign="space-between baseline">
+    <h5 class="modal-title">{{ 'Reports' | uppercase }}</h5>
+    <!--<button type="button" class="btn-close" routerLink="/villages/{{ villageId }}/buildings"></button>-->
+  </div>
+  <div class="card-body" style="min-height: 500px">
+    <tabset [justified]="true"  #staticTabs>
+      <tab heading="All">
+        <div>
+          <table mat-table [dataSource]="dataSource">
+
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()"
+                              [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)"
+                              [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+
+            <!-- Subject Column -->
+            <ng-container matColumnDef="subject">
+              <th mat-header-cell *matHeaderCellDef> Subject </th>
+              <td mat-cell *matCellDef="let report">
+                <a class="list-item" [routerLink]="[report.id]"> <!--[ngClass] = "{'active-village': v.villageId === currentVillageId}" (click)="onVillageSelect(v.villageId)"-->
+                <div fxLayout>
+                  <i class="envelope" [ngClass] = "{'envelope-close': !report.read, 'envelope-open': report.read}"></i>
+                  <div>
+                    {{ report.subject }}
+                  </div>
+                </div>
+                </a>
+              </td>
+            </ng-container>
+
+            <!-- Received Column -->
+            <ng-container matColumnDef="received">
+              <th mat-header-cell *matHeaderCellDef> Received </th>
+              <td mat-cell *matCellDef="let report"> {{report.received | date:'short' }} </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+            </tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[10, 20, 50]"
+                         showFirstLastButtons
+                         aria-label="Select page">
+          </mat-paginator>
+        </div>
+      </tab>
+      <tab heading="Offensive" (selectTab)="null">
+        <div class="tabset__tab">
+          <!--<div *ngIf="militaryUnitList">
+            <p class="fs-4 fw-bold mt-4 text-start" *ngIf="militaryUnitList.IN.length > 0">Incoming armies</p>
+            <app-combat-group *ngFor="let unit of militaryUnitList.IN" [militaryUnit]="unit" (countDownDone)="onCountDone()"></app-combat-group>
+
+            <p class="fs-4 fw-bold mt-4 text-start" *ngIf="militaryUnitList.OUT.length > 0">Outgoing armies</p>
+            <app-combat-group *ngFor="let unit of militaryUnitList.OUT" [militaryUnit]="unit" (countDownDone)="onCountDone()"></app-combat-group>
+
+            <p class="fs-4 fw-bold mt-4 text-start" *ngIf="militaryUnitList.HOME.length > 0">Armies in this village</p>
+            <app-combat-group *ngFor="let unit of militaryUnitList.HOME" [militaryUnit]="unit" (countDownDone)="onCountDone()"></app-combat-group>
+
+            <p class="fs-4 fw-bold mt-4 text-start" *ngIf="militaryUnitList.AWAY.length > 0">Armies in other places</p>
+            <app-combat-group *ngFor="let unit of militaryUnitList.AWAY" [militaryUnit]="unit" (countDownDone)="onCountDone()"></app-combat-group>
+          </div>-->
+        </div>
+      </tab>
+
+      <tab heading="Defensive" (selectTab)="null">
+        <div class="tabset__tab">
+          <!--<app-troops-send [homeLegion]="homeLegion" (confirmClick)="getAllCombatGroups(true)"></app-troops-send>-->
+        </div>
+      </tab>
+      <tab heading="Scouting">
+        <div class="tabset__tab">
+          Tretiy
+        </div>
+      </tab>
+      <tab heading="Other">
+        <div class="tabset__tab">
+          Tretiy
+        </div>
+      </tab>
+      <tab heading="Surrounding">
+        <div class="tabset__tab">
+          Tretiy
+        </div>
+      </tab>
+    </tabset>
+  </div>
+</div>

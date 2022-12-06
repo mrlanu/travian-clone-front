@@ -107,14 +107,13 @@ export class RallyPointComponent implements OnInit {
   }
 
   onCountDone(){
-    this.store.dispatch(fetchSettlement());
+    //this.store.dispatch(fetchSettlement());
     this.getAllCombatGroups(false);
   }
 
   private getRallyPointBuildingFromCurrentVillage() {
     this.store.select(settlementSelector).pipe(take(1)).subscribe(
       village => {
-        console.log('Village from rally: ', village);
         this.villageId = village?.villageId;
         this.buildingView = {...village!.buildings.find(f => f.name == "Rally-point")!};
         let res = new Map<string, number>();
@@ -128,7 +127,6 @@ export class RallyPointComponent implements OnInit {
           units: [...village!.homeUnits],
           nation: village!.nation
         };
-        console.log('Legion: ', this.homeLegion);
       });
   }
 

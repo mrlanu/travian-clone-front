@@ -78,4 +78,10 @@ export const confirmTroopsSending = createAction(
 export const troopsSent = createAction(
   '[Settlement] Is troops sent', props<{ result: boolean}>());
 
+export const fetchReportsBrief = createAction(
+  '[Settlement] Fetch reports brief');
+
+export const setReportsBrief = createAction(
+  '[Settlement] Set reports brief', props<{ reports: any; }>());
+
 export const errorSettlement = createAction('[Settlement] Error', props<{ error: string }>());

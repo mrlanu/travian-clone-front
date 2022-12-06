@@ -90,3 +90,8 @@ export const isTroopsSentSelector = createSelector(
   settlement,
   (state: fromSettlement.State) => state.isTroopsSent
 );
+
+export const reportsBriefSelector = createSelector(
+  settlement,
+  (state: fromSettlement.State) => state.reports
+);

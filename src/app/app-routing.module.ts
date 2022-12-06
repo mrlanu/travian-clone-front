@@ -11,6 +11,8 @@ import {AllBuildingsListComponent} from "./village/all-buildings-list/all-buildi
 import {RallyPointComponent} from "./village/building-details/rally-point/rally-point.component";
 import {BuildingDetailsContainerComponent} from "./village/building-details/building-details-container/building-details-container.component";
 import {MapComponent} from "./village/map/map.component";
+import {ReportsComponent} from "./village/reports/reports.component";
+import {ReportComponent} from "./village/reports/report/report.component";
 
 const routes: Routes = [
   {path: 'welcome-page', component: WelcomePageComponent, children: [
@@ -24,6 +26,8 @@ const routes: Routes = [
       {path: 'buildings/:position/new', component: AllBuildingsListComponent},
       {path: 'buildings/:position/Rally-point', component: RallyPointComponent},
       {path: 'buildings/:position/:name', component: BuildingDetailsContainerComponent},
+      {path: 'reports', component: ReportsComponent},
+      {path: 'reports/:id', component: ReportComponent},
       {path: 'map', component: MapComponent},
     ]},
   {path: '**', redirectTo: '/welcome-page/login'}

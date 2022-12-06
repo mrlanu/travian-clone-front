@@ -13,6 +13,7 @@ import {Building} from "../all-buildings-list/all-buildings-list.component";
 import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
 import {TroopMovementsBrief} from "../troop-movements-brief/troop-movements-brief.component";
 import {CombatGroupSendingContract} from "../building-details/rally-point/rally-point.component";
+import {Report} from "../reports/reports.component";
 
 @Injectable()
 export class SettlementEffects {
@@ -221,6 +222,21 @@ export class SettlementEffects {
           .post<boolean>(`${environment.baseUrl}/villages/troops-send`, action.contract)
           .pipe(map((result) =>
               SettlementActions.troopsSent({result})),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
+  reportsBrief$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.fetchReportsBrief),
+      withLatestFrom(this.store.select(settlementIdSelector)),
+      exhaustMap(([_, settlementId]) =>
+        this.httpClient
+          .get<Report[]>(`${environment.baseUrl}/villages/${settlementId}/reports`)
+          .pipe(map((reports) =>
+              SettlementActions.setReportsBrief({reports})),
             catchError(error => of(SettlementActions.errorSettlement({error})))
           )
       )
