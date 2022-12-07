@@ -59,6 +59,7 @@ import { ReportComponent } from './village/reports/report/report.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import { TableComponent } from './village/reports/report/table/table.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     TroopMovementsBriefComponent,
     ReportsComponent,
     ReportsListComponent,
-    ReportComponent
+    ReportComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,

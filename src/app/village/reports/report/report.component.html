@@ -9,10 +9,12 @@
     </button>
   </div>
   <hr>
-  <div fxLayout class="mt-3">
+  <div fxLayout>
     <div fxLayoutAlign="start center" fxFlex>{{currentBrief?.received |  date:'short'}}</div>
     <div class="btn-group" role="group">
-      <button type="button" class="btn btn-secondary">1</button>
+      <button type="button" class="btn btn-secondary">
+        <fa-icon [icon]="faFileZipper" size="1x" [styles]="faStyle"></fa-icon>
+      </button>
       <button type="button" class="btn btn-secondary">
         <fa-icon [icon]="faEnvelope" size="1x" [styles]="faStyle"></fa-icon>
       </button>
@@ -21,5 +23,53 @@
       </button>
     </div>
   </div>
+  <hr>
+  <div class="attacker">
+    ATTACKER
+  </div>
+  <div fxLayout class="mt-2 mb-2">
+    <div fxLayoutAlign="start center" fxFlex>
+      <div class="fw-bold pe-2">
+        {{ report?.from?.playerName }}
+      </div>
+      <div>from village</div>
+      <div class="fw-bold ps-2">
+        {{ report?.from?.settlementName }}
+      </div>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-secondary">
+        <fa-icon [icon]="faRepeat" size="1x" [styles]="faStyle"></fa-icon>
+      </button>
+      <button type="button" class="btn btn-secondary">
+        <fa-icon [icon]="faShieldHalved" size="1x" [styles]="faStyle"></fa-icon>
+      </button>
+      <button type="button" class="btn btn-secondary">
+        <fa-icon [icon]="faBullseye" size="1x" [styles]="faStyle"></fa-icon>
+      </button>
+    </div>
+  </div>
+  <app-table *ngIf="report" [reportPlayer]="report.from"></app-table>
+  <hr>
+  <div class="defender">
+    DEFENDER
+  </div>
+  <div fxLayout class="mt-2 mb-2">
+    <div fxLayoutAlign="start center" fxFlex>
+      <div class="fw-bold pe-2">
+        {{ report?.to?.playerName }}
+      </div>
+      <div>from village</div>
+      <div class="fw-bold ps-2">
+        {{ report?.to?.settlementName }}
+      </div>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-secondary">
+        <fa-icon [icon]="faShieldHalved" size="1x" [styles]="faStyle"></fa-icon>
+      </button>
+    </div>
+  </div>
+  <app-table *ngIf="report" [reportPlayer]="report.to"></app-table>
 </div>
 

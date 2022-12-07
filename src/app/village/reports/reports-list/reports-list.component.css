@@ -1,8 +1,5 @@
 table {
   width: 100%;
-}
-
-.mat-table {
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -12,7 +9,7 @@ table {
 
 .mat-column-subject {
   flex: none;
-  width: 450px;
+  width: 430px;
 }
 
 .mat-header-cell {

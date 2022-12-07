@@ -5,7 +5,8 @@ import {Subscription} from "rxjs";
 import {reportSelector, reportsSelector} from "../../store/settlement.selectors";
 import {fetchReport} from "../../store/settlement.actions";
 import {ActivatedRoute} from "@angular/router";
-import {faArrowLeft, faArrowRight, faTrash, faEnvelope} from '@fortawesome/free-solid-svg-icons';
+import {faArrowLeft, faArrowRight, faTrash, faEnvelope,
+  faFileZipper, faRepeat, faShieldHalved, faBullseye} from '@fortawesome/free-solid-svg-icons';
 import {ReportBrief} from "../reports-list/reports-list.component";
 
 
@@ -21,6 +22,10 @@ export interface Report {
 
 export interface ReportPlayer{
   settlementId: string;
+  settlementName: string;
+  accountId: string;
+  playerName: string;
+  nation: string;
   troops: number[];
   dead: null[];
   bounty: Map<string, number>;
@@ -41,6 +46,10 @@ export class ReportComponent implements OnInit, OnDestroy{
   faArrowRight = faArrowRight;
   faTrash = faTrash;
   faEnvelope = faEnvelope;
+  faFileZipper = faFileZipper;
+  faRepeat = faRepeat;
+  faShieldHalved = faShieldHalved;
+  faBullseye = faBullseye;
   faStyle = {
     'color': 'white'
   }

@@ -1,0 +1,38 @@
+<div class="mt-3">
+  <table class="table table-sm">
+    <tbody>
+      <tr>
+        <th>
+
+        </th>
+        <td class="unit-icon" *ngFor="let u of reportPlayer!.troops; let i=index;">
+          <img class="unit unit-{{ reportPlayer!.nation | lowercase}} u{{ i }}" alt="u-{{ u }}" [src]="imgSrc">
+        </td>
+      </tr>
+
+      <tr>
+        <th>
+          <img class="unit troops-count" alt="u-0" [src]="imgSrc">
+        </th>
+        <td class="unit-icon" style="width: 8.2%" *ngFor="let u of reportPlayer!.troops"> {{ u }} </td>
+      </tr>
+
+      <tr>
+        <th>
+          <img class="unit troops-dead" alt="u-0" [src]="imgSrc">
+        </th>
+        <td class="unit-icon" style="width: 8.2%" *ngFor="let u of reportPlayer!.dead"> {{ u }} </td>
+      </tr>
+
+      <!--should be uncommented when the feature with catch troops will be implemented-->
+      <!--<tr *ngIf="reportPlayer.catch > 0">
+        <th>
+          <img class="unit troops-catch" alt="u-0" [src]="imgSrc">
+        </th>
+        <td class="unit none" *ngFor="let u of reportPlayer!.dead"> {{ u }} </td>
+      </tr>-->
+
+    </tbody>
+  </table>
+</div>
+
