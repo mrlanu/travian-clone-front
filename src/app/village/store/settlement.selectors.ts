@@ -95,3 +95,13 @@ export const reportsBriefSelector = createSelector(
   settlement,
   (state: fromSettlement.State) => state.reports
 );
+
+export const reportsSelector = createSelector(
+  settlement,
+  (state: fromSettlement.State) => state.reports
+);
+
+export const reportSelector = createSelector(
+  settlement,
+  (state: fromSettlement.State) => state.currentReport
+);

@@ -13,7 +13,7 @@ import {Building} from "../all-buildings-list/all-buildings-list.component";
 import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
 import {TroopMovementsBrief} from "../troop-movements-brief/troop-movements-brief.component";
 import {CombatGroupSendingContract} from "../building-details/rally-point/rally-point.component";
-import {Report} from "../reports/reports.component";
+import {ReportBrief} from "../reports/reports-list/reports-list.component";
 
 @Injectable()
 export class SettlementEffects {
@@ -234,9 +234,23 @@ export class SettlementEffects {
       withLatestFrom(this.store.select(settlementIdSelector)),
       exhaustMap(([_, settlementId]) =>
         this.httpClient
-          .get<Report[]>(`${environment.baseUrl}/villages/${settlementId}/reports`)
+          .get<ReportBrief[]>(`${environment.baseUrl}/villages/${settlementId}/reports`)
           .pipe(map((reports) =>
               SettlementActions.setReportsBrief({reports})),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
+  report$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.fetchReport),
+      exhaustMap(action =>
+        this.httpClient
+          .get<any>(`${environment.baseUrl}/villages/reports/${action.reportId}`)
+          .pipe(map((report) =>
+              SettlementActions.setReport({report})),
             catchError(error => of(SettlementActions.errorSettlement({error})))
           )
       )

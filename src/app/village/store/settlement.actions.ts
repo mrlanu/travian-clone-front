@@ -84,4 +84,10 @@ export const fetchReportsBrief = createAction(
 export const setReportsBrief = createAction(
   '[Settlement] Set reports brief', props<{ reports: any; }>());
 
+export const fetchReport = createAction(
+  '[Settlement] Fetch report', props<{reportId: string}>());
+
+export const setReport = createAction(
+  '[Settlement] Set report', props<{report: any}>());
+
 export const errorSettlement = createAction('[Settlement] Error', props<{ error: string }>());

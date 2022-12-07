@@ -5,7 +5,8 @@ import {Building} from "../all-buildings-list/all-buildings-list.component";
 import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
 import {CombatGroupSendingContract, CombatGroupsMap} from "../building-details/rally-point/rally-point.component";
 import {TroopMovementsBrief} from "../troop-movements-brief/troop-movements-brief.component";
-import {Report} from "../reports/reports.component";
+import {ReportBrief} from "../reports/reports-list/reports-list.component";
+import {Report} from "../reports/report/report.component";
 
 export interface State {
   current: VillageView | undefined;
@@ -16,7 +17,8 @@ export interface State {
   movementsBrief: Map<string, TroopMovementsBrief>;
   sendingContract: CombatGroupSendingContract | null,
   isTroopsSent: boolean,
-  reports: Report[]
+  reports: ReportBrief[],
+  currentReport: Report | undefined
 }
 
 export const initialState: State = {
@@ -30,7 +32,8 @@ export const initialState: State = {
   movementsBrief: new Map(),
   sendingContract: null,
   isTroopsSent: false,
-  reports: []
+  reports: [],
+  currentReport: undefined
 };
 
 export const settlementReducer = createReducer(
@@ -61,6 +64,9 @@ export const settlementReducer = createReducer(
   )),
   on(SettlementActions.setReportsBrief, (state, {reports}) => (
     { ...state, reports: reports }
+  )),
+  on(SettlementActions.setReport, (state, {report}) => (
+    { ...state, currentReport: report }
   )),
   on(SettlementActions.clear, () => (
     { ...initialState }
