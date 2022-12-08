@@ -11,7 +11,7 @@ import {combatGroupsSelector, settlementSelector} from "../../store/settlement.s
 import {CombatGroup} from "./combat-group/combat-group.component";
 
 export class CombatGroupSendingRequest {
-  constructor(public villageId: string, public x: number, public y: number,
+  constructor(public targetSettlementId: string,
               public mission: string, public waves: WaveModels[]) {
   }
 }

@@ -27,7 +27,7 @@ export class TileDetailComponent implements OnInit {
 
   onSendTroops(){
     this.router.navigate(['/villages', this.villageId, 'buildings', '31', 'Rally-point'],
-      {queryParams: {x: this.tileDetail?.x, y: this.tileDetail?.y, tab: 2}});
+      {queryParams: {targetSettlementId: this.tileDetail?.id, x: this.tileDetail?.x, y: this.tileDetail?.y, tab: 2}});
     this.bsModalRef.hide();
   }
 

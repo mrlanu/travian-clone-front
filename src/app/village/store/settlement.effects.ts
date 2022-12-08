@@ -199,9 +199,10 @@ export class SettlementEffects {
   checkSendingContract$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettlementActions.checkSendingContract),
-      exhaustMap(action =>
+      withLatestFrom(this.store.select(settlementIdSelector)),
+      exhaustMap(([action, settlementId]) =>
         this.httpClient
-          .post<CombatGroupSendingContract>(`${environment.baseUrl}/villages/check-troops-send`, action.attackRequest)
+          .post<CombatGroupSendingContract>(`${environment.baseUrl}/villages/${settlementId}/check-troops-send`, action.attackRequest)
           .pipe(map((mU) => {
               let result = new CombatGroupSendingContract(mU.id, mU.nation, mU.move, mU.mission, mU.originVillageId,
                 mU.originVillageName, mU.originPlayerName, mU.originVillageCoordinates, mU.currentLocationVillageId,

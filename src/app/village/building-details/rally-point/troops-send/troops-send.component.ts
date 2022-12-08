@@ -33,7 +33,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
 
   bsModalRef?: BsModalRef;
 
-  attack: CombatGroupSendingRequest = new CombatGroupSendingRequest('', 0, 0, 'REINFORCEMENT',  []);
+  attack: CombatGroupSendingRequest = new CombatGroupSendingRequest('', 'REINFORCEMENT',  []);
 
   targets: string[] = ['Random target', 'Random target'];
   attackForm!: UntypedFormGroup;
@@ -49,6 +49,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
       villageId: new UntypedFormControl({value: ''}),
       x: new UntypedFormControl({value: this.route.snapshot.queryParams.x, disabled: true}, Validators.required),
       y: new UntypedFormControl({value: this.route.snapshot.queryParams.y, disabled: true}, Validators.required),
+      targetSettlementId: new UntypedFormControl({value: this.route.snapshot.queryParams.targetSettlementId, disabled: true}),
       kind: new UntypedFormControl({value: '3', disabled: true}),
       u0: new UntypedFormControl({value: 0, disabled: true}),
       u1: new UntypedFormControl({value: 0, disabled: true}),
@@ -73,6 +74,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
   private setEnable() {
     this.attackForm.controls.x.enable();
     this.attackForm.controls.y.enable();
+    this.attackForm.controls.targetSettlementId.enable();
     this.attackForm.controls.kind.enable();
     this.attackForm.controls.u0.enable();
     this.attackForm.controls.u1.enable();
@@ -145,9 +147,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.attack = {
       ...this.attack,
-      villageId: this.homeLegion.villageId,
-      x: +this.attackForm.value.x,
-      y: +this.attackForm.value.y,
+      targetSettlementId: this.attackForm.value.targetSettlementId,
       mission: +this.attackForm.value.kind === 2 ? 'REINFORCEMENT': +this.attackForm.value.kind === 3 ? 'ATTACK' : 'RAID',
       waves: this.attack.waves,
     };
@@ -196,6 +196,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
     /*this.militaryUnit.units = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];*/
     this.attackForm.reset({
       x: '', y: '',
+      targetSettlementId: '',
       kind: '3',
       u0: 0,
       u1: 0,

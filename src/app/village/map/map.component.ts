@@ -81,7 +81,6 @@ export class MapComponent implements OnInit, OnDestroy {
 
   onTileSelected(id: string){
     this.villageService.getTileDetail(id, this.villageCoordinates.x, this.villageCoordinates.y).subscribe(detail => {
-      console.log('Tile detail - ', detail);
       this.openModalWithComponent(detail);
     });
   }
