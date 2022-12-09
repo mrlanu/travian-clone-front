@@ -1,6 +1,11 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Utils} from "../../../../shared/utils";
 import {CombatGroupSendingContract} from "../rally-point.component";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../../../store/app.reducer";
+import {Subscription} from "rxjs";
+import {settlementSelector} from "../../../store/settlement.selectors";
+import {VillageView} from "../../../../models/village-dto.model";
 
 @Component({
   selector: 'app-military-unit-contract',
@@ -10,14 +15,19 @@ import {CombatGroupSendingContract} from "../rally-point.component";
 export class MilitaryUnitContractComponent implements OnInit, OnDestroy {
 
   @Input() militaryUnitContract!: CombatGroupSendingContract;
+  currentSettlement: VillageView | undefined;
   imgSrc = "../../../../../assets/img/x.gif";
   arrivalTime: Date | null | undefined;
   intervalId: number | undefined;
   arrivalTimeStr = '';
+  componentSubs: Subscription[] = [];
 
-  constructor() { }
+  constructor(private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
+    this.componentSubs.push(this.store.select(settlementSelector).subscribe(settlement => {
+      this.currentSettlement = settlement;
+    }));
     this.arrivalTime = new Date(this.militaryUnitContract.arrivalTime!);
     this.countDateUp();
   }

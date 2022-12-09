@@ -202,12 +202,12 @@ export class SettlementEffects {
       withLatestFrom(this.store.select(settlementIdSelector)),
       exhaustMap(([action, settlementId]) =>
         this.httpClient
-          .post<CombatGroupSendingContract>(`${environment.baseUrl}/villages/${settlementId}/check-troops-send`, action.attackRequest)
+          .post<CombatGroupSendingContract>(`${environment.baseUrl}/villages/${settlementId}/check-troops-send`,
+            action.attackRequest)
           .pipe(map((mU) => {
-              let result = new CombatGroupSendingContract(mU.id, mU.nation, mU.move, mU.mission, mU.originVillageId,
-                mU.originVillageName, mU.originPlayerName, mU.originVillageCoordinates, mU.currentLocationVillageId,
-                mU.targetVillageId, mU.targetVillageName, mU.targetPlayerName, mU.targetVillageCoordinates,
-                mU.units, mU.arrivalTime ? new Date(mU.arrivalTime) : null, mU.duration, mU.expensesPerHour)
+              let result = new CombatGroupSendingContract(mU.id, mU.savedEntityId, mU.move, mU.mission, mU.targetVillageId,
+                mU.targetVillageName, mU.targetPlayerName, mU.targetVillageCoordinates, mU.units,
+                mU.arrivalTime ? new Date(mU.arrivalTime) : null, mU.duration);
               return SettlementActions.setSendingContract({contract: result})}),
             catchError(error => of(SettlementActions.errorSettlement({error})))
           )
@@ -218,9 +218,10 @@ export class SettlementEffects {
   confirmTroopsSending$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettlementActions.confirmTroopsSending),
-      exhaustMap(action =>
+      withLatestFrom(this.store.select(settlementIdSelector)),
+      exhaustMap(([action, settlementId]) =>
         this.httpClient
-          .post<boolean>(`${environment.baseUrl}/villages/troops-send`, action.contract)
+          .post<boolean>(`${environment.baseUrl}/villages/${settlementId}/troops-send/${action.contract.savedEntityId}`, '')
           .pipe(map((result) =>
               SettlementActions.troopsSent({result})),
             catchError(error => of(SettlementActions.errorSettlement({error})))

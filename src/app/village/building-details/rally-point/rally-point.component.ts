@@ -40,14 +40,9 @@ export interface HomeLegion {
 export class CombatGroupSendingContract {
   constructor(
     public id: string,
-    public nation: string,
+    public savedEntityId: string,
     public move: boolean,
     public mission: string,
-    public originVillageId: string,
-    public originVillageName: string,
-    public originPlayerName: string,
-    public originVillageCoordinates: number[],
-    public currentLocationVillageId: string,
     public targetVillageId: string,
     public targetVillageName: string,
     public targetPlayerName: string,
@@ -55,7 +50,6 @@ export class CombatGroupSendingContract {
     public units: number[],
     public arrivalTime: null | Date,
     public duration: number,
-    public expensesPerHour: number
   ) {
   }
 }
