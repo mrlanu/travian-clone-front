@@ -152,8 +152,8 @@ export class SettlementEffects {
       withLatestFrom(this.store.select(settlementIdSelector)),
       exhaustMap(([action, settlementId]) =>
         this.httpClient
-          .post<VillageView>(`${environment.baseUrl}/villages/military`,
-            {'villageId': settlementId, 'unitType': action.unitType, 'amount': action.amount})
+          .post<VillageView>(`${environment.baseUrl}/villages/${settlementId}/military`,
+            {'unitType': action.unitType, 'amount': action.amount})
           .pipe(map((settlement) =>
               SettlementActions.setSettlement({settlement})),
             catchError(error => of(SettlementActions.errorSettlement({error})))
@@ -253,6 +253,31 @@ export class SettlementEffects {
           .get<any>(`${environment.baseUrl}/villages/reports/${action.reportId}`)
           .pipe(map((report) =>
               SettlementActions.setReport({report})),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
+  openReport$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.openReport),
+      exhaustMap(action =>
+        this.httpClient
+          .put<any>(`${environment.baseUrl}/villages/reports/${action.report.id}`, '')
+      )
+    ), { dispatch: false }
+  );
+
+  deleteReports$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.deleteReports),
+      withLatestFrom(this.store.select(settlementIdSelector)),
+      exhaustMap(([action, settlementId]) =>
+        this.httpClient
+          .put<any>(`${environment.baseUrl}/villages/${settlementId}/reports/delete`, action.reportsId)
+          .pipe(map((reports) =>
+              SettlementActions.setReportsBrief({reports})),
             catchError(error => of(SettlementActions.errorSettlement({error})))
           )
       )

@@ -8,6 +8,7 @@ import {
   CombatGroupsMap
 } from "../building-details/rally-point/rally-point.component";
 import {TroopMovementsBrief} from "../troop-movements-brief/troop-movements-brief.component";
+import {Report} from "../reports/report/report.component";
 
 export const clear = createAction(
   '[Game] Clear');
@@ -88,6 +89,12 @@ export const fetchReport = createAction(
   '[Settlement] Fetch report', props<{reportId: string}>());
 
 export const setReport = createAction(
-  '[Settlement] Set report', props<{report: any}>());
+  '[Settlement] Set report', props<{report: Report}>());
+
+export const openReport = createAction(
+  '[Settlement] Open report', props<{report: Report}>());
+
+export const deleteReports = createAction(
+  '[Settlement] Delete reports', props<{reportsId: string[]}>());
 
 export const errorSettlement = createAction('[Settlement] Error', props<{ error: string }>());

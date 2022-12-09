@@ -3,11 +3,12 @@ import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
 import {Subscription} from "rxjs";
 import {reportSelector, reportsSelector} from "../../store/settlement.selectors";
-import {fetchReport} from "../../store/settlement.actions";
+import {fetchReport, openReport} from "../../store/settlement.actions";
 import {ActivatedRoute} from "@angular/router";
 import {faArrowLeft, faArrowRight, faTrash, faEnvelope,
   faFileZipper, faRepeat, faShieldHalved, faBullseye} from '@fortawesome/free-solid-svg-icons';
 import {ReportBrief} from "../reports-list/reports-list.component";
+import {skip} from "rxjs/operators";
 
 
 export interface Report {
@@ -62,10 +63,12 @@ export class ReportComponent implements OnInit, OnDestroy{
     this.componentSubs.push(this.store.select(reportsSelector).subscribe(reports => {
       this.reportBriefsList = reports;
     }));
-    this.componentSubs.push(this.store.select(reportSelector).subscribe(report => {
-      console.log(report);
+    this.componentSubs.push(this.store.select(reportSelector).pipe(skip(1)).subscribe(report => {
       this.report = report;
       this.currentBrief = this.reportBriefsList.find(b => b.id === report?.id);
+      if (!report?.read){
+        this.store.dispatch(openReport({report: report!}));
+      }
     }));
     this.store.dispatch(fetchReport({reportId}));
   }

@@ -6,7 +6,8 @@ import {MatPaginator} from "@angular/material/paginator";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
 import {reportsBriefSelector} from "../../store/settlement.selectors";
-import {fetchReportsBrief} from "../../store/settlement.actions";
+import {deleteReports, fetchReportsBrief} from "../../store/settlement.actions";
+import {ActivatedRoute, Router} from "@angular/router";
 
 export interface ReportBrief {
   id: string;
@@ -23,21 +24,40 @@ export interface ReportBrief {
 export class ReportsListComponent implements OnInit, OnDestroy{
   reportsData: ReportBrief[] = [];
   displayedColumns: string[] = ['select', 'subject', 'received'];
-  dataSource = new MatTableDataSource<ReportBrief>(this.reportsData);
+  dataSource = new MatTableDataSource<ReportBrief>([]);
   selection = new SelectionModel<ReportBrief>(true, []);
   componentSubs: Subscription[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
-  constructor(private store: Store<fromAppStore.AppState>) {
+  constructor(private store: Store<fromAppStore.AppState>, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.componentSubs.push(this.store.select(reportsBriefSelector).subscribe(reports => {
-      console.log('Reports: ', reports);
       this.dataSource.data = reports;
+      this.reportsData = reports;
+
     }));
     this.store.dispatch(fetchReportsBrief());
+  }
+
+  onReportSelect(reportId: string){
+    this.router.navigate([reportId], {relativeTo:this.route});
+  }
+
+  onMark(){
+    if (this.selection.hasValue()){
+
+    }
+  }
+
+  onDelete(){
+    if (this.selection.hasValue()){
+      this.store.dispatch(deleteReports({reportsId: this.selection.selected.map(r => r.id)}));
+    } else {
+      this.store.dispatch(deleteReports({reportsId: this.reportsData.map(r => r.id)}));
+    }
   }
 
   ngAfterViewInit() {

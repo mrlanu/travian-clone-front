@@ -1,4 +1,12 @@
-<div>
+<div fxLayout="column">
+  <div class="btn-group mt-3 ms-3 me-3" role="group">
+    <button type="button" class="btn btn-sm btn-success" (click)="onMark()">
+      {{ selection.hasValue() ? 'MARK SELECTED AS READ' : 'MARK ALL AS READ'}}
+    </button>
+    <button type="button" class="btn btn-sm btn-success" (click)="onDelete()">
+      {{ selection.hasValue() ? 'DELETE SELECTED' : 'DELETE ALL'}}
+    </button>
+  </div>
   <table mat-table [dataSource]="dataSource">
 
     <!-- Checkbox Column -->
@@ -23,7 +31,7 @@
     <ng-container matColumnDef="subject">
       <th mat-header-cell *matHeaderCellDef> Subject </th>
       <td mat-cell *matCellDef="let report">
-        <a class="list-item" [routerLink]="[report.id]"> <!--[ngClass] = "{'active-village': v.villageId === currentVillageId}" (click)="onVillageSelect(v.villageId)"-->
+        <a class="list-item" (click)="onReportSelect(report.id)"> <!--[ngClass] = "{'active-village': v.villageId === currentVillageId}" (click)="onVillageSelect(v.villageId)"-->
           <div fxLayout>
             <i class="envelope" [ngClass] = "{'envelope-close': !report.read, 'envelope-open': report.read}"></i>
             <div>
