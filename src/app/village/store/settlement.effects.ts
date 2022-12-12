@@ -264,20 +264,33 @@ export class SettlementEffects {
       ofType(SettlementActions.openReport),
       exhaustMap(action =>
         this.httpClient
-          .put<any>(`${environment.baseUrl}/villages/reports/${action.report.id}`, '')
+          .put<any>(`${environment.baseUrl}/villages/reports/read`, [action.report.id])
       )
     ), { dispatch: false }
+  );
+
+  readReports$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.readReports),
+      exhaustMap(action =>
+        this.httpClient
+          .put<any>(`${environment.baseUrl}/villages/reports/read`, action.reportsId)
+          .pipe(map(() =>
+              SettlementActions.editedReports()),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
   );
 
   deleteReports$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettlementActions.deleteReports),
-      withLatestFrom(this.store.select(settlementIdSelector)),
-      exhaustMap(([action, settlementId]) =>
+      exhaustMap(action =>
         this.httpClient
-          .put<any>(`${environment.baseUrl}/villages/${settlementId}/reports/delete`, action.reportsId)
+          .put<any>(`${environment.baseUrl}/villages/reports/delete`, action.reportsId)
           .pipe(map(() =>
-              SettlementActions.deletedConfirmReports()),
+              SettlementActions.editedReports()),
             catchError(error => of(SettlementActions.errorSettlement({error})))
           )
       )

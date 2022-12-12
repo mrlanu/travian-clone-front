@@ -19,7 +19,7 @@ export interface State {
   isTroopsSent: boolean,
   reports: ReportBrief[],
   currentReport: Report | undefined,
-  deletedConfirmReport: boolean,
+  editedReports: boolean,
 }
 
 export const initialState: State = {
@@ -35,7 +35,7 @@ export const initialState: State = {
   isTroopsSent: false,
   reports: [],
   currentReport: undefined,
-  deletedConfirmReport: false,
+  editedReports: false,
 };
 
 export const settlementReducer = createReducer(
@@ -70,8 +70,8 @@ export const settlementReducer = createReducer(
   on(SettlementActions.setReport, (state, {report}) => (
     { ...state, currentReport: report }
   )),
-  on(SettlementActions.deletedConfirmReports, (state) => (
-    { ...state, deletedConfirmReport: !state.deletedConfirmReport }
+  on(SettlementActions.editedReports, (state) => (
+    { ...state, editedReports: !state.editedReports }
   )),
   on(SettlementActions.clear, () => (
     { ...initialState }

@@ -106,7 +106,8 @@ export const reportSelector = createSelector(
   (state: fromSettlement.State) => state.currentReport
 );
 
-export const reportDeletedSelector = createSelector(
+export const editedReportsSelector = createSelector(
   settlement,
-  (state: fromSettlement.State) => state.deletedConfirmReport
+  (state: fromSettlement.State) => state.editedReports
 );
+

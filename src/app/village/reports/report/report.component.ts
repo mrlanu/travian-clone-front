@@ -2,14 +2,21 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
 import {Subscription} from "rxjs";
-import {reportDeletedSelector, reportSelector, reportsSelector} from "../../store/settlement.selectors";
+import {editedReportsSelector, reportSelector, reportsSelector} from "../../store/settlement.selectors";
 import {deleteReports, fetchReport, openReport} from "../../store/settlement.actions";
 import {ActivatedRoute, Router} from "@angular/router";
-import {faArrowLeft, faArrowRight, faTrash, faEnvelope,
-  faFileZipper, faRepeat, faShieldHalved, faBullseye} from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowLeft,
+  faArrowRight,
+  faBullseye,
+  faEnvelope,
+  faFileZipper,
+  faRepeat,
+  faShieldHalved,
+  faTrash
+} from '@fortawesome/free-solid-svg-icons';
 import {ReportBrief} from "../reports-list/reports-list.component";
 import {skip} from "rxjs/operators";
-import {Location} from "@angular/common";
 
 
 export interface Report {
@@ -71,8 +78,8 @@ export class ReportComponent implements OnInit, OnDestroy{
         this.store.dispatch(openReport({report: report!}));
       }
     }));
-    this.componentSubs.push(this.store.select(reportDeletedSelector).pipe(skip(1)).subscribe(() => {
-      this.reportDeleted();
+    this.componentSubs.push(this.store.select(editedReportsSelector).pipe(skip(1)).subscribe(() => {
+      this.editedReports();
       }
     ));
     this.store.dispatch(fetchReport({reportId}));
@@ -106,7 +113,7 @@ export class ReportComponent implements OnInit, OnDestroy{
     this.store.dispatch(deleteReports({reportsId: [this.report!.id]}));
   }
 
-  private reportDeleted(){
+  private editedReports(){
     this.reportBriefsList.forEach((b, i) => {
       if (b.id === this.report?.id){
         this.reportBriefsList.splice(i,1);

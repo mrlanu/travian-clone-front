@@ -94,10 +94,13 @@ export const setReport = createAction(
 export const openReport = createAction(
   '[Settlement] Open report', props<{report: Report}>());
 
+export const readReports = createAction(
+  '[Settlement] Read reports', props<{reportsId: string[]}>());
+
 export const deleteReports = createAction(
   '[Settlement] Delete reports', props<{reportsId: string[]}>());
 
-export const deletedConfirmReports = createAction(
-  '[Settlement] Reports have been deleted');
+export const editedReports = createAction(
+  '[Settlement] Reports have been edited');
 
 export const errorSettlement = createAction('[Settlement] Error', props<{ error: string }>());

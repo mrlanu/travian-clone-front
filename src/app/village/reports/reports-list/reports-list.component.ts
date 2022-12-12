@@ -5,8 +5,8 @@ import {Subscription} from "rxjs";
 import {MatPaginator} from "@angular/material/paginator";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
-import {reportDeletedSelector, reportsBriefSelector} from "../../store/settlement.selectors";
-import {deleteReports, fetchReportsBrief} from "../../store/settlement.actions";
+import {editedReportsSelector, reportsBriefSelector} from "../../store/settlement.selectors";
+import {deleteReports, fetchReportsBrief, readReports} from "../../store/settlement.actions";
 import {ActivatedRoute, Router} from "@angular/router";
 import {skip} from "rxjs/operators";
 
@@ -39,8 +39,8 @@ export class ReportsListComponent implements OnInit, OnDestroy{
       this.dataSource.data = reports;
       this.reportsData = reports;
     }));
-    this.componentSubs.push(this.store.select(reportDeletedSelector).pipe(skip(1)).subscribe(() => {
-        this.reportsDeleted();
+    this.componentSubs.push(this.store.select(editedReportsSelector).pipe(skip(1)).subscribe(() => {
+        this.reportsEdited();
       }
     ));
     this.store.dispatch(fetchReportsBrief());
@@ -52,8 +52,11 @@ export class ReportsListComponent implements OnInit, OnDestroy{
 
   onMark(){
     if (this.selection.hasValue()){
-
+      this.store.dispatch(readReports({reportsId: this.selection.selected.map(r => r.id)}));
+    } else {
+      this.store.dispatch(readReports({reportsId: this.reportsData.map(r => r.id)}));
     }
+    this.selection.clear();
   }
 
   onDelete(){
@@ -65,7 +68,7 @@ export class ReportsListComponent implements OnInit, OnDestroy{
     this.selection.clear();
   }
 
-  private reportsDeleted(){
+  private reportsEdited(){
     this.store.dispatch(fetchReportsBrief());
   }
 
