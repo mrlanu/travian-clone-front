@@ -276,8 +276,8 @@ export class SettlementEffects {
       exhaustMap(([action, settlementId]) =>
         this.httpClient
           .put<any>(`${environment.baseUrl}/villages/${settlementId}/reports/delete`, action.reportsId)
-          .pipe(map((reports) =>
-              SettlementActions.setReportsBrief({reports})),
+          .pipe(map(() =>
+              SettlementActions.deletedConfirmReports()),
             catchError(error => of(SettlementActions.errorSettlement({error})))
           )
       )

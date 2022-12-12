@@ -97,4 +97,7 @@ export const openReport = createAction(
 export const deleteReports = createAction(
   '[Settlement] Delete reports', props<{reportsId: string[]}>());
 
+export const deletedConfirmReports = createAction(
+  '[Settlement] Reports have been deleted');
+
 export const errorSettlement = createAction('[Settlement] Error', props<{ error: string }>());

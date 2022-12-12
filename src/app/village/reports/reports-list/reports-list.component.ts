@@ -5,9 +5,10 @@ import {Subscription} from "rxjs";
 import {MatPaginator} from "@angular/material/paginator";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
-import {reportsBriefSelector} from "../../store/settlement.selectors";
+import {reportDeletedSelector, reportsBriefSelector} from "../../store/settlement.selectors";
 import {deleteReports, fetchReportsBrief} from "../../store/settlement.actions";
 import {ActivatedRoute, Router} from "@angular/router";
+import {skip} from "rxjs/operators";
 
 export interface ReportBrief {
   id: string;
@@ -37,8 +38,11 @@ export class ReportsListComponent implements OnInit, OnDestroy{
     this.componentSubs.push(this.store.select(reportsBriefSelector).subscribe(reports => {
       this.dataSource.data = reports;
       this.reportsData = reports;
-
     }));
+    this.componentSubs.push(this.store.select(reportDeletedSelector).pipe(skip(1)).subscribe(() => {
+        this.reportsDeleted();
+      }
+    ));
     this.store.dispatch(fetchReportsBrief());
   }
 
@@ -58,6 +62,11 @@ export class ReportsListComponent implements OnInit, OnDestroy{
     } else {
       this.store.dispatch(deleteReports({reportsId: this.reportsData.map(r => r.id)}));
     }
+    this.selection.clear();
+  }
+
+  private reportsDeleted(){
+    this.store.dispatch(fetchReportsBrief());
   }
 
   ngAfterViewInit() {

@@ -18,7 +18,8 @@ export interface State {
   sendingContract: CombatGroupSendingContract | null,
   isTroopsSent: boolean,
   reports: ReportBrief[],
-  currentReport: Report | undefined
+  currentReport: Report | undefined,
+  deletedConfirmReport: boolean,
 }
 
 export const initialState: State = {
@@ -33,7 +34,8 @@ export const initialState: State = {
   sendingContract: null,
   isTroopsSent: false,
   reports: [],
-  currentReport: undefined
+  currentReport: undefined,
+  deletedConfirmReport: false,
 };
 
 export const settlementReducer = createReducer(
@@ -67,6 +69,9 @@ export const settlementReducer = createReducer(
   )),
   on(SettlementActions.setReport, (state, {report}) => (
     { ...state, currentReport: report }
+  )),
+  on(SettlementActions.deletedConfirmReports, (state) => (
+    { ...state, deletedConfirmReport: !state.deletedConfirmReport }
   )),
   on(SettlementActions.clear, () => (
     { ...initialState }
