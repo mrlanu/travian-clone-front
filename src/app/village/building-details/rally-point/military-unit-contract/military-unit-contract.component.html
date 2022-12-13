@@ -3,7 +3,7 @@
     <tbody>
     <tr>
       <td class="fw-bold">
-        <a href="/karte.php?d=46567">{{ militaryUnitContract.originVillageName }}</a>
+        <a href="/karte.php?d=46567">{{ currentSettlement?.name }}</a>
       </td>
       <td colspan="11" class="fw-bold" style="text-align: center">
         <div *ngIf="militaryUnitContract.mission === 'Attack' || militaryUnitContract.mission === 'Raid'">
@@ -15,13 +15,13 @@
     <tr>
       <th class="coords fw-normal">
         <span class="coordinates">
-          <span>{{ militaryUnitContract.originVillageCoordinates[0] }}</span>
+          <span>{{ currentSettlement?.x }}</span>
           <span>|</span>
-          <span>{{ militaryUnitContract.originVillageCoordinates[1] }}</span>
+          <span>{{ currentSettlement?.y }}</span>
         </span>
       </th>
       <td class="unit-icon" *ngFor="let u of militaryUnitContract.units; let i=index;">
-        <img class="unit unit-{{ militaryUnitContract.nation | lowercase}} u{{ i }}" alt="u-{{ u }}" [src]="imgSrc">
+        <img class="unit unit-{{ currentSettlement?.nation | lowercase}} u{{ i }}" alt="u-{{ u }}" [src]="imgSrc">
       </td>
     </tr>
 

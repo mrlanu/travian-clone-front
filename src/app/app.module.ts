@@ -53,6 +53,13 @@ import {appReducer} from "./store/app.reducer";
 import {EffectsModule} from "@ngrx/effects";
 import {SettlementEffects} from "./village/store/settlement.effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import { ReportsComponent } from './village/reports/reports.component';
+import { ReportsListComponent } from './village/reports/reports-list/reports-list.component';
+import { ReportComponent } from './village/reports/report/report.component';
+import {MatTableModule} from "@angular/material/table";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { TableComponent } from './village/reports/report/table/table.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +91,11 @@ import {StoreDevtoolsModule} from "@ngrx/store-devtools";
     ConfirmTroopsSendComponent,
     MapComponent,
     TileDetailComponent,
-    TroopMovementsBriefComponent
+    TroopMovementsBriefComponent,
+    ReportsComponent,
+    ReportsListComponent,
+    ReportComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +119,10 @@ import {StoreDevtoolsModule} from "@ngrx/store-devtools";
     MatSnackBarModule,
     MatGridListModule,
     TabsModule.forRoot(),
-    EffectsModule.forRoot([SettlementEffects])
+    EffectsModule.forRoot([SettlementEffects]),
+    MatTableModule,
+    MatCheckboxModule,
+    MatPaginatorModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, BsModalService],
   bootstrap: [AppComponent]

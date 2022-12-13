@@ -1,0 +1,111 @@
+<div *ngIf="report" fxLayout="column" class="card p-3 mt-3" >
+  <div fxLayout class="btn-group" role="group">
+    <button fxFlex="10" type="button" class="btn btn-success" (click)="onLeft()">
+      <fa-icon [icon]="faArrowLeft" size="1x" [styles]="faStyle"></fa-icon>
+    </button>
+    <div fxLayoutAlign="center center" fxFlex="80" style="vertical-align: auto">{{currentBrief?.subject}}</div>
+    <button fxFlex="10" type="button" class="btn btn-success" (click)="onRight()">
+      <fa-icon [icon]="faArrowRight" size="1x" [styles]="faStyle"></fa-icon>
+    </button>
+  </div>
+  <hr>
+  <div fxLayout>
+    <div fxLayoutAlign="start center" fxFlex>{{currentBrief?.received |  date:'short'}}</div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-secondary">
+        <fa-icon [icon]="faFileZipper" size="1x" [styles]="faStyle"></fa-icon>
+      </button>
+      <button type="button" class="btn btn-secondary">
+        <fa-icon [icon]="faEnvelope" size="1x" [styles]="faStyle"></fa-icon>
+      </button>
+      <button type="button" class="btn btn-danger">
+        <fa-icon [icon]="faTrash" size="1x" [styles]="faStyle" (click)="onDelete()"></fa-icon>
+      </button>
+    </div>
+  </div>
+  <hr>
+  <div class="attacker">
+    ATTACKER
+  </div>
+  <div fxLayout class="mt-2 mb-2">
+    <div fxLayoutAlign="start center" fxFlex>
+      <div class="fw-bold pe-2">
+        {{ report.from.playerName }}
+      </div>
+      <div>from village</div>
+      <div class="fw-bold ps-2">
+        {{ report.from.settlementName }}
+      </div>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-secondary">
+        <fa-icon [icon]="faRepeat" size="1x" [styles]="faStyle"></fa-icon>
+      </button>
+      <button type="button" class="btn btn-secondary">
+        <fa-icon [icon]="faShieldHalved" size="1x" [styles]="faStyle"></fa-icon>
+      </button>
+      <button type="button" class="btn btn-secondary">
+        <fa-icon [icon]="faBullseye" size="1x" [styles]="faStyle"></fa-icon>
+      </button>
+    </div>
+  </div>
+  <app-table [reportPlayer]="report.from"></app-table>
+
+  <div fxLayout fxLayoutAlign="start" fxLayoutGap="1rem">
+    <div class="me-3">
+      Bounty
+    </div>
+    <div fxLayout fxLayoutAlign="start center">
+      <div class="carry me-2"
+           [ngClass]="{'empty': bounty == 0, 'half': bounty > 0 && bounty < report.from.carry, 'full': bounty == report.from.carry}"></div>
+      <div class="me-5">{{bounty}}/{{report.from.carry}}</div>
+    </div>
+    <div fxLayout>
+      <i class="r r-wood"></i>
+      <div>
+        {{ report.from.bounty.get('WOOD') }}
+      </div>
+    </div>
+    <div fxLayout>
+      <i class="r r-clay"></i>
+      <div>
+        {{ report.from.bounty.get('CLAY') }}
+      </div>
+    </div>
+    <div fxLayout>
+      <i class="r r-iron"></i>
+      <div>
+        {{ report.from.bounty.get('IRON') }}
+      </div>
+    </div>
+    <div fxLayout>
+      <i class="r r-crop"></i>
+      <div>
+        {{ report.from.bounty.get('CROP') }}
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <div class="defender">
+    DEFENDER
+  </div>
+  <div fxLayout class="mt-2 mb-2">
+    <div fxLayoutAlign="start center" fxFlex>
+      <div class="fw-bold pe-2">
+        {{ report.to.playerName }}
+      </div>
+      <div>from village</div>
+      <div class="fw-bold ps-2">
+        {{ report.to.settlementName }}
+      </div>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-secondary">
+        <fa-icon [icon]="faShieldHalved" size="1x" [styles]="faStyle"></fa-icon>
+      </button>
+    </div>
+  </div>
+  <app-table [reportPlayer]="report.to"></app-table>
+</div>
+

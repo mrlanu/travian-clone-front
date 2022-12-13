@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
   faBook,
   faChartLine,
@@ -9,16 +9,21 @@ import {
   faSignOutAlt,
   faSmileWink
 } from "@fortawesome/free-solid-svg-icons";
-import {ActivatedRoute} from "@angular/router";
 import {AuthService} from "../../auth/auth.service";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../store/app.reducer";
+import {Subscription} from "rxjs";
+import {settlementSelector} from "../store/settlement.selectors";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
+  newReportsCount = 0;
+  componentSubs: Subscription[] = [];
   faSeedling = faSeedling;
   faHome = faHome;
   faGlobe = faGlobe;
@@ -32,12 +37,21 @@ export class HeaderComponent implements OnInit {
     'color': 'darkgreen'
   };
 
-  constructor(private route: ActivatedRoute, private authService: AuthService) { }
+  constructor(private authService: AuthService, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
+    this.componentSubs.push(this.store.select(settlementSelector).subscribe(settlement => {
+      this.newReportsCount = settlement!.newReportsCount;
+    }));
   }
 
   onLogout(){
     this.authService.logout();
+  }
+
+  ngOnDestroy() {
+    this.componentSubs.forEach(subs => {
+      subs.unsubscribe();
+    });
   }
 }

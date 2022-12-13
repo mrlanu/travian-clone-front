@@ -13,6 +13,7 @@ import {Building} from "../all-buildings-list/all-buildings-list.component";
 import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
 import {TroopMovementsBrief} from "../troop-movements-brief/troop-movements-brief.component";
 import {CombatGroupSendingContract} from "../building-details/rally-point/rally-point.component";
+import {ReportBrief} from "../reports/reports-list/reports-list.component";
 
 @Injectable()
 export class SettlementEffects {
@@ -151,8 +152,8 @@ export class SettlementEffects {
       withLatestFrom(this.store.select(settlementIdSelector)),
       exhaustMap(([action, settlementId]) =>
         this.httpClient
-          .post<VillageView>(`${environment.baseUrl}/villages/military`,
-            {'villageId': settlementId, 'unitType': action.unitType, 'amount': action.amount})
+          .post<VillageView>(`${environment.baseUrl}/villages/${settlementId}/military`,
+            {'unitType': action.unitType, 'amount': action.amount})
           .pipe(map((settlement) =>
               SettlementActions.setSettlement({settlement})),
             catchError(error => of(SettlementActions.errorSettlement({error})))
@@ -198,14 +199,15 @@ export class SettlementEffects {
   checkSendingContract$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettlementActions.checkSendingContract),
-      exhaustMap(action =>
+      withLatestFrom(this.store.select(settlementIdSelector)),
+      exhaustMap(([action, settlementId]) =>
         this.httpClient
-          .post<CombatGroupSendingContract>(`${environment.baseUrl}/villages/check-troops-send`, action.attackRequest)
+          .post<CombatGroupSendingContract>(`${environment.baseUrl}/villages/${settlementId}/check-troops-send`,
+            action.attackRequest)
           .pipe(map((mU) => {
-              let result = new CombatGroupSendingContract(mU.id, mU.nation, mU.move, mU.mission, mU.originVillageId,
-                mU.originVillageName, mU.originPlayerName, mU.originVillageCoordinates, mU.currentLocationVillageId,
-                mU.targetVillageId, mU.targetVillageName, mU.targetPlayerName, mU.targetVillageCoordinates,
-                mU.units, mU.arrivalTime ? new Date(mU.arrivalTime) : null, mU.duration, mU.expensesPerHour)
+              let result = new CombatGroupSendingContract(mU.id, mU.savedEntityId, mU.move, mU.mission, mU.targetVillageId,
+                mU.targetVillageName, mU.targetPlayerName, mU.targetVillageCoordinates, mU.units,
+                mU.arrivalTime ? new Date(mU.arrivalTime) : null, mU.duration);
               return SettlementActions.setSendingContract({contract: result})}),
             catchError(error => of(SettlementActions.errorSettlement({error})))
           )
@@ -216,11 +218,79 @@ export class SettlementEffects {
   confirmTroopsSending$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettlementActions.confirmTroopsSending),
-      exhaustMap(action =>
+      withLatestFrom(this.store.select(settlementIdSelector)),
+      exhaustMap(([action, settlementId]) =>
         this.httpClient
-          .post<boolean>(`${environment.baseUrl}/villages/troops-send`, action.contract)
+          .post<boolean>(`${environment.baseUrl}/villages/${settlementId}/troops-send/${action.contract.savedEntityId}`, '')
           .pipe(map((result) =>
               SettlementActions.troopsSent({result})),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
+  reportsBrief$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.fetchReportsBrief),
+      withLatestFrom(this.store.select(settlementIdSelector)),
+      exhaustMap(([_, settlementId]) =>
+        this.httpClient
+          .get<ReportBrief[]>(`${environment.baseUrl}/villages/${settlementId}/reports`)
+          .pipe(map((reports) =>
+              SettlementActions.setReportsBrief({reports})),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
+  report$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.fetchReport),
+      exhaustMap(action =>
+        this.httpClient
+          .get<any>(`${environment.baseUrl}/villages/reports/${action.reportId}`)
+          .pipe(map((report) =>
+              SettlementActions.setReport({report})),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
+  openReport$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.openReport),
+      exhaustMap(action =>
+        this.httpClient
+          .put<any>(`${environment.baseUrl}/villages/reports/read`, [action.report.id])
+      )
+    ), { dispatch: false }
+  );
+
+  readReports$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.readReports),
+      exhaustMap(action =>
+        this.httpClient
+          .put<any>(`${environment.baseUrl}/villages/reports/read`, action.reportsId)
+          .pipe(map(() =>
+              SettlementActions.editedReports()),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
+  deleteReports$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.deleteReports),
+      exhaustMap(action =>
+        this.httpClient
+          .put<any>(`${environment.baseUrl}/villages/reports/delete`, action.reportsId)
+          .pipe(map(() =>
+              SettlementActions.editedReports()),
             catchError(error => of(SettlementActions.errorSettlement({error})))
           )
       )

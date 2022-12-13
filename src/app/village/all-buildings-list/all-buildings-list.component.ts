@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
-import {VillageService} from "../../services/village.service";
 import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";

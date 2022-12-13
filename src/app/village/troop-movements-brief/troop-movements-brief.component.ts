@@ -31,6 +31,8 @@ export class TroopMovementsBriefComponent implements OnInit, OnDestroy {
 
   onCountDone() {
     this.store.dispatch(fetchSettlement());
+    setTimeout(()=>{
+      this.store.dispatch(fetchMovementsBrief())}, 300);
   }
 
   ngOnDestroy(): void {

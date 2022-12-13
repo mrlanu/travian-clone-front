@@ -18,7 +18,8 @@ export class VillageView {
               public homeUnits: number[],
               public producePerHour: Map<string, number>,
               public eventsList: EventView[],
-              public unitOrders: OrderCombatUnit[]) {
+              public unitOrders: OrderCombatUnit[],
+              public newReportsCount: number) {
   }
 }
 

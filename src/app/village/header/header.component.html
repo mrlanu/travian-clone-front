@@ -1,46 +1,52 @@
-<div class="header-cont mt-2"
+<div class="header-cont mt-2 position-relative"
      gdColumns="120px repeat(8, 72px) 180px 120px"
      gdRows="72px 48px"
-     gdAreas="hero fields buildings map stat war mail quest logout gold logo | hero res res res res res res res res res logo">
+     gdAreas="hero fields buildings map stat reports mail quest logout gold logo | hero res res res res res res res res res logo">
   <div gdArea="hero" style="border: 1px solid darkgreen">Hero is under construction</div>
   <div class="btn-container" gdArea="fields">
     <button class="header-buttons" [routerLink]="['fields']" routerLinkActive="header-active" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Fields">
-      <fa-icon [icon]="faSeedling" size="3x" [styles]="faStyle"></fa-icon>
+      <fa-icon [icon]="faSeedling" size="2x" [styles]="faStyle"></fa-icon>
     </button>
   </div>
   <div class="btn-container" gdArea="buildings">
     <button class="header-buttons" [routerLink]="['buildings']" routerLinkActive="header-active" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Buildings">
-      <fa-icon [icon]="faHome" size="3x" [styles]="faStyle"></fa-icon>
+      <fa-icon [icon]="faHome" size="2x" [styles]="faStyle"></fa-icon>
     </button>
   </div>
   <div class="btn-container" gdArea="map">
     <button class="header-buttons" [routerLink]="['map']" routerLinkActive="header-active" data-bs-toggle="tooltip" data-bs-placement="bottom" title="World">
-      <fa-icon [icon]="faGlobe" size="3x" [styles]="faStyle"></fa-icon>
+      <fa-icon [icon]="faGlobe" size="2x" [styles]="faStyle"></fa-icon>
     </button>
   </div>
-  <div class="btn-container" gdArea="stat">
+  <div class="btn-container position-absolute" gdArea="stat">
     <button class="header-buttons" (click)="null" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Statistics">
-      <fa-icon [icon]="faChartLine" size="3x" [styles]="faStyle"></fa-icon>
+      <fa-icon [icon]="faChartLine" size="2x" [styles]="faStyle"></fa-icon>
     </button>
   </div>
-  <div class="btn-container" gdArea="war">
-    <button class="header-buttons" (click)="null" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reports">
-      <fa-icon [icon]="faBook" size="3x" [styles]="faStyle"></fa-icon>
+  <div class="btn-container position-absolute" gdArea="reports">
+    <button class="header-buttons" [routerLink]="['reports/list']" routerLinkActive="header-active"
+            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reports">
+      <fa-icon [icon]="faBook" size="2x" [styles]="faStyle"></fa-icon>
     </button>
+    <span *ngIf="newReportsCount > 0"
+          class="position-relative translate-middle badge rounded-pill bg-warning text-bg-warning border border-dark"
+          style="z-index: 1000; left: 57px; bottom: 68px;">
+    {{newReportsCount}}
+  </span>
   </div>
-  <div class="btn-container" gdArea="mail">
+  <div class="btn-container position-absolute" gdArea="mail">
     <button class="header-buttons" (click)="null" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Messages">
-      <fa-icon [icon]="faEnvelope" size="3x" [styles]="faStyle"></fa-icon>
+      <fa-icon [icon]="faEnvelope" size="2x" [styles]="faStyle"></fa-icon>
     </button>
   </div>
-  <div class="btn-container" gdArea="quest">
+  <div class="btn-container position-absolute" gdArea="quest">
     <button class="header-buttons" (click)="null" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Quests">
-      <fa-icon [icon]="faSmileWink" size="3x" [styles]="faStyle"></fa-icon>
+      <fa-icon [icon]="faSmileWink" size="2x" [styles]="faStyle"></fa-icon>
     </button>
   </div>
-  <div class="btn-container" gdArea="logout">
+  <div class="btn-container position-absolute" gdArea="logout">
     <button class="header-buttons" (click)="onLogout()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Logout">
-      <fa-icon [icon]="faSignOutAlt" size="3x" [styles]="faStyle"></fa-icon>
+      <fa-icon [icon]="faSignOutAlt" size="2x" [styles]="faStyle"></fa-icon>
     </button>
   </div>
   <app-storage gdArea="res"></app-storage>

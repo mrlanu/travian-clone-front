@@ -6,12 +6,12 @@ import {TabsetComponent} from "ngx-bootstrap/tabs";
 import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
-import {fetchCombatGroups, fetchSettlement} from "../../store/settlement.actions";
+import {addReportsCount, fetchCombatGroups, fetchSettlement} from "../../store/settlement.actions";
 import {combatGroupsSelector, settlementSelector} from "../../store/settlement.selectors";
 import {CombatGroup} from "./combat-group/combat-group.component";
 
 export class CombatGroupSendingRequest {
-  constructor(public villageId: string, public x: number, public y: number,
+  constructor(public targetSettlementId: string,
               public mission: string, public waves: WaveModels[]) {
   }
 }
@@ -40,14 +40,9 @@ export interface HomeLegion {
 export class CombatGroupSendingContract {
   constructor(
     public id: string,
-    public nation: string,
+    public savedEntityId: string,
     public move: boolean,
     public mission: string,
-    public originVillageId: string,
-    public originVillageName: string,
-    public originPlayerName: string,
-    public originVillageCoordinates: number[],
-    public currentLocationVillageId: string,
     public targetVillageId: string,
     public targetVillageName: string,
     public targetPlayerName: string,
@@ -55,7 +50,6 @@ export class CombatGroupSendingContract {
     public units: number[],
     public arrivalTime: null | Date,
     public duration: number,
-    public expensesPerHour: number
   ) {
   }
 }
@@ -107,14 +101,14 @@ export class RallyPointComponent implements OnInit {
   }
 
   onCountDone(){
-    this.store.dispatch(fetchSettlement());
+    //this.store.dispatch(fetchSettlement());
+    this.store.dispatch(addReportsCount({amount: 1}));
     this.getAllCombatGroups(false);
   }
 
   private getRallyPointBuildingFromCurrentVillage() {
     this.store.select(settlementSelector).pipe(take(1)).subscribe(
       village => {
-        console.log('Village from rally: ', village);
         this.villageId = village?.villageId;
         this.buildingView = {...village!.buildings.find(f => f.name == "Rally-point")!};
         let res = new Map<string, number>();
@@ -128,7 +122,6 @@ export class RallyPointComponent implements OnInit {
           units: [...village!.homeUnits],
           nation: village!.nation
         };
-        console.log('Legion: ', this.homeLegion);
       });
   }
 

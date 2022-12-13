@@ -1,0 +1,43 @@
+table {
+  width: 100%;
+}
+
+td {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+}
+
+.mat-column-subject {
+  flex: none;
+  width: 400px;
+}
+
+mat-header-cell {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+th.mat-header-cell {
+  text-align: center;
+}
+
+.list-item {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+.envelope {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+  background-image: url('../../../../assets/img/messageStatus.gif');
+}
+
+.envelope-open{
+  background-position: left -26px;
+}
+
+.envelope-close{
+  background-position: left 0;
+}

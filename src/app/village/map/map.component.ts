@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {faArrowDown, faArrowLeft, faArrowRight, faArrowUp, faHome} from '@fortawesome/free-solid-svg-icons';
 import {VillageService} from "../../services/village.service";
-import {MapTile, VillageView} from "../../models/village-dto.model";
+import {MapTile} from "../../models/village-dto.model";
 import {Subscription} from "rxjs";
 import {take} from "rxjs/operators";
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
@@ -81,7 +81,6 @@ export class MapComponent implements OnInit, OnDestroy {
 
   onTileSelected(id: string){
     this.villageService.getTileDetail(id, this.villageCoordinates.x, this.villageCoordinates.y).subscribe(detail => {
-      console.log('Tile detail - ', detail);
       this.openModalWithComponent(detail);
     });
   }

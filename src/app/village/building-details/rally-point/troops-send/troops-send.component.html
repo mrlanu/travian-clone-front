@@ -2,7 +2,7 @@
   <div class="row justify-content-sm-evenly">
     <div class="col-lg-11">
       <form [formGroup]="attackForm" (ngSubmit)="onSubmit()">
-
+        <input type="hidden" placeholder="X coordinate" formControlName="targetSettlementId">
         <!--Coordinates-->
         <div>
           <div class="row">
