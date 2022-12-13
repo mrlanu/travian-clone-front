@@ -3,7 +3,7 @@ import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
 import {Subscription} from "rxjs";
 import {editedReportsSelector, reportSelector, reportsSelector} from "../../store/settlement.selectors";
-import {deleteReports, fetchReport, openReport} from "../../store/settlement.actions";
+import {deleteReports, fetchReport, openReport, subtractReportsCount} from "../../store/settlement.actions";
 import {ActivatedRoute, Router} from "@angular/router";
 import {
   faArrowLeft,

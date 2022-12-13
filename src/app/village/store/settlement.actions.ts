@@ -103,4 +103,10 @@ export const deleteReports = createAction(
 export const editedReports = createAction(
   '[Settlement] Reports have been edited');
 
+export const addReportsCount = createAction(
+  '[Settlement] Add reports count', props<{amount: number}>());
+
+export const subtractReportsCount = createAction(
+  '[Settlement] Subtract reports count', props<{amount: number}>());
+
 export const errorSettlement = createAction('[Settlement] Error', props<{ error: string }>());

@@ -28,7 +28,7 @@ export const settlementSelector = createSelector(
       return  new VillageView(village.villageId, village.accountId, village.nation, village.name,
         village.x, village.y, village.villageType, village.population, village.culture, village.approval,
         village.buildings, storage, village.warehouseCapacity, village.granaryCapacity, homeLegion,
-        village.homeUnits, producePerHour, village.eventsList, village.unitOrders
+        village.homeUnits, producePerHour, village.eventsList, village.unitOrders, village.newReportsCount
       );
     } else {
       return undefined;

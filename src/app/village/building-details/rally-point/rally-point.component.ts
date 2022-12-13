@@ -6,7 +6,7 @@ import {TabsetComponent} from "ngx-bootstrap/tabs";
 import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
-import {fetchCombatGroups, fetchSettlement} from "../../store/settlement.actions";
+import {addReportsCount, fetchCombatGroups, fetchSettlement} from "../../store/settlement.actions";
 import {combatGroupsSelector, settlementSelector} from "../../store/settlement.selectors";
 import {CombatGroup} from "./combat-group/combat-group.component";
 
@@ -102,6 +102,7 @@ export class RallyPointComponent implements OnInit {
 
   onCountDone(){
     //this.store.dispatch(fetchSettlement());
+    this.store.dispatch(addReportsCount({amount: 1}));
     this.getAllCombatGroups(false);
   }
 
