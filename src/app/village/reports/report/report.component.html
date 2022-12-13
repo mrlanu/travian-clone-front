@@ -1,4 +1,4 @@
-<div fxLayout="column" class="card p-3 mt-3" >
+<div *ngIf="report" fxLayout="column" class="card p-3 mt-3" >
   <div fxLayout class="btn-group" role="group">
     <button fxFlex="10" type="button" class="btn btn-success" (click)="onLeft()">
       <fa-icon [icon]="faArrowLeft" size="1x" [styles]="faStyle"></fa-icon>
@@ -30,11 +30,11 @@
   <div fxLayout class="mt-2 mb-2">
     <div fxLayoutAlign="start center" fxFlex>
       <div class="fw-bold pe-2">
-        {{ report?.from?.playerName }}
+        {{ report.from.playerName }}
       </div>
       <div>from village</div>
       <div class="fw-bold ps-2">
-        {{ report?.from?.settlementName }}
+        {{ report.from.settlementName }}
       </div>
     </div>
     <div class="btn-group" role="group">
@@ -49,7 +49,43 @@
       </button>
     </div>
   </div>
-  <app-table *ngIf="report" [reportPlayer]="report.from"></app-table>
+  <app-table [reportPlayer]="report.from"></app-table>
+
+  <div fxLayout fxLayoutAlign="start" fxLayoutGap="1rem">
+    <div class="me-3">
+      Bounty
+    </div>
+    <div fxLayout fxLayoutAlign="start center">
+      <div class="carry me-2"
+           [ngClass]="{'empty': bounty == 0, 'half': bounty > 0 && bounty < report.from.carry, 'full': bounty == report.from.carry}"></div>
+      <div class="me-5">{{bounty}}/{{report.from.carry}}</div>
+    </div>
+    <div fxLayout>
+      <i class="r r-wood"></i>
+      <div>
+        {{ report.from.bounty.get('WOOD') }}
+      </div>
+    </div>
+    <div fxLayout>
+      <i class="r r-clay"></i>
+      <div>
+        {{ report.from.bounty.get('CLAY') }}
+      </div>
+    </div>
+    <div fxLayout>
+      <i class="r r-iron"></i>
+      <div>
+        {{ report.from.bounty.get('IRON') }}
+      </div>
+    </div>
+    <div fxLayout>
+      <i class="r r-crop"></i>
+      <div>
+        {{ report.from.bounty.get('CROP') }}
+      </div>
+    </div>
+  </div>
+
   <hr>
   <div class="defender">
     DEFENDER
@@ -57,11 +93,11 @@
   <div fxLayout class="mt-2 mb-2">
     <div fxLayoutAlign="start center" fxFlex>
       <div class="fw-bold pe-2">
-        {{ report?.to?.playerName }}
+        {{ report.to.playerName }}
       </div>
       <div>from village</div>
       <div class="fw-bold ps-2">
-        {{ report?.to?.settlementName }}
+        {{ report.to.settlementName }}
       </div>
     </div>
     <div class="btn-group" role="group">
@@ -70,6 +106,6 @@
       </button>
     </div>
   </div>
-  <app-table *ngIf="report" [reportPlayer]="report.to"></app-table>
+  <app-table [reportPlayer]="report.to"></app-table>
 </div>
 

@@ -103,7 +103,19 @@ export const reportsSelector = createSelector(
 
 export const reportSelector = createSelector(
   settlement,
-  (state: fromSettlement.State) => state.currentReport
+  (state: fromSettlement.State) => {
+    if (state.currentReport){
+        let bounty = new Map<string, number>();
+        for(const [key, value] of Object.entries(state.currentReport.from.bounty)){
+          bounty.set(key, value);
+        }
+        return {
+          ...state.currentReport, from: {...state.currentReport['from'], bounty: bounty}
+        }
+    }else {
+      return undefined;
+    }
+  }
 );
 
 export const editedReportsSelector = createSelector(

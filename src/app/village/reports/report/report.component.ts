@@ -44,12 +44,13 @@ export interface ReportPlayer{
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
-  styleUrls: ['./report.component.css']
+  styleUrls: ['./report.component.css', '../reports.component.css', '../../../shared/resources.css']
 })
 export class ReportComponent implements OnInit, OnDestroy{
   reportBriefsList: ReportBrief[] = [];
   currentBrief: ReportBrief | undefined;
   report: Report | undefined;
+  bounty = 0;
   componentSubs: Subscription[] = [];
   faArrowLeft = faArrowLeft;
   faArrowRight = faArrowRight;
@@ -72,7 +73,10 @@ export class ReportComponent implements OnInit, OnDestroy{
       this.reportBriefsList = [...reports];
     }));
     this.componentSubs.push(this.store.select(reportSelector).pipe(skip(1)).subscribe(report => {
+      let sum = 0;
       this.report = report;
+      report?.from.bounty.forEach(value => sum += value);
+      this.bounty = sum;
       this.currentBrief = this.reportBriefsList.find(b => b.id === report?.id);
       if (!report?.read){
         this.store.dispatch(openReport({report: report!}));

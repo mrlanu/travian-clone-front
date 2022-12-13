@@ -1,0 +1,18 @@
+.carry {
+  height: 12px;
+  width: 13px;
+  background-image: url('../../../assets/img/carry.png');
+}
+
+.empty {
+  background-position: 0 -30px;
+}
+
+.half {
+  background-position: 0 -15px;
+}
+
+.full {
+  background-position: 0 0;
+}
+
