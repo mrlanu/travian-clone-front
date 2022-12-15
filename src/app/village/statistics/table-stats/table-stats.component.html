@@ -1,0 +1,16 @@
+<table *ngIf="tableData.data.length > 0" class="table table-hover mt-2">
+  <thead>
+  <tr>
+    <th *ngFor="let d of tableData.headers" scope="col">{{d}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let d of tableData.data">
+    <th scope="row">{{d.index}}</th>
+    <td>{{d.playerName}}</td>
+    <td>{{d.allianceName}}</td>
+    <td>{{d.population}}</td>
+    <td>{{d.villagesCount}}</td>
+  </tr>
+  </tbody>
+</table>

@@ -3,7 +3,8 @@ export class User {
               public expirationDate: Date,
               public email: string,
               public username: string,
-              public userId: string) {
+              public userId: string,
+              public statisticsId: string) {
   }
 
   get token(): string | null {

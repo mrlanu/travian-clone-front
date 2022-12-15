@@ -60,6 +60,9 @@ import {MatTableModule} from "@angular/material/table";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { TableComponent } from './village/reports/report/table/table.component';
+import { StatisticsComponent } from './village/statistics/statistics.component';
+import { TableStatsComponent } from './village/statistics/table-stats/table-stats.component';
+import {StatisticsEffects} from "./village/statistics/store/statistics.effects";
 
 @NgModule({
   declarations: [
@@ -95,7 +98,9 @@ import { TableComponent } from './village/reports/report/table/table.component';
     ReportsComponent,
     ReportsListComponent,
     ReportComponent,
-    TableComponent
+    TableComponent,
+    StatisticsComponent,
+    TableStatsComponent
   ],
   imports: [
     BrowserModule,
@@ -119,7 +124,7 @@ import { TableComponent } from './village/reports/report/table/table.component';
     MatSnackBarModule,
     MatGridListModule,
     TabsModule.forRoot(),
-    EffectsModule.forRoot([SettlementEffects]),
+    EffectsModule.forRoot([SettlementEffects, StatisticsEffects]),
     MatTableModule,
     MatCheckboxModule,
     MatPaginatorModule
