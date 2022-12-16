@@ -64,6 +64,11 @@ import { StatisticsComponent } from './village/statistics/statistics.component';
 import { TableStatsComponent } from './village/statistics/table-stats/table-stats.component';
 import {StatisticsEffects} from "./village/statistics/store/statistics.effects";
 import {NgxPaginationModule} from "ngx-pagination";
+import { MessagesComponent } from './village/messages/messages.component';
+import { MessagesListComponent } from './village/messages/messages-list/messages-list.component';
+import { MessageWriteComponent } from './village/messages/message-write/message-write.component';
+import { MessageReadComponent } from './village/messages/message-read/message-read.component';
+import {MessagesEffects} from "./village/messages/store/messages.effects";
 
 @NgModule({
   declarations: [
@@ -101,7 +106,11 @@ import {NgxPaginationModule} from "ngx-pagination";
     ReportComponent,
     TableComponent,
     StatisticsComponent,
-    TableStatsComponent
+    TableStatsComponent,
+    MessagesComponent,
+    MessagesListComponent,
+    MessageWriteComponent,
+    MessageReadComponent
   ],
   imports: [
     BrowserModule,
@@ -125,7 +134,7 @@ import {NgxPaginationModule} from "ngx-pagination";
     MatSnackBarModule,
     MatGridListModule,
     TabsModule.forRoot(),
-    EffectsModule.forRoot([SettlementEffects, StatisticsEffects]),
+    EffectsModule.forRoot([SettlementEffects, StatisticsEffects, MessagesEffects]),
     MatTableModule,
     MatCheckboxModule,
     MatPaginatorModule,

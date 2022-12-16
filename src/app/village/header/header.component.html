@@ -35,7 +35,8 @@
   </span>
   </div>
   <div class="btn-container position-absolute" gdArea="mail">
-    <button class="header-buttons" (click)="null" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Messages">
+    <button class="header-buttons" [routerLink]="['messages/list']" routerLinkActive="header-active"
+            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Messages">
       <fa-icon [icon]="faEnvelope" size="2x" [styles]="faStyle"></fa-icon>
     </button>
   </div>
