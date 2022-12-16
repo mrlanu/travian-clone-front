@@ -1,0 +1,39 @@
+<div class="card text-center" style="position: absolute; top: 50px; width: 100%">
+  <div class="card-header" fxLayout fxLayoutAlign="space-between baseline">
+    <h5 class="modal-title">{{ 'Statistics' | uppercase }}</h5>
+    <!--<button type="button" class="btn-close" routerLink="/villages/{{ villageId }}/buildings"></button>-->
+  </div>
+  <div class="card-body" style="min-height: 500px">
+    <tabset [justified]="true"  #staticTabs>
+      <tab heading="Players">
+        <app-table-stats [headers]="['#', 'Name', 'Alliance', 'Population', 'Villages']"></app-table-stats>
+      </tab>
+      <tab heading="Alliances" (selectTab)="null">
+        <div class="tabset__tab">
+
+        </div>
+      </tab>
+
+      <tab heading="Villages" (selectTab)="null">
+        <div class="tabset__tab">
+
+        </div>
+      </tab>
+      <tab heading="Heroes">
+        <div class="tabset__tab">
+          Tretiy
+        </div>
+      </tab>
+      <tab heading="General">
+        <div class="tabset__tab">
+          Tretiy
+        </div>
+      </tab>
+      <tab heading="Surrounding">
+        <div class="tabset__tab">
+          Tretiy
+        </div>
+      </tab>
+    </tabset>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<table *ngIf="statsInfo" class="table table-hover mt-2">
+  <thead>
+  <tr>
+    <th *ngFor="let d of headers" scope="col">{{d}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let d of statsInfo.statistics | paginate: {id: 'foo',
+                                                      itemsPerPage: statsInfo.itemsPerPage,
+                                                      currentPage: statsInfo.currentPage,
+                                                      totalItems: statsInfo.totalItems}">
+    <th scope="row">{{d.index}}</th>
+    <td>{{d.playerName}}</td>
+    <td>{{d.allianceName}}</td>
+    <td>{{d.population}}</td>
+    <td>{{d.villagesCount}}</td>
+  </tr>
+  </tbody>
+</table>
+<pagination-controls (pageChange)="getPage($event)" id="foo">
+</pagination-controls>

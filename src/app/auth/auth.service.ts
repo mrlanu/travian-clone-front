@@ -8,6 +8,9 @@ import {map} from "rxjs/operators";
 import {AuthRequest} from "./auth-request.model";
 import {UiService} from "../services/ui.service";
 import {VillageService} from "../services/village.service";
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../store/app.reducer";
+import {login} from "./store/auth.actions";
 
 interface AuthResponse{
   email: string;
@@ -15,6 +18,7 @@ interface AuthResponse{
   token: string;
   expirationDate: Date;
   userId: string;
+  statisticsId: string
 }
 
 @Injectable({
@@ -31,7 +35,8 @@ export class AuthService {
   constructor(private router: Router,
               private httpClient: HttpClient,
               private villageService: VillageService,
-              private uiService: UiService) {}
+              private uiService: UiService,
+              private store: Store<fromAppStore.AppState>) {}
 
   registerUser(authData: AuthRequest) {
     this.isLoadingChanged.next(true);
@@ -48,12 +53,13 @@ export class AuthService {
     this.isLoadingChanged.next(true);
     this.httpClient.post<AuthResponse>(this.baseUrl + '/auth/login', authData)
       .pipe(map(res => {
-      return  new User(res.token, new Date(res.expirationDate), res.email, res.username, res.userId);
+      return  new User(res.token, new Date(res.expirationDate), res.email, res.username, res.userId, res.statisticsId);
     })).subscribe(user => {
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('user-id', user.userId);
         this.isLoadingChanged.next(false);
         this.authSuccessfully(user);
+        this.store.dispatch(login({user}))
       }, err => {
       this.uiService.showSnackbar('Wrong email or password', null, 4000);
         this.isLoadingChanged.next(false);
@@ -66,12 +72,14 @@ export class AuthService {
       username: string;
       _token: string;
       expirationDate: string;
-      userId: string
+      userId: string;
+      statisticsId: string;
     } = JSON.parse(<string>localStorage.getItem('user'));
     if (!userData){
       return;
     }
-    const user = new User(userData._token, new Date(userData.expirationDate), userData.email, userData.username, userData.userId);
+    const user = new User(userData._token, new Date(userData.expirationDate), userData.email, userData.username,
+      userData.userId, userData.statisticsId);
 
     if (user.token){
       this.authSuccessfully(user);
