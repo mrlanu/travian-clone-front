@@ -6,7 +6,7 @@
   <div class="card-body" style="min-height: 500px">
     <tabset [justified]="true"  #staticTabs>
       <tab heading="Players">
-        <app-table-stats [tableData]="{'headers': ['#', 'Name', 'Alliance', 'Population', 'Villages'], 'data': statistics}"></app-table-stats>
+        <app-table-stats [headers]="['#', 'Name', 'Alliance', 'Population', 'Villages']"></app-table-stats>
       </tab>
       <tab heading="Alliances" (selectTab)="null">
         <div class="tabset__tab">

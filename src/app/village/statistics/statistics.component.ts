@@ -2,9 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
 import {Subscription} from "rxjs";
-import {statisticsSelector} from "./store/statistics.selectors";
-import {fetchStatistics} from "./store/statistics.actions";
-import {skip} from "rxjs/operators";
 
 export interface Statistics{
     index: number;
@@ -23,6 +20,7 @@ export interface StatsInfo {
   statistics: Statistics[];
   totalItems: number;
   totalPages: number;
+  itemsPerPage: number;
 }
 
 @Component({
@@ -32,19 +30,13 @@ export interface StatsInfo {
 })
 export class StatisticsComponent implements OnInit, OnDestroy{
 
-  statistics: Statistics[] = [];
+  statsInfo: StatsInfo | undefined;
   componentSubs: Subscription[] = [];
 
   constructor(private store: Store<fromAppStore.AppState>) {
   }
 
-  ngOnInit(): void {
-    this.componentSubs.push(this.store.select(statisticsSelector).pipe(skip(1)).subscribe(statsInfo => {
-      console.log('Statistics: ', statsInfo);
-      this.statistics = statsInfo!.statistics;
-    }));
-    this.store.dispatch(fetchStatistics());
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.componentSubs.forEach(sub => {

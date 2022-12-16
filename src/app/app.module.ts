@@ -63,6 +63,7 @@ import { TableComponent } from './village/reports/report/table/table.component';
 import { StatisticsComponent } from './village/statistics/statistics.component';
 import { TableStatsComponent } from './village/statistics/table-stats/table-stats.component';
 import {StatisticsEffects} from "./village/statistics/store/statistics.effects";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -127,7 +128,8 @@ import {StatisticsEffects} from "./village/statistics/store/statistics.effects";
     EffectsModule.forRoot([SettlementEffects, StatisticsEffects]),
     MatTableModule,
     MatCheckboxModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NgxPaginationModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, BsModalService],
   bootstrap: [AppComponent]

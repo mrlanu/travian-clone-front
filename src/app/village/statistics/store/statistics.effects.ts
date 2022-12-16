@@ -23,13 +23,20 @@ export class StatisticsEffects {
     this.actions$.pipe(
       ofType(StatisticsActions.fetchStatistics),
       withLatestFrom(this.store.select(userSelector)),
-      exhaustMap(([_, user]) =>
-        this.httpClient
-          .get<StatsInfo>(`${environment.baseUrl}/statistics/${user!.statisticsId}`)
+      exhaustMap(([action, user]) => {
+        let params = {};
+        if (action.needStatisticsId){
+          params = {...params, statisticsId: user!.statisticsId}
+        }
+        if (action.page){
+          params = {...params, page: action.page}
+        }
+        return this.httpClient
+          .get<StatsInfo>(`${environment.baseUrl}/statistics`, {params})
           .pipe(map(response => StatisticsActions.setStatistics({statistics: response})),
             catchError(error => of(StatisticsActions.errorStatistics({error})))
           )
-      )
+      })
     )
   );
 }
