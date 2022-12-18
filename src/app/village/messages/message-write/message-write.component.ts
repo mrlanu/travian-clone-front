@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
@@ -18,6 +18,8 @@ export interface MessageSendRequest {
   styleUrls: ['./message-write.component.css']
 })
 export class MessageWriteComponent implements OnInit, OnDestroy{
+
+  @Output() getOut = new EventEmitter<boolean>();
 
   ngOnInit(): void {
     this.messageForm.controls.recipientName.enable();
@@ -44,6 +46,8 @@ export class MessageWriteComponent implements OnInit, OnDestroy{
       body: this.messageForm.value.body,
     }
     this.store.dispatch(sendMessage({message}));
+    this.messageForm.reset();
+    this.getOut.emit(true);
   }
 
   ngOnDestroy(): void {

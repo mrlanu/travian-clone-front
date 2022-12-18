@@ -19,3 +19,8 @@ export const messageSelector = createSelector(
   (state: fromMessages.State) => state.current
 );
 
+export const editedMessagesSelector = createSelector(
+  messages,
+  (state: fromMessages.State) => state.editedMessages
+);
+

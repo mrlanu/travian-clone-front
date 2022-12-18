@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
-import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {Message} from "../messages.component";
 import {messageSelector} from "../store/messages.selectors";
-import {fetchMessage} from "../store/messages.actions";
+import {fetchMessage, readMessages} from "../store/messages.actions";
+import {skip} from "rxjs/operators";
 
 @Component({
   selector: 'app-message-read',
@@ -19,12 +19,13 @@ export class MessageReadComponent implements OnInit, OnDestroy{
   message: Message | undefined;
   componentSubs: Subscription[] = [];
 
-  constructor(private store: Store<fromAppStore.AppState>, private route: ActivatedRoute, private router: Router) {
+  constructor(private store: Store<fromAppStore.AppState>) {
   }
 
   ngOnInit(): void {
-    this.componentSubs.push(this.store.select(messageSelector).subscribe(message => {
+    this.componentSubs.push(this.store.select(messageSelector).pipe(skip(1)).subscribe(message => {
       this.message = message;
+      this.store.dispatch(readMessages({messagesId: [message!.id]}));
     }));
     this.store.dispatch(fetchMessage({messageId: this.messageId}));
   }

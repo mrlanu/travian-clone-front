@@ -14,7 +14,7 @@
       </tab>
       <tab heading="Write" (selectTab)="onWriteSelect()">
         <div class="tabset__tab">
-          <app-message-write></app-message-write>
+          <app-message-write (getOut)="selectTab(0)"></app-message-write>
         </div>
       </tab>
 

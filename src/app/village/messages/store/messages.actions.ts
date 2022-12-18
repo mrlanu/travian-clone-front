@@ -26,4 +26,13 @@ export const sendMessage = createAction(
 export const messageSent = createAction(
   '[Messages] Message sent');
 
+export const readMessages = createAction(
+  '[Messages] Read messages', props<{messagesId: string[]}>());
+
+export const deleteMessages = createAction(
+  '[Messages] Delete messages', props<{messagesId: string[];}>());
+
+export const editedMessages = createAction(
+  '[Messages] Messages have been edited');
+
 export const errorStatistics = createAction('[Messages] Error', props<{ error: string }>());

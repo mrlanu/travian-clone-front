@@ -9,6 +9,7 @@ import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
 import {userSelector} from "../../../auth/store/auth.selectors";
 import {Message, MessageBrief} from "../messages.component";
+import * as SettlementActions from "../../store/settlement.actions";
 
 @Injectable()
 export class MessagesEffects {
@@ -74,6 +75,36 @@ export class MessagesEffects {
             catchError(error => of(MessagesActions.errorStatistics({error})))
           )
       })
+    )
+  );
+
+  readMessages$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MessagesActions.readMessages),
+      exhaustMap(action =>
+        this.httpClient
+          .put<any>(`${environment.baseUrl}/messages/read`, action.messagesId)
+          .pipe(map(() =>
+              MessagesActions.editedMessages()),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
+
+  deleteMessages$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MessagesActions.deleteMessages),
+      withLatestFrom(this.store.select(userSelector)),
+      exhaustMap(([action, user]) =>
+        this.httpClient
+          .put<any>(`${environment.baseUrl}/messages/delete`,
+            action.messagesId, {params: {'requestedOwnerId': user!.userId}})
+          .pipe(map(() =>
+              MessagesActions.editedMessages()),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
     )
   );
 }

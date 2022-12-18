@@ -1,6 +1,6 @@
 <div fxLayout="column">
   <div class="btn-group mt-3 ms-3 me-3" role="group">
-    <button type="button" class="btn btn-sm btn-success" (click)="onMark()">
+    <button *ngIf="!isForSent" type="button" class="btn btn-sm btn-success" (click)="onMark()">
       {{ selection.hasValue() ? 'MARK SELECTED AS READ' : 'MARK ALL AS READ'}}
     </button>
     <button type="button" class="btn btn-sm btn-success" (click)="onDelete()">

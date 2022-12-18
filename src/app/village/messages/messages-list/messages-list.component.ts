@@ -6,9 +6,11 @@ import {MatPaginator} from "@angular/material/paginator";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
 import {ActivatedRoute, Router} from "@angular/router";
-import {messagesSelector, messagesSentSelector} from "../store/messages.selectors";
+import {editedMessagesSelector, messagesSelector, messagesSentSelector} from "../store/messages.selectors";
 import {MessageBrief} from "../messages.component";
-import {fetchMessages, fetchSentMessages} from "../store/messages.actions";
+import {deleteMessages, fetchMessages, fetchSentMessages, readMessages} from "../store/messages.actions";
+import {skip} from "rxjs/operators";
+import {readReports, subtractReportsCount} from "../../store/settlement.actions";
 
 @Component({
   selector: 'app-messages-list',
@@ -43,6 +45,10 @@ export class MessagesListComponent {
       }));
       this.store.dispatch(fetchMessages());
     }
+    this.componentSubs.push(this.store.select(editedMessagesSelector).pipe(skip(1)).subscribe(() => {
+        this.messagesEdited();
+      }
+    ));
   }
 
   onMessageSelect(messageId: string){
@@ -50,11 +56,31 @@ export class MessagesListComponent {
   }
 
   onMark(){
-
+    if (this.selection.hasValue()){
+      /*this.store.dispatch(subtractReportsCount({amount: this.selection.selected.filter(r => !r.read).length}));*/
+      this.store.dispatch(readMessages({messagesId: this.selection.selected.map(m => m.id)}));
+    } else {
+      /*this.store.dispatch(subtractReportsCount({amount: this.reportsData.filter(r => !r.read).length}));*/
+      this.store.dispatch(readMessages({messagesId: this.messagesData.map(m => m.id)}));
+    }
+    this.selection.clear();
   }
 
   onDelete(){
+    if (this.selection.hasValue()){
+      /*this.store.dispatch(subtractReportsCount({
+        amount: this.selection.selected.filter(r => !r.read).length}));*/
+      this.store.dispatch(deleteMessages({messagesId: this.selection.selected.map(m => m.id)}));
+    } else {
+      /*this.store.dispatch(subtractReportsCount({
+        amount: this.reportsData.filter(r => !r.read).length}));*/
+      this.store.dispatch(deleteMessages({messagesId: this.messagesData.map(m => m.id)}));
+    }
+    this.selection.clear();
+  }
 
+  private messagesEdited(){
+    this.isForSent ? this.store.dispatch(fetchSentMessages()) : this.store.dispatch(fetchMessages());
   }
 
   ngAfterViewInit() {

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
 import {ActivatedRoute, Router} from "@angular/router";
+import {TabsetComponent} from "ngx-bootstrap/tabs";
 
 export interface MessageBrief {
   id: string;
@@ -32,8 +33,16 @@ export class MessagesComponent {
 
   listVisible = true;
   selectedMessageId: string = '';
+  @ViewChild('staticTabs', { static: false }) staticTabs?: TabsetComponent;
 
   constructor(private store: Store<fromAppStore.AppState>, private router: Router, private route: ActivatedRoute) {
+  }
+
+
+  selectTab(tabId: number) {
+    if (this.staticTabs?.tabs[tabId]) {
+      this.staticTabs.tabs[tabId].active = true;
+    }
   }
 
   messageSelected(messageId: string){
