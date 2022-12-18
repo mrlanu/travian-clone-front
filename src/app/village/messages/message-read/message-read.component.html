@@ -1,0 +1,9 @@
+<div *ngIf="message" class="card text-start mt-3" style="min-height: 410px">
+  <div class="card-body">
+    <a class="card-link" (click)="onBack()">Back to list</a>
+    <h6 class="card-title mb-2 mt-3 text-muted">Sender: {{message.senderName}}</h6>
+    <h6 class="card-subtitle mb-2 text-muted">Subject: {{message.subject}}</h6>
+    <h6 class="card-subtitle mb-4 text-muted">Sent: {{message.dateTime | date:'short'}}</h6>
+    <p class="card-text">{{message.body}}</p>
+  </div>
+</div>

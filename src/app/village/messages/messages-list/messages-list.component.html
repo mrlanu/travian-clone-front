@@ -1,0 +1,67 @@
+<div fxLayout="column">
+  <div class="btn-group mt-3 ms-3 me-3" role="group">
+    <button *ngIf="!isForSent" type="button" class="btn btn-sm btn-success" (click)="onMark()">
+      {{ selection.hasValue() ? 'MARK SELECTED AS READ' : 'MARK ALL AS READ'}}
+    </button>
+    <button type="button" class="btn btn-sm btn-success" (click)="onDelete()">
+      {{ selection.hasValue() ? 'DELETE SELECTED' : 'DELETE ALL'}}
+    </button>
+  </div>
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef style="padding-right: 0">
+        <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                      [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row" style="padding-right: 0">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)"
+                      [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Subject Column -->
+    <ng-container matColumnDef="subject">
+      <th mat-header-cell *matHeaderCellDef> Subject </th>
+      <td mat-cell *matCellDef="let message">
+        <a class="list-item" (click)="onMessageSelect(message.id)"> <!--[ngClass] = "{'active-village': v.villageId === currentVillageId}" (click)="onVillageSelect(v.villageId)"-->
+          <div fxLayout>
+            <i class="envelope" [ngClass] = "{'envelope-close': !message.read, 'envelope-open': message.read}"></i>
+            <div>
+              {{ message.subject }}
+            </div>
+          </div>
+        </a>
+      </td>
+    </ng-container>
+
+    <!-- Sender Column -->
+    <ng-container matColumnDef="sender">
+      <th mat-header-cell *matHeaderCellDef> {{isForSent ? 'Recipient' : 'Sender'}} </th>
+      <td mat-cell *matCellDef="let message"> {{isForSent ? message.recipientName : message.senderName}} </td>
+    </ng-container>
+
+    <!-- Received Column -->
+    <ng-container matColumnDef="received">
+      <th mat-header-cell *matHeaderCellDef> Received </th>
+      <td mat-cell *matCellDef="let message"> {{message.time | date:'short' }} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 20, 50]"
+                 showFirstLastButtons
+                 aria-label="Select page">
+  </mat-paginator>
+</div>
+

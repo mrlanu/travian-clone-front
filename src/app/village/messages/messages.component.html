@@ -1,0 +1,44 @@
+<div class="card text-center" style="position: absolute; top: 50px; width: 100%">
+  <div class="card-header" fxLayout fxLayoutAlign="space-between baseline">
+    <h5 class="modal-title">{{ 'Messages' | uppercase }}</h5>
+    <!--<button type="button" class="btn-close" routerLink="/villages/{{ villageId }}/buildings"></button>-->
+  </div>
+  <div class="card-body" style="min-height: 500px">
+    <tabset [justified]="true"  #staticTabs>
+      <tab heading="Inbox" (selectTab)="onIndexSelect()">
+        <div class="tabset__tab">
+          <!--<router-outlet></router-outlet>-->
+          <app-messages-list *ngIf="listVisible" [isForSent]="false" (getOut)="messageSelected($event)"></app-messages-list>
+          <app-message-read *ngIf="!listVisible" [messageId]="selectedMessageId" (getOut)="listVisible = true"></app-message-read>
+        </div>
+      </tab>
+      <tab heading="Write" (selectTab)="onWriteSelect()">
+        <div class="tabset__tab">
+          <app-message-write (getOut)="selectTab(0)"></app-message-write>
+        </div>
+      </tab>
+
+      <tab heading="Sent" (selectTab)="onSentSelect()">
+        <div class="tabset__tab">
+          <app-messages-list *ngIf="listVisible" [isForSent]="true" (getOut)="messageSelected($event)"></app-messages-list>
+          <app-message-read *ngIf="!listVisible" [messageId]="selectedMessageId" (getOut)="listVisible = true"></app-message-read>
+        </div>
+      </tab>
+      <tab heading="Archive">
+        <div class="tabset__tab">
+
+        </div>
+      </tab>
+      <tab heading="Notes">
+        <div class="tabset__tab">
+
+        </div>
+      </tab>
+      <tab heading="Ignored">
+        <div class="tabset__tab">
+
+        </div>
+      </tab>
+    </tabset>
+  </div>
+</div>

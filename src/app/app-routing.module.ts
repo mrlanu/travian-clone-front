@@ -15,6 +15,10 @@ import {ReportsComponent} from "./village/reports/reports.component";
 import {ReportComponent} from "./village/reports/report/report.component";
 import {ReportsListComponent} from "./village/reports/reports-list/reports-list.component";
 import {StatisticsComponent} from "./village/statistics/statistics.component";
+import {MessagesComponent} from "./village/messages/messages.component";
+import {MessageReadComponent} from "./village/messages/message-read/message-read.component";
+import {MessagesListComponent} from "./village/messages/messages-list/messages-list.component";
+import {MessageWriteComponent} from "./village/messages/message-write/message-write.component";
 
 const routes: Routes = [
   {path: 'welcome-page', component: WelcomePageComponent, children: [
@@ -32,6 +36,10 @@ const routes: Routes = [
       {path: 'reports', component: ReportsComponent, children: [
           {path: 'list/:id', component: ReportComponent},
           {path: 'list', component: ReportsListComponent},
+        ]},
+      {path: 'messages', component: MessagesComponent, children: [
+          {path: 'list/:id', component: MessageReadComponent},
+          {path: 'list', component: MessagesListComponent},
         ]},
       {path: 'map', component: MapComponent},
     ]},

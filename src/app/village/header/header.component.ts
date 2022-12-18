@@ -14,6 +14,8 @@ import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
 import {Subscription} from "rxjs";
 import {settlementSelector} from "../store/settlement.selectors";
+import {amountNewMessagesSelector} from "../messages/store/messages.selectors";
+import {countNewMessages} from "../messages/store/messages.actions";
 
 @Component({
   selector: 'app-header',
@@ -22,7 +24,9 @@ import {settlementSelector} from "../store/settlement.selectors";
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
+  newMessagesCount = 0;
   newReportsCount = 0;
+
   componentSubs: Subscription[] = [];
   faSeedling = faSeedling;
   faHome = faHome;
@@ -42,6 +46,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.componentSubs.push(this.store.select(settlementSelector).subscribe(settlement => {
       this.newReportsCount = settlement!.newReportsCount;
+      this.store.dispatch(countNewMessages());
+    }));
+    this.componentSubs.push(this.store.select(amountNewMessagesSelector).subscribe(amount => {
+      this.newMessagesCount = amount;
     }));
   }
 
