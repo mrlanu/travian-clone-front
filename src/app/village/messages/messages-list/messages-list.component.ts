@@ -38,9 +38,6 @@ export class MessagesListComponent {
 
   onMessageSelect(messageId: string){
     this.router.navigate([messageId], {relativeTo:this.route});
-    if (!this.messagesData.find(m => m.id === messageId)!.read){
-      //this.store.dispatch(subtractReportsCount({amount: 1}));
-    }
   }
 
   onMark(){

@@ -40,7 +40,6 @@ const routes: Routes = [
       {path: 'messages', component: MessagesComponent, children: [
           {path: 'list/:id', component: MessageReadComponent},
           {path: 'list', component: MessagesListComponent},
-          {path: 'write', component: MessageWriteComponent},
         ]},
       {path: 'map', component: MapComponent},
     ]},

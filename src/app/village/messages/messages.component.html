@@ -6,11 +6,13 @@
   <div class="card-body" style="min-height: 500px">
     <tabset [justified]="true"  #staticTabs>
       <tab heading="Inbox">
-        <router-outlet></router-outlet>
-      </tab>
-      <tab heading="Write" (selectTab)="null">
         <div class="tabset__tab">
-
+          <router-outlet></router-outlet>
+        </div>
+      </tab>
+      <tab heading="Write" (selectTab)="onWriteSelect()">
+        <div class="tabset__tab">
+          <app-message-write></app-message-write>
         </div>
       </tab>
 

@@ -17,4 +17,7 @@ export const messagesReducer = createReducer(
   on(MessagesActions.setMessages, (state, { messages }) => (
     { ...state, list: messages }
   )),
+  on(MessagesActions.setMessage, (state, { message }) => (
+    { ...state, current: message }
+  )),
 );

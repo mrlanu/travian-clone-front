@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../store/app.reducer";
+import {ActivatedRoute, Router} from "@angular/router";
 
 export interface MessageBrief {
   id: string;
@@ -11,6 +14,11 @@ export interface MessageBrief {
 
 export interface Message {
   id: string;
+  subject: string;
+  body: string;
+  senderId: string;
+  senderName: string;
+  dateTime: Date;
 }
 
 @Component({
@@ -19,5 +27,12 @@ export interface Message {
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent {
+
+  constructor(private store: Store<fromAppStore.AppState>, private router: Router, private route: ActivatedRoute) {
+  }
+
+  onWriteSelect(){
+
+  }
 
 }

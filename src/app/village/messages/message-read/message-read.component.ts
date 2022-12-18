@@ -1,10 +1,40 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Store} from "@ngrx/store";
+import * as fromAppStore from "../../../store/app.reducer";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Subscription} from "rxjs";
+import {Message} from "../messages.component";
+import {messageSelector} from "../store/messages.selectors";
+import {fetchMessage} from "../store/messages.actions";
 
 @Component({
   selector: 'app-message-read',
   templateUrl: './message-read.component.html',
   styleUrls: ['./message-read.component.css']
 })
-export class MessageReadComponent {
+export class MessageReadComponent implements OnInit, OnDestroy{
 
+  message: Message | undefined;
+  componentSubs: Subscription[] = [];
+
+  constructor(private store: Store<fromAppStore.AppState>, private route: ActivatedRoute, private router: Router) {
+  }
+
+  ngOnInit(): void {
+    const messageId = this.route.snapshot.params['id'];
+    this.componentSubs.push(this.store.select(messageSelector).subscribe(message => {
+      this.message = message;
+    }));
+    this.store.dispatch(fetchMessage({messageId: messageId}));
+  }
+
+  onBack(){
+    this.router.navigate(['../'], {relativeTo: this.route});
+  }
+
+  ngOnDestroy(): void {
+    this.componentSubs.forEach(sub => {
+      sub.unsubscribe();
+    });
+  }
 }

@@ -1,1 +1,34 @@
-<p>message-write works!</p>
+<div>
+  <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
+
+    <div class="messages"></div>
+
+    <div class="controls">
+
+      <div class="row m-3">
+          <div class="col-md-12">
+            <input type="text" class="form-control" placeholder="Recipient name" formControlName="recipientName">
+          </div>
+      </div>
+
+      <div class="row m-3">
+        <div class="col-md-12">
+          <input type="text" class="form-control" formControlName="subject" placeholder="Subject" aria-label="Subject" aria-describedby="basic-addon2">
+        </div>
+      </div>
+
+      <div class="row m-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <textarea id="form_message" name="message" class="form-control" formControlName="body" placeholder="Message..." rows="10" required="required"></textarea>
+            <div class="help-block with-errors"></div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <input type="submit" class="btn btn-success btn-send m-3 mb-0" value="Send message">
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>
