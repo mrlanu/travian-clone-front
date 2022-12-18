@@ -8,9 +8,14 @@ import * as fromAppStore from "../../../store/app.reducer";
 import {ActivatedRoute, Router} from "@angular/router";
 import {editedMessagesSelector, messagesSelector, messagesSentSelector} from "../store/messages.selectors";
 import {MessageBrief} from "../messages.component";
-import {deleteMessages, fetchMessages, fetchSentMessages, readMessages} from "../store/messages.actions";
+import {
+  countNewMessages,
+  deleteMessages,
+  fetchMessages,
+  fetchSentMessages,
+  readMessages
+} from "../store/messages.actions";
 import {skip} from "rxjs/operators";
-import {readReports, subtractReportsCount} from "../../store/settlement.actions";
 
 @Component({
   selector: 'app-messages-list',
@@ -57,26 +62,22 @@ export class MessagesListComponent {
 
   onMark(){
     if (this.selection.hasValue()){
-      /*this.store.dispatch(subtractReportsCount({amount: this.selection.selected.filter(r => !r.read).length}));*/
       this.store.dispatch(readMessages({messagesId: this.selection.selected.map(m => m.id)}));
     } else {
-      /*this.store.dispatch(subtractReportsCount({amount: this.reportsData.filter(r => !r.read).length}));*/
       this.store.dispatch(readMessages({messagesId: this.messagesData.map(m => m.id)}));
     }
     this.selection.clear();
+    setTimeout(()=>{this.store.dispatch(countNewMessages())}, 300);
   }
 
   onDelete(){
     if (this.selection.hasValue()){
-      /*this.store.dispatch(subtractReportsCount({
-        amount: this.selection.selected.filter(r => !r.read).length}));*/
       this.store.dispatch(deleteMessages({messagesId: this.selection.selected.map(m => m.id)}));
     } else {
-      /*this.store.dispatch(subtractReportsCount({
-        amount: this.reportsData.filter(r => !r.read).length}));*/
       this.store.dispatch(deleteMessages({messagesId: this.messagesData.map(m => m.id)}));
     }
     this.selection.clear();
+    setTimeout(()=>{this.store.dispatch(countNewMessages())}, 300);
   }
 
   private messagesEdited(){

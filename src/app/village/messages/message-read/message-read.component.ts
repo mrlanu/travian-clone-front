@@ -4,7 +4,7 @@ import * as fromAppStore from "../../../store/app.reducer";
 import {Subscription} from "rxjs";
 import {Message} from "../messages.component";
 import {messageSelector} from "../store/messages.selectors";
-import {fetchMessage, readMessages} from "../store/messages.actions";
+import {countNewMessages, fetchMessage, readMessages} from "../store/messages.actions";
 import {skip} from "rxjs/operators";
 
 @Component({
@@ -26,6 +26,7 @@ export class MessageReadComponent implements OnInit, OnDestroy{
     this.componentSubs.push(this.store.select(messageSelector).pipe(skip(1)).subscribe(message => {
       this.message = message;
       this.store.dispatch(readMessages({messagesId: [message!.id]}));
+      setTimeout(()=>{this.store.dispatch(countNewMessages())}, 300);
     }));
     this.store.dispatch(fetchMessage({messageId: this.messageId}));
   }

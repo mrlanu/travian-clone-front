@@ -24,3 +24,8 @@ export const editedMessagesSelector = createSelector(
   (state: fromMessages.State) => state.editedMessages
 );
 
+export const amountNewMessagesSelector = createSelector(
+  messages,
+  (state: fromMessages.State) => state.newMessagesAmount
+);
+

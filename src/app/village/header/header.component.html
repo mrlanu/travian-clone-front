@@ -39,6 +39,11 @@
             data-bs-toggle="tooltip" data-bs-placement="bottom" title="Messages">
       <fa-icon [icon]="faEnvelope" size="2x" [styles]="faStyle"></fa-icon>
     </button>
+    <span *ngIf="newMessagesCount > 0"
+          class="position-relative translate-middle badge rounded-pill bg-warning text-bg-warning border border-dark"
+          style="z-index: 1000; left: 57px; bottom: 68px;">
+    {{newMessagesCount}}
+  </span>
   </div>
   <div class="btn-container position-absolute" gdArea="quest">
     <button class="header-buttons" (click)="null" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Quests">

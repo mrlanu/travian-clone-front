@@ -107,4 +107,19 @@ export class MessagesEffects {
       )
     )
   );
+
+  countNewMessages$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MessagesActions.countNewMessages),
+      withLatestFrom(this.store.select(userSelector)),
+      exhaustMap(([_, user]) =>
+        this.httpClient
+          .get<number>(`${environment.baseUrl}/messages/count-new`,{params: {'recipientId': user!.userId}})
+          .pipe(map(amount =>
+              MessagesActions.setMessagesAmount({amount})),
+            catchError(error => of(SettlementActions.errorSettlement({error})))
+          )
+      )
+    )
+  );
 }

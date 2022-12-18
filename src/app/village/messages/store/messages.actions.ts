@@ -35,4 +35,10 @@ export const deleteMessages = createAction(
 export const editedMessages = createAction(
   '[Messages] Messages have been edited');
 
+export const countNewMessages = createAction(
+  '[Messages] Count new messages');
+
+export const setMessagesAmount = createAction(
+  '[Messages] Set messages amount', props<{amount: number;}>());
+
 export const errorStatistics = createAction('[Messages] Error', props<{ error: string }>());
