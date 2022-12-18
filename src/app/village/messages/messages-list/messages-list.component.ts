@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {SelectionModel} from "@angular/cdk/collections";
 import {Subscription} from "rxjs";
@@ -6,9 +6,9 @@ import {MatPaginator} from "@angular/material/paginator";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
 import {ActivatedRoute, Router} from "@angular/router";
-import {messagesSelector} from "../store/messages.selectors";
+import {messagesSelector, messagesSentSelector} from "../store/messages.selectors";
 import {MessageBrief} from "../messages.component";
-import {fetchMessages} from "../store/messages.actions";
+import {fetchMessages, fetchSentMessages} from "../store/messages.actions";
 
 @Component({
   selector: 'app-messages-list',
@@ -16,6 +16,8 @@ import {fetchMessages} from "../store/messages.actions";
   styleUrls: ['./messages-list.component.css']
 })
 export class MessagesListComponent {
+  @Output() getOut = new EventEmitter<string>();
+  @Input() isForSent = false;
   messagesData: MessageBrief[] = [];
   displayedColumns: string[] = ['select', 'subject', 'sender', 'received'];
   dataSource = new MatTableDataSource<MessageBrief>([]);
@@ -28,16 +30,23 @@ export class MessagesListComponent {
   }
 
   ngOnInit(): void {
-    this.componentSubs.push(this.store.select(messagesSelector).subscribe(messages => {
-      this.dataSource.data = messages;
-      this.messagesData = messages;
-      console.log('Messages: ', messages);
-    }));
-    this.store.dispatch(fetchMessages());
+    if (this.isForSent){
+      this.componentSubs.push(this.store.select(messagesSentSelector).subscribe(messages => {
+        this.dataSource.data = messages;
+        this.messagesData = messages;
+      }));
+      this.store.dispatch(fetchSentMessages());
+    } else {
+      this.componentSubs.push(this.store.select(messagesSelector).subscribe(messages => {
+        this.dataSource.data = messages;
+        this.messagesData = messages;
+      }));
+      this.store.dispatch(fetchMessages());
+    }
   }
 
   onMessageSelect(messageId: string){
-    this.router.navigate([messageId], {relativeTo:this.route});
+    this.getOut.emit(messageId);
   }
 
   onMark(){

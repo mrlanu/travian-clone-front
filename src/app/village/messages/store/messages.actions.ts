@@ -8,11 +8,17 @@ export const fetchMessages = createAction(
 export const fetchMessage = createAction(
   '[Messages] Fetch message', props<{messageId: string}>());
 
+export const fetchSentMessages = createAction(
+  '[Messages] Fetch sent messages');
+
 export const setMessage = createAction(
   '[Messages] Set message', props<{message: Message}>());
 
 export const setMessages = createAction(
   '[Messages] Set messages', props<{messages: MessageBrief[]}>());
+
+export const setSentMessages = createAction(
+  '[Messages] Set sent messages', props<{messages: MessageBrief[]}>());
 
 export const sendMessage = createAction(
   '[Messages] Send message', props<{message: MessageSendRequest}>());

@@ -9,6 +9,11 @@ export const messagesSelector = createSelector(
   (state: fromMessages.State) => state.list
 );
 
+export const messagesSentSelector = createSelector(
+  messages,
+  (state: fromMessages.State) => state.listSent
+);
+
 export const messageSelector = createSelector(
   messages,
   (state: fromMessages.State) => state.current

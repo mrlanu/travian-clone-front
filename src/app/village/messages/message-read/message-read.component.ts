@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -14,6 +14,8 @@ import {fetchMessage} from "../store/messages.actions";
 })
 export class MessageReadComponent implements OnInit, OnDestroy{
 
+  @Output() getOut = new EventEmitter<boolean>();
+  @Input() messageId: string = '';
   message: Message | undefined;
   componentSubs: Subscription[] = [];
 
@@ -21,15 +23,14 @@ export class MessageReadComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    const messageId = this.route.snapshot.params['id'];
     this.componentSubs.push(this.store.select(messageSelector).subscribe(message => {
       this.message = message;
     }));
-    this.store.dispatch(fetchMessage({messageId: messageId}));
+    this.store.dispatch(fetchMessage({messageId: this.messageId}));
   }
 
   onBack(){
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.getOut.emit(true);
   }
 
   ngOnDestroy(): void {

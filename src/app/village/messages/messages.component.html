@@ -5,9 +5,11 @@
   </div>
   <div class="card-body" style="min-height: 500px">
     <tabset [justified]="true"  #staticTabs>
-      <tab heading="Inbox">
+      <tab heading="Inbox" (selectTab)="onIndexSelect()">
         <div class="tabset__tab">
-          <router-outlet></router-outlet>
+          <!--<router-outlet></router-outlet>-->
+          <app-messages-list *ngIf="listVisible" [isForSent]="false" (getOut)="messageSelected($event)"></app-messages-list>
+          <app-message-read *ngIf="!listVisible" [messageId]="selectedMessageId" (getOut)="listVisible = true"></app-message-read>
         </div>
       </tab>
       <tab heading="Write" (selectTab)="onWriteSelect()">
@@ -16,9 +18,10 @@
         </div>
       </tab>
 
-      <tab heading="Sent" (selectTab)="null">
+      <tab heading="Sent" (selectTab)="onSentSelect()">
         <div class="tabset__tab">
-
+          <app-messages-list *ngIf="listVisible" [isForSent]="true" (getOut)="messageSelected($event)"></app-messages-list>
+          <app-message-read *ngIf="!listVisible" [messageId]="selectedMessageId" (getOut)="listVisible = true"></app-message-read>
         </div>
       </tab>
       <tab heading="Archive">

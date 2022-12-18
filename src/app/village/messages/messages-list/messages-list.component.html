@@ -44,8 +44,8 @@
 
     <!-- Sender Column -->
     <ng-container matColumnDef="sender">
-      <th mat-header-cell *matHeaderCellDef> Sender </th>
-      <td mat-cell *matCellDef="let message"> {{message.senderName}} </td>
+      <th mat-header-cell *matHeaderCellDef> {{isForSent ? 'Recipient' : 'Sender'}} </th>
+      <td mat-cell *matCellDef="let message"> {{isForSent ? message.recipientName : message.senderName}} </td>
     </ng-container>
 
     <!-- Received Column -->

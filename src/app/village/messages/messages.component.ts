@@ -8,6 +8,8 @@ export interface MessageBrief {
   subject: string;
   senderName: string;
   senderId: string;
+  recipientName: string;
+  recipientId: string;
   read: boolean;
   time: Date;
 }
@@ -28,11 +30,27 @@ export interface Message {
 })
 export class MessagesComponent {
 
+  listVisible = true;
+  selectedMessageId: string = '';
+
   constructor(private store: Store<fromAppStore.AppState>, private router: Router, private route: ActivatedRoute) {
+  }
+
+  messageSelected(messageId: string){
+    this.selectedMessageId = messageId;
+    this.listVisible = false;
+  }
+
+  onIndexSelect(){
+    this.listVisible = true;
   }
 
   onWriteSelect(){
 
+  }
+
+  onSentSelect(){
+    this.listVisible = true;
   }
 
 }

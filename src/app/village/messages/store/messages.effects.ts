@@ -25,8 +25,24 @@ export class MessagesEffects {
       withLatestFrom(this.store.select(userSelector)),
       exhaustMap(([_, user]) => {
         return this.httpClient
-          .get<MessageBrief[]>(`${environment.baseUrl}/messages`, {params: {'recipientId': user!.userId}})
+          .get<MessageBrief[]>(`${environment.baseUrl}/messages`,
+            {params: {'clientId': user!.userId, 'sent': false}})
           .pipe(map(response => MessagesActions.setMessages({messages: response})),
+            catchError(error => of(MessagesActions.errorStatistics({error})))
+          )
+      })
+    )
+  );
+
+  messagesSent$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MessagesActions.fetchSentMessages),
+      withLatestFrom(this.store.select(userSelector)),
+      exhaustMap(([_, user]) => {
+        return this.httpClient
+          .get<MessageBrief[]>(`${environment.baseUrl}/messages`,
+            {params: {'clientId': user!.userId, 'sent': true}})
+          .pipe(map(response => MessagesActions.setSentMessages({messages: response})),
             catchError(error => of(MessagesActions.errorStatistics({error})))
           )
       })
