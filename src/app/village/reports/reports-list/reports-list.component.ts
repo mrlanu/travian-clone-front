@@ -5,8 +5,13 @@ import {Subscription} from "rxjs";
 import {MatPaginator} from "@angular/material/paginator";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
-import {editedReportsSelector, reportsBriefSelector} from "../../store/settlement.selectors";
-import {deleteReports, fetchReportsBrief, readReports, subtractReportsCount} from "../../store/settlement.actions";
+import {editedReportsSelector, reportsBriefSelector} from "../store/reports.selectors";
+import {
+  countNewReports,
+  deleteReports,
+  fetchReportsBrief,
+  readReports
+} from "../store/reports.actions";
 import {ActivatedRoute, Router} from "@angular/router";
 import {skip} from "rxjs/operators";
 
@@ -48,33 +53,26 @@ export class ReportsListComponent implements OnInit, OnDestroy{
 
   onReportSelect(reportId: string){
     this.router.navigate([reportId], {relativeTo:this.route});
-    if (!this.reportsData.find(r => r.id === reportId)!.read){
-      this.store.dispatch(subtractReportsCount({amount: 1}));
-    }
   }
 
   onMark(){
     if (this.selection.hasValue()){
-      this.store.dispatch(subtractReportsCount({amount: this.selection.selected.filter(r => !r.read).length}));
       this.store.dispatch(readReports({reportsId: this.selection.selected.map(r => r.id)}));
     } else {
-      this.store.dispatch(subtractReportsCount({amount: this.reportsData.filter(r => !r.read).length}));
       this.store.dispatch(readReports({reportsId: this.reportsData.map(r => r.id)}));
     }
     this.selection.clear();
+    setTimeout(()=>{this.store.dispatch(countNewReports())}, 300);
   }
 
   onDelete(){
     if (this.selection.hasValue()){
-      this.store.dispatch(subtractReportsCount({
-        amount: this.selection.selected.filter(r => !r.read).length}));
       this.store.dispatch(deleteReports({reportsId: this.selection.selected.map(r => r.id)}));
     } else {
-      this.store.dispatch(subtractReportsCount({
-        amount: this.reportsData.filter(r => !r.read).length}));
       this.store.dispatch(deleteReports({reportsId: this.reportsData.map(r => r.id)}));
     }
     this.selection.clear();
+    setTimeout(()=>{this.store.dispatch(countNewReports())}, 300);
   }
 
   private reportsEdited(){

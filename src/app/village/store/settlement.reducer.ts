@@ -17,10 +17,6 @@ export interface State {
   movementsBrief: Map<string, TroopMovementsBrief>;
   sendingContract: CombatGroupSendingContract | null,
   isTroopsSent: boolean,
-  reports: ReportBrief[],
-  currentReport: Report | undefined,
-  editedReports: boolean,
-  newReportsCount: number
 }
 
 export const initialState: State = {
@@ -34,10 +30,6 @@ export const initialState: State = {
   movementsBrief: new Map(),
   sendingContract: null,
   isTroopsSent: false,
-  reports: [],
-  currentReport: undefined,
-  editedReports: false,
-  newReportsCount: 0,
 };
 
 export const settlementReducer = createReducer(
@@ -65,21 +57,6 @@ export const settlementReducer = createReducer(
   )),
   on(SettlementActions.troopsSent, (state, {result}) => (
     { ...state, isTroopsSent: result }
-  )),
-  on(SettlementActions.setReportsBrief, (state, {reports}) => (
-    { ...state, reports: reports }
-  )),
-  on(SettlementActions.setReport, (state, {report}) => (
-    { ...state, currentReport: report }
-  )),
-  on(SettlementActions.editedReports, (state) => (
-    { ...state, editedReports: !state.editedReports }
-  )),
-  on(SettlementActions.addReportsCount, (state, {amount}) => (
-    { ...state, current: {...state.current!, newReportsCount: state.current!.newReportsCount + amount} }
-  )),
-  on(SettlementActions.subtractReportsCount, (state, {amount}) => (
-    { ...state, current: {...state.current!, newReportsCount: state.current!.newReportsCount - amount} }
   )),
   on(SettlementActions.clear, () => (
     { ...initialState }

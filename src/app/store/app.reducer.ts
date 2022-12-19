@@ -2,6 +2,7 @@ import * as fromAuth from '../auth/store/auth.reducer';
 import * as fromSettlement from '../village/store/settlement.reducer'
 import * as fromStatistics from '../village/statistics/store/statistics.reducer'
 import * as fromMessages from '../village/messages/store/messages.reducer'
+import * as fromReports from '../village/reports/store/reports.reducer'
 import {ActionReducerMap} from "@ngrx/store";
 
 export interface AppState {
@@ -9,6 +10,7 @@ export interface AppState {
   settlement: fromSettlement.State;
   statistics: fromStatistics.State;
   messages: fromMessages.State;
+  reports: fromReports.State;
 }
 
 export const appReducer: ActionReducerMap<AppState> = {
@@ -16,4 +18,5 @@ export const appReducer: ActionReducerMap<AppState> = {
   settlement: fromSettlement.settlementReducer,
   statistics: fromStatistics.statisticsReducer,
   messages: fromMessages.messagesReducer,
+  reports: fromReports.reportsReducer,
 };

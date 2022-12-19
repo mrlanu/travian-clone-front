@@ -69,6 +69,7 @@ import { MessagesListComponent } from './village/messages/messages-list/messages
 import { MessageWriteComponent } from './village/messages/message-write/message-write.component';
 import { MessageReadComponent } from './village/messages/message-read/message-read.component';
 import {MessagesEffects} from "./village/messages/store/messages.effects";
+import {ReportsEffects} from "./village/reports/store/reports.effects";
 
 @NgModule({
   declarations: [
@@ -134,7 +135,7 @@ import {MessagesEffects} from "./village/messages/store/messages.effects";
     MatSnackBarModule,
     MatGridListModule,
     TabsModule.forRoot(),
-    EffectsModule.forRoot([SettlementEffects, StatisticsEffects, MessagesEffects]),
+    EffectsModule.forRoot([SettlementEffects, StatisticsEffects, MessagesEffects, ReportsEffects]),
     MatTableModule,
     MatCheckboxModule,
     MatPaginatorModule,

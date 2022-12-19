@@ -1,4 +1,4 @@
-import { createAction, props } from '@ngrx/store';
+import {createAction, props} from '@ngrx/store';
 import {ShortVillageInfo, VillageView} from "../../models/village-dto.model";
 import {Building} from "../all-buildings-list/all-buildings-list.component";
 import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
@@ -8,7 +8,6 @@ import {
   CombatGroupsMap
 } from "../building-details/rally-point/rally-point.component";
 import {TroopMovementsBrief} from "../troop-movements-brief/troop-movements-brief.component";
-import {Report} from "../reports/report/report.component";
 
 export const clear = createAction(
   '[Game] Clear');
@@ -78,35 +77,5 @@ export const confirmTroopsSending = createAction(
 
 export const troopsSent = createAction(
   '[Settlement] Is troops sent', props<{ result: boolean}>());
-
-export const fetchReportsBrief = createAction(
-  '[Settlement] Fetch reports brief');
-
-export const setReportsBrief = createAction(
-  '[Settlement] Set reports brief', props<{ reports: any; }>());
-
-export const fetchReport = createAction(
-  '[Settlement] Fetch report', props<{reportId: string}>());
-
-export const setReport = createAction(
-  '[Settlement] Set report', props<{report: Report}>());
-
-export const openReport = createAction(
-  '[Settlement] Open report', props<{report: Report}>());
-
-export const readReports = createAction(
-  '[Settlement] Read reports', props<{reportsId: string[]}>());
-
-export const deleteReports = createAction(
-  '[Settlement] Delete reports', props<{reportsId: string[]}>());
-
-export const editedReports = createAction(
-  '[Settlement] Reports have been edited');
-
-export const addReportsCount = createAction(
-  '[Settlement] Add reports count', props<{amount: number}>());
-
-export const subtractReportsCount = createAction(
-  '[Settlement] Subtract reports count', props<{amount: number}>());
 
 export const errorSettlement = createAction('[Settlement] Error', props<{ error: string }>());

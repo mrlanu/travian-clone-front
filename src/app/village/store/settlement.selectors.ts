@@ -28,7 +28,7 @@ export const settlementSelector = createSelector(
       return  new VillageView(village.villageId, village.accountId, village.nation, village.name,
         village.x, village.y, village.villageType, village.population, village.culture, village.approval,
         village.buildings, storage, village.warehouseCapacity, village.granaryCapacity, homeLegion,
-        village.homeUnits, producePerHour, village.eventsList, village.unitOrders, village.newReportsCount
+        village.homeUnits, producePerHour, village.eventsList, village.unitOrders
       );
     } else {
       return undefined;
@@ -90,36 +90,3 @@ export const isTroopsSentSelector = createSelector(
   settlement,
   (state: fromSettlement.State) => state.isTroopsSent
 );
-
-export const reportsBriefSelector = createSelector(
-  settlement,
-  (state: fromSettlement.State) => state.reports
-);
-
-export const reportsSelector = createSelector(
-  settlement,
-  (state: fromSettlement.State) => state.reports
-);
-
-export const reportSelector = createSelector(
-  settlement,
-  (state: fromSettlement.State) => {
-    if (state.currentReport){
-        let bounty = new Map<string, number>();
-        for(const [key, value] of Object.entries(state.currentReport.from.bounty)){
-          bounty.set(key, value);
-        }
-        return {
-          ...state.currentReport, from: {...state.currentReport['from'], bounty: bounty}
-        }
-    }else {
-      return undefined;
-    }
-  }
-);
-
-export const editedReportsSelector = createSelector(
-  settlement,
-  (state: fromSettlement.State) => state.editedReports
-);
-

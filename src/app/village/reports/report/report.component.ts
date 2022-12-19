@@ -2,8 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
 import {Subscription} from "rxjs";
-import {editedReportsSelector, reportSelector, reportsSelector} from "../../store/settlement.selectors";
-import {deleteReports, fetchReport, openReport, subtractReportsCount} from "../../store/settlement.actions";
+import {editedReportsSelector, reportsBriefSelector, reportSelector} from "../store/reports.selectors";
+import {countNewReports, deleteReports, fetchReport, openReport} from "../store/reports.actions";
 import {ActivatedRoute, Router} from "@angular/router";
 import {
   faArrowLeft,
@@ -69,7 +69,7 @@ export class ReportComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     const reportId = this.route.snapshot.params['id'];
-    this.componentSubs.push(this.store.select(reportsSelector).subscribe(reports => {
+    this.componentSubs.push(this.store.select(reportsBriefSelector).subscribe(reports => {
       this.reportBriefsList = [...reports];
     }));
     this.componentSubs.push(this.store.select(reportSelector).pipe(skip(1)).subscribe(report => {
@@ -80,6 +80,7 @@ export class ReportComponent implements OnInit, OnDestroy{
       this.currentBrief = this.reportBriefsList.find(b => b.id === report?.id);
       if (!report?.read){
         this.store.dispatch(openReport({report: report!}));
+        setTimeout(()=>{this.store.dispatch(countNewReports())}, 300);
       }
     }));
     this.componentSubs.push(this.store.select(editedReportsSelector).pipe(skip(1)).subscribe(() => {

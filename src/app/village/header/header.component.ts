@@ -16,6 +16,8 @@ import {Subscription} from "rxjs";
 import {settlementSelector} from "../store/settlement.selectors";
 import {amountNewMessagesSelector} from "../messages/store/messages.selectors";
 import {countNewMessages} from "../messages/store/messages.actions";
+import {amountNewReportsSelector} from "../reports/store/reports.selectors";
+import {countNewReports} from "../reports/store/reports.actions";
 
 @Component({
   selector: 'app-header',
@@ -44,12 +46,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
-    this.componentSubs.push(this.store.select(settlementSelector).subscribe(settlement => {
-      this.newReportsCount = settlement!.newReportsCount;
+    this.componentSubs.push(this.store.select(settlementSelector).subscribe(() => {
       this.store.dispatch(countNewMessages());
+      this.store.dispatch(countNewReports());
     }));
     this.componentSubs.push(this.store.select(amountNewMessagesSelector).subscribe(amount => {
       this.newMessagesCount = amount;
+    }));
+    this.componentSubs.push(this.store.select(amountNewReportsSelector).subscribe(amount => {
+      this.newReportsCount = amount;
     }));
   }
 
