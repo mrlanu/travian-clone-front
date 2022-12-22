@@ -176,25 +176,6 @@ export class SettlementEffects {
     )
   );
 
-  movementsBrief$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(SettlementActions.fetchMovementsBrief),
-      withLatestFrom(this.store.select(settlementIdSelector)),
-      exhaustMap(([_, settlementId]) =>
-        this.httpClient
-          .get(`${environment.baseUrl}/villages/${settlementId}/troop-movements`)
-          .pipe(map((brief) => {
-            let result = new Map<string, TroopMovementsBrief>();
-            for(const [key, value] of Object.entries(brief)){
-              result.set(key, new TroopMovementsBrief(value.count, value.timeToArrive));
-            }
-            return SettlementActions.setMovementsBrief({brief: result})}),
-            catchError(error => of(SettlementActions.errorSettlement({error})))
-          )
-      )
-    )
-  );
-
   checkSendingContract$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettlementActions.checkSendingContract),

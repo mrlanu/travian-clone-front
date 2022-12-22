@@ -1,3 +1,5 @@
+import {TroopMovementsBrief} from "../village/troop-movements-brief/troop-movements-brief.component";
+
 export class VillageView {
 
   constructor(public villageId: string,
@@ -18,7 +20,8 @@ export class VillageView {
               public homeUnits: number[],
               public producePerHour: Map<string, number>,
               public eventsList: EventView[],
-              public unitOrders: OrderCombatUnit[]) {
+              public unitOrders: OrderCombatUnit[],
+              public movements: Map<string, TroopMovementsBrief>) {
   }
 }
 

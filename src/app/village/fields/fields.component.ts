@@ -7,6 +7,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from '../../store/app.reducer'
 import {settlementSelector} from "../store/settlement.selectors";
+import {fetchSettlement} from "../store/settlement.actions";
 
 
 @Component({
@@ -30,6 +31,7 @@ export class FieldsComponent implements OnInit, OnDestroy {
           this.village = village!;
         })
     );
+    this.store.dispatch(fetchSettlement());
   }
 
   ngOnDestroy(): void {

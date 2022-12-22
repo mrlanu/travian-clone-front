@@ -4,7 +4,7 @@ import {VillageService} from "../../services/village.service";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
 import {fetchMovementsBrief, fetchSettlement} from "../store/settlement.actions";
-import {movementsBriefSelector} from "../store/settlement.selectors";
+import {settlementSelector} from "../store/settlement.selectors";
 
 export class TroopMovementsBrief {
   constructor(public count: number, public timeToArrive: number) {}
@@ -23,10 +23,9 @@ export class TroopMovementsBriefComponent implements OnInit, OnDestroy {
   constructor(private villageService: VillageService, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
-    this.componentSubs.push(this.store.select(movementsBriefSelector).subscribe(brief => {
-        this.movedTroopsList = brief;
+    this.componentSubs.push(this.store.select(settlementSelector).subscribe(settlement => {
+        this.movedTroopsList = settlement?.movements;
     }));
-    this.store.dispatch(fetchMovementsBrief());
   }
 
   onCountDone() {

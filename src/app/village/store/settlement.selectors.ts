@@ -3,6 +3,7 @@ import * as fromApp from "../../store/app.reducer";
 import * as fromSettlement from "./settlement.reducer";
 import {VillageView} from "../../models/village-dto.model";
 import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
+import {TroopMovementsBrief} from "../troop-movements-brief/troop-movements-brief.component";
 
 const settlement = (state: fromApp.AppState) => state.settlement;
 
@@ -14,6 +15,7 @@ export const settlementSelector = createSelector(
       let producePerHour = new Map<string, number>();
       let storage = new Map<string, number>();
       let homeLegion = new Map<string, number>();
+      let movements = new Map<string, TroopMovementsBrief>();
 
       for(const [key, value] of Object.entries(village.producePerHour)){
         producePerHour.set(key, value);
@@ -25,10 +27,14 @@ export const settlementSelector = createSelector(
         // PHALANX -> Phalanx
         homeLegion.set(capitalizeFirstLater(key), value);
       }
+      for(const [key, value] of Object.entries(village.movements)){
+        movements.set(key, new TroopMovementsBrief(value.count, value.timeToArrive));
+      }
+
       return  new VillageView(village.villageId, village.accountId, village.nation, village.name,
         village.x, village.y, village.villageType, village.population, village.culture, village.approval,
         village.buildings, storage, village.warehouseCapacity, village.granaryCapacity, homeLegion,
-        village.homeUnits, producePerHour, village.eventsList, village.unitOrders
+        village.homeUnits, producePerHour, village.eventsList, village.unitOrders, movements
       );
     } else {
       return undefined;
@@ -73,12 +79,6 @@ export const researchedUnitsSelector = createSelector(
 export const combatGroupsSelector = createSelector(
   settlement,
   (state: fromSettlement.State) => state.combatGroups
-);
-
-
-export const movementsBriefSelector = createSelector(
-  settlement,
-  (state: fromSettlement.State) => state.movementsBrief
 );
 
 export const sendingContractSelector = createSelector(
