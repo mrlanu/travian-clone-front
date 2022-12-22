@@ -11,7 +11,6 @@ import * as fromAppStore from "../../store/app.reducer";
 import {settlementIdSelector, settlementSelector} from "./settlement.selectors";
 import {Building} from "../all-buildings-list/all-buildings-list.component";
 import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
-import {TroopMovementsBrief} from "../troop-movements-brief/troop-movements-brief.component";
 import {CombatGroupSendingContract} from "../building-details/rally-point/rally-point.component";
 
 @Injectable()
@@ -63,9 +62,9 @@ export class SettlementEffects {
       exhaustMap(([action, settlementId]) => {
         let params = new HttpParams().set('kind', action.kind);
         return this.httpClient
-          .put(`${environment.baseUrl}/villages/${settlementId}/buildings/${action.position}/new`,
-            {}, {responseType: "text", params: params})
-          .pipe(map(() => SettlementActions.fetchSettlementFirstTime({ id: settlementId! })),
+          .put<VillageView>(`${environment.baseUrl}/villages/${settlementId}/buildings/${action.position}/new`,
+            {}, {params})
+          .pipe(map(settlement => SettlementActions.setSettlement({settlement})),
             catchError(error => of(SettlementActions.errorSettlement({ error })))
           )
       })
@@ -78,8 +77,8 @@ export class SettlementEffects {
       withLatestFrom(this.store.select(settlementIdSelector)),
       exhaustMap(([action, settlementId]) =>
         this.httpClient
-          .put<string>(`${environment.baseUrl}/villages/${settlementId}/buildings/${action.position}/upgrade`, {})
-          .pipe(map(() => SettlementActions.fetchSettlementFirstTime({ id: settlementId! })),
+          .put<VillageView>(`${environment.baseUrl}/villages/${settlementId}/buildings/${action.position}/upgrade`, {})
+          .pipe(map(settlement => SettlementActions.setSettlement({settlement})),
             catchError(error => of(SettlementActions.errorSettlement({ error })))
           )
       )
@@ -93,8 +92,8 @@ export class SettlementEffects {
       exhaustMap(([a, settlement]) => {
         let params = new HttpParams().set('name', a.newName);
         return this.httpClient
-          .put(`${environment.baseUrl}/villages/${settlement!.villageId}/update-name`, {}, {responseType: "text", params: params})
-          .pipe(map(() => SettlementActions.fetchSettlementsList({userId: settlement!.accountId})),
+          .put<VillageView>(`${environment.baseUrl}/villages/${settlement!.villageId}/update-name`, {}, {params})
+          .pipe(map(settlement => SettlementActions.setSettlement({settlement})),
             catchError(error => of(SettlementActions.errorSettlement({error})))
           )
       })
@@ -107,8 +106,8 @@ export class SettlementEffects {
       withLatestFrom(this.store.select(settlementIdSelector)),
       exhaustMap(([action, settlementId]) =>
         this.httpClient
-          .delete<string>(`${environment.baseUrl}/villages/${settlementId}/events/${action.eventId}`, {})
-          .pipe(map(() => SettlementActions.fetchSettlementFirstTime({ id: settlementId! })),
+          .delete<VillageView>(`${environment.baseUrl}/villages/${settlementId}/events/${action.eventId}`)
+          .pipe(map(settlement => SettlementActions.setSettlement({settlement})),
             catchError(error => of(SettlementActions.errorSettlement({ error })))
           )
       )
@@ -155,21 +154,6 @@ export class SettlementEffects {
             {'unitType': action.unitType, 'amount': action.amount})
           .pipe(map((settlement) =>
               SettlementActions.setSettlement({settlement})),
-            catchError(error => of(SettlementActions.errorSettlement({error})))
-          )
-      )
-    )
-  );
-
-  combatGroups$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(SettlementActions.fetchCombatGroups),
-      withLatestFrom(this.store.select(settlementIdSelector)),
-      exhaustMap(([_, settlementId]) =>
-        this.httpClient
-          .get<any>(`${environment.baseUrl}/villages/${settlementId}/combat-group`)
-          .pipe(map((groups) =>
-              SettlementActions.setCombatGroups({groups})),
             catchError(error => of(SettlementActions.errorSettlement({error})))
           )
       )

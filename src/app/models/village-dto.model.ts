@@ -1,4 +1,5 @@
 import {TroopMovementsBrief} from "../village/troop-movements-brief/troop-movements-brief.component";
+import {CombatGroupsMap} from "../village/building-details/rally-point/rally-point.component";
 
 export class VillageView {
 
@@ -21,7 +22,8 @@ export class VillageView {
               public producePerHour: Map<string, number>,
               public eventsList: EventView[],
               public unitOrders: OrderCombatUnit[],
-              public movements: Map<string, TroopMovementsBrief>) {
+              public movementsBrief: Map<string, TroopMovementsBrief>,
+              public combatGroupByLocation: CombatGroupsMap) {
   }
 }
 

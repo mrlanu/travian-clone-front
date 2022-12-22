@@ -24,7 +24,7 @@ export class TroopMovementsBriefComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.componentSubs.push(this.store.select(settlementSelector).subscribe(settlement => {
-        this.movedTroopsList = settlement?.movements;
+        this.movedTroopsList = settlement?.movementsBrief;
     }));
   }
 
