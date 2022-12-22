@@ -57,8 +57,12 @@ export class ReportsEffects {
       exhaustMap(action =>
         this.httpClient
           .put<any>(`${environment.baseUrl}/reports/read`, [action.report.id])
+          .pipe(map((report) =>
+              ReportsActions.subtractReportsCount({amount: 1})),
+            catchError(error => of(ReportsActions.errorReports({error})))
+          )
       )
-    ), { dispatch: false }
+    )
   );
 
   readReports$ = createEffect(() =>

@@ -22,9 +22,6 @@ export class VillageComponent implements OnInit, OnDestroy {
     this.componentSubs.push(
       this.store.select(settlementSelector).subscribe(
         settlement => this.village = settlement
-        /*(village: VillageView) => {
-          this.village = village;
-        }*/
         )
     );
   }

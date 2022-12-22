@@ -80,7 +80,6 @@ export class ReportComponent implements OnInit, OnDestroy{
       this.currentBrief = this.reportBriefsList.find(b => b.id === report?.id);
       if (!report?.read){
         this.store.dispatch(openReport({report: report!}));
-        setTimeout(()=>{this.store.dispatch(countNewReports())}, 300);
       }
     }));
     this.componentSubs.push(this.store.select(editedReportsSelector).pipe(skip(1)).subscribe(() => {

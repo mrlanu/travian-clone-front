@@ -27,9 +27,9 @@ export const editedReports = createAction(
 
 /*export const addReportsCount = createAction(
   '[Reports] Add reports count', props<{amount: number}>());
-
+*/
 export const subtractReportsCount = createAction(
-  '[Reports] Subtract reports count', props<{amount: number}>())*/
+  '[Reports] Subtract reports count', props<{amount: number}>())
 
 export const countNewReports = createAction(
   '[Reports] Count new reports');

@@ -109,6 +109,7 @@ export class ReportsListComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy() {
+    console.log('List destroyed');
     this.componentSubs.forEach(subs => {
       subs.unsubscribe();
     });
