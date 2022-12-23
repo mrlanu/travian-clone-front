@@ -39,6 +39,9 @@ export const deleteBuildEvent = createAction(
 export const updateName = createAction(
   '[Settlement] Update name', props<{ newName: string}>());
 
+export const nameUpdated = createAction(
+  '[Settlement] Name updated', props<{ settlement: VillageView}>());
+
 export const fetchAvailableBuildings = createAction(
   '[Settlement] Fetch available buildings');
 

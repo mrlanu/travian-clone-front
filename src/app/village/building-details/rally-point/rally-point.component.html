@@ -5,7 +5,7 @@
   </div>
   <div class="card-body" style="min-height: 500px">
     <tabset [justified]="true"  #staticTabs>
-      <tab heading="MANAGEMENT">
+      <tab heading="MANAGEMENT" (selectTab)="onManagementSelected()">
         <div class="tabset__tab" *ngIf="buildingView">
           <app-building-details [buildingView]="buildingView"></app-building-details>
         </div>

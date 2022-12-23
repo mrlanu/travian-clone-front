@@ -4,7 +4,7 @@
      gdAreas="fields movements | fields prod | tasks army"
      gdGap="1rem">
   <div class="fields_container" gdArea="fields">
-    <button class="btn-buildings" routerLink="../buildings" >
+    <button class="btn-buildings" (click)="onClick()" routerLink="../buildings" >
       <fa-icon [icon]="faHome" size="2x" [styles]="{'color': 'white'}"></fa-icon>
     </button>
     <div *ngFor="let field of village?.buildings; let i=index">

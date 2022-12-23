@@ -48,7 +48,7 @@ export class BuildingDetailsComponent implements OnInit {
 
   onUpgradeClick(){
     this.store.dispatch(upgradeBuilding({position: this.buildingView.position}));
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../../'], {relativeTo: this.route});
 
     /*this.villageService.upgradeField(villageId, this.buildingView.position!).subscribe(resp => {
       this.store.dispatch(fetchSettlement({id: villageId}));

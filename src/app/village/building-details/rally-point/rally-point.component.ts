@@ -80,8 +80,14 @@ export class RallyPointComponent implements OnInit {
       this.getRallyPointBuildingFromCurrentVillage();
       this.militaryUnitList = settlement?.combatGroupByLocation;
     });
-    this.store.dispatch(fetchSettlement());
-    setTimeout(()=>{this.selectTab(this.route.snapshot.queryParams.tab)}, 100);
+    /*this.store.dispatch(fetchSettlement());
+    console.log('Fetch settlement from rally-point init');*/
+    const tab = this.route.snapshot.queryParams.tab;
+    tab ? setTimeout(()=>{this.selectTab(tab)}, 100) : this.getAllCombatGroups(false);
+  }
+
+  onManagementSelected(){
+    this.getAllCombatGroups(false);
   }
 
   onSendingSelect(){
@@ -122,6 +128,7 @@ export class RallyPointComponent implements OnInit {
   }
 
   getAllCombatGroups(redirected: boolean) {
+    console.log('Fetch settlement from rally-point getAllCombat');
     this.store.dispatch(fetchSettlement());
       if (redirected) {
         this.selectTab(1);

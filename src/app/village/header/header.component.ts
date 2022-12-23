@@ -18,6 +18,8 @@ import {amountNewMessagesSelector} from "../messages/store/messages.selectors";
 import {countNewMessages} from "../messages/store/messages.actions";
 import {amountNewReportsSelector} from "../reports/store/reports.selectors";
 import {countNewReports} from "../reports/store/reports.actions";
+import {skip} from "rxjs/operators";
+import {fetchSettlement} from "../store/settlement.actions";
 
 @Component({
   selector: 'app-header',
@@ -58,11 +60,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }));
   }
 
+  onSelect(){
+    console.log('Fetch settlement from header onSelect');
+    this.store.dispatch(fetchSettlement());
+  }
+
   onLogout(){
     this.authService.logout();
   }
 
   ngOnDestroy() {
+    console.log('Header Destroy');
     this.componentSubs.forEach(subs => {
       subs.unsubscribe();
     });

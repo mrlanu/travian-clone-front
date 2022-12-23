@@ -7,7 +7,6 @@ import {CombatGroupSendingContract} from "../building-details/rally-point/rally-
 
 export interface State {
   current: VillageView | undefined;
-  allSettlements: ShortVillageInfo[];
   availableBuildings: Building[];
   researchedUnits: CombatUnit[];
   sendingContract: CombatGroupSendingContract | null,
@@ -16,7 +15,6 @@ export interface State {
 
 export const initialState: State = {
   current: undefined,
-  allSettlements: [],
   availableBuildings: [],
   researchedUnits: [],
   sendingContract: null,
@@ -27,9 +25,6 @@ export const settlementReducer = createReducer(
   initialState,
   on(SettlementActions.setSettlement, (state, { settlement }) => (
     { ...state, current: settlement }
-  )),
-  on(SettlementActions.setSettlementsList, (state, { list }) => (
-    { ...state, allSettlements: list }
   )),
   on(SettlementActions.setAvailableBuildings, (state, { buildings }) => (
     { ...state, availableBuildings: buildings }
@@ -43,7 +38,25 @@ export const settlementReducer = createReducer(
   on(SettlementActions.troopsSent, (state, {result}) => (
     { ...state, isTroopsSent: result }
   )),
+  on(SettlementActions.nameUpdated, (state, {settlement}) => (
+    { ...state, current: settlement }
+  )),
   on(SettlementActions.clear, () => (
     { ...initialState }
+  )),
+);
+
+export interface StateAllSettlements{
+  allSettlements: ShortVillageInfo[];
+}
+
+export const initialStateAllSettlements: StateAllSettlements = {
+  allSettlements: [],
+}
+
+export const settlementsListReducer = createReducer(
+  initialStateAllSettlements,
+  on(SettlementActions.setSettlementsList, (state, { list }) => (
+    { ...state, allSettlements: list }
   )),
 );

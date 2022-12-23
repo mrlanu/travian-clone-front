@@ -31,6 +31,9 @@ export class FieldsComponent implements OnInit, OnDestroy {
           this.village = village!;
         })
     );
+  }
+
+  onClick(){
     this.store.dispatch(fetchSettlement());
   }
 

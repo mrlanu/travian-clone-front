@@ -54,8 +54,8 @@ export const settlementIdSelector = createSelector(
 );
 
 export const settlementsListSelector = createSelector(
-  settlement,
-  (state: fromSettlement.State) => state.allSettlements
+  (state: fromApp.AppState) => state.settlementsList,
+  (state: fromSettlement.StateAllSettlements) => state.allSettlements
 );
 
 export const availableBuildingsSelector = createSelector(

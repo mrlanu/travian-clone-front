@@ -29,9 +29,6 @@ export class BuildingsComponent implements OnInit, OnDestroy {
         village => {
           this.village = village!;
         }));
-    this.componentSubs.push(this.route.parent!.params.subscribe((params) => {
-      this.store.dispatch(fetchSettlement())
-    }));
   }
 
   onBuildingSelect(building: BuildingView){

@@ -12,6 +12,7 @@ import {settlementIdSelector, settlementSelector} from "./settlement.selectors";
 import {Building} from "../all-buildings-list/all-buildings-list.component";
 import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
 import {CombatGroupSendingContract} from "../building-details/rally-point/rally-point.component";
+import {userSelector} from "../../auth/store/auth.selectors";
 
 @Injectable()
 export class SettlementEffects {
@@ -93,10 +94,23 @@ export class SettlementEffects {
         let params = new HttpParams().set('name', a.newName);
         return this.httpClient
           .put<VillageView>(`${environment.baseUrl}/villages/${settlement!.villageId}/update-name`, {}, {params})
-          .pipe(map(settlement => SettlementActions.setSettlement({settlement})),
+          .pipe(map(settlement => SettlementActions.nameUpdated({settlement})),
             catchError(error => of(SettlementActions.errorSettlement({error})))
           )
       })
+    )
+  );
+
+  settlementsListAfterNameUpdated$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.nameUpdated),
+      withLatestFrom(this.store.select(userSelector)),
+      exhaustMap(([_, user]) =>
+        this.httpClient.get<ShortVillageInfo[]>(`${environment.baseUrl}/users/${user!.userId}/villages`)
+          .pipe(map(list => SettlementActions.setSettlementsList({ list })),
+            catchError(error => of(SettlementActions.errorSettlement({ error })))
+          )
+      )
     )
   );
 
