@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {catchError, exhaustMap, map, withLatestFrom} from "rxjs/operators";
+import {catchError, exhaustMap, map, tap, withLatestFrom} from "rxjs/operators";
 import * as SettlementActions from './settlement.actions';
 import {of} from "rxjs";
 import {ShortVillageInfo, VillageView} from "../../models/village-dto.model";
@@ -13,6 +13,7 @@ import {Building} from "../all-buildings-list/all-buildings-list.component";
 import {CombatUnit} from "../building-details/barracks/combat-unit/combat-unit.component";
 import {CombatGroupSendingContract} from "../building-details/rally-point/rally-point.component";
 import {userSelector} from "../../auth/store/auth.selectors";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class SettlementEffects {
@@ -84,6 +85,15 @@ export class SettlementEffects {
           )
       )
     )
+  );
+
+  redirect$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettlementActions.redirectAfterBuilding),
+      withLatestFrom(this.store.select(settlementIdSelector)),
+      tap(([_, settlementId]) => this.router.navigate(['villages', settlementId, 'fields'])
+      )
+    ), {dispatch: false}
   );
 
   updateName$ = createEffect(() =>
@@ -211,7 +221,8 @@ export class SettlementEffects {
   constructor(
     private httpClient: HttpClient,
     private actions$: Actions,
-    private store: Store<fromAppStore.AppState>
+    private store: Store<fromAppStore.AppState>,
+    private router: Router
   ) {}
 
   private mapBuildings(buildingsList: Building[]): Building[] {

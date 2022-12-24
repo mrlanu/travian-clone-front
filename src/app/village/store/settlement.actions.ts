@@ -33,6 +33,9 @@ export const buildNewBuilding = createAction(
 export const upgradeBuilding = createAction(
   '[Settlement] Upgrade building', props<{ position: number }>());
 
+export const redirectAfterBuilding = createAction(
+  '[Settlement] Redirect after building');
+
 export const deleteBuildEvent = createAction(
   '[Settlement] Delete build event', props<{ eventId: string }>());
 
