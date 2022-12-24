@@ -82,6 +82,6 @@ export const confirmTroopsSending = createAction(
   '[Settlement] Confirm troops sending', props<{ contract: CombatGroupSendingContract}>());
 
 export const troopsSent = createAction(
-  '[Settlement] Is troops sent', props<{ result: boolean}>());
+  '[UI] Troops has been sent', props<{ result: boolean}>());
 
 export const errorSettlement = createAction('[Settlement] Error', props<{ error: string }>());

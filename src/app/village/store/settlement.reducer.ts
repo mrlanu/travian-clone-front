@@ -10,7 +10,6 @@ export interface State {
   availableBuildings: Building[];
   researchedUnits: CombatUnit[];
   sendingContract: CombatGroupSendingContract | null,
-  isTroopsSent: boolean,
 }
 
 export const initialState: State = {
@@ -18,7 +17,6 @@ export const initialState: State = {
   availableBuildings: [],
   researchedUnits: [],
   sendingContract: null,
-  isTroopsSent: false,
 };
 
 export const settlementReducer = createReducer(
@@ -34,9 +32,6 @@ export const settlementReducer = createReducer(
   )),
   on(SettlementActions.setSendingContract, (state, {contract}) => (
     { ...state, sendingContract: contract }
-  )),
-  on(SettlementActions.troopsSent, (state, {result}) => (
-    { ...state, isTroopsSent: result }
   )),
   on(SettlementActions.nameUpdated, (state, {settlement}) => (
     { ...state, current: settlement }
@@ -58,5 +53,20 @@ export const settlementsListReducer = createReducer(
   initialStateAllSettlements,
   on(SettlementActions.setSettlementsList, (state, { list }) => (
     { ...state, allSettlements: list }
+  )),
+);
+
+export interface StateUI{
+  troopsSentDone: boolean,
+}
+
+export const initialStateUI: StateUI = {
+  troopsSentDone: false
+}
+
+export const stateUIReducer = createReducer(
+  initialStateUI,
+  on(SettlementActions.troopsSent, (state, {result}) => (
+    { ...state, troopsSentDone: result }
   )),
 );

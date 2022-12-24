@@ -80,22 +80,20 @@ export class RallyPointComponent implements OnInit {
       this.getRallyPointBuildingFromCurrentVillage();
       this.militaryUnitList = settlement?.combatGroupByLocation;
     });
-    /*this.store.dispatch(fetchSettlement());
-    console.log('Fetch settlement from rally-point init');*/
     const tab = this.route.snapshot.queryParams.tab;
-    tab ? setTimeout(()=>{this.selectTab(tab)}, 100) : this.getAllCombatGroups(false);
+    tab ? setTimeout(()=>{this.selectTab(tab)}, 100) : this.getAllCombatGroups();
   }
 
   onManagementSelected(){
-    this.getAllCombatGroups(false);
+    this.getAllCombatGroups();
   }
 
   onSendingSelect(){
-    this.getAllCombatGroups(false);
+    this.getAllCombatGroups();
   }
 
   onOverviewSelected(){
-    this.getAllCombatGroups(false);
+    this.getAllCombatGroups();
   }
 
   selectTab(tabId: number) {
@@ -105,7 +103,7 @@ export class RallyPointComponent implements OnInit {
   }
 
   onCountDone(){
-    this.getAllCombatGroups(false);
+    this.getAllCombatGroups();
   }
 
   private getRallyPointBuildingFromCurrentVillage() {
@@ -127,11 +125,11 @@ export class RallyPointComponent implements OnInit {
       });
   }
 
-  getAllCombatGroups(redirected: boolean) {
-    console.log('Fetch settlement from rally-point getAllCombat');
+  getAllCombatGroups() {
     this.store.dispatch(fetchSettlement());
-      if (redirected) {
-        this.selectTab(1);
-      }
+  }
+
+  redirect(){
+    this.selectTab(1);
   }
 }

@@ -83,6 +83,6 @@ export const sendingContractSelector = createSelector(
 );
 
 export const isTroopsSentSelector = createSelector(
-  settlement,
-  (state: fromSettlement.State) => state.isTroopsSent
+  (state: fromApp.AppState) => state.ui,
+  (state: fromSettlement.StateUI) => state.troopsSentDone
 );
