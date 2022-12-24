@@ -3,7 +3,13 @@ import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
 import {Subscription} from "rxjs";
 import {editedReportsSelector, reportsBriefSelector, reportSelector} from "../store/reports.selectors";
-import {countNewReports, deleteReports, fetchReport, openReport} from "../store/reports.actions";
+import {
+  checkReportAsReadLocally,
+  countNewReports,
+  deleteReports,
+  fetchReport,
+  openReport
+} from "../store/reports.actions";
 import {ActivatedRoute, Router} from "@angular/router";
 import {
   faArrowLeft,
@@ -80,6 +86,7 @@ export class ReportComponent implements OnInit, OnDestroy{
       this.currentBrief = this.reportBriefsList.find(b => b.id === report?.id);
       if (!report?.read){
         this.store.dispatch(openReport({report: report!}));
+        this.store.dispatch(checkReportAsReadLocally());
       }
     }));
     this.componentSubs.push(this.store.select(editedReportsSelector).pipe(skip(1)).subscribe(() => {

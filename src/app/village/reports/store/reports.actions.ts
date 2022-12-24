@@ -19,6 +19,9 @@ export const openReport = createAction(
 export const readReports = createAction(
   '[Reports] Read reports', props<{reportsId: string[]}>());
 
+export const checkReportAsReadLocally = createAction(
+  '[Reports] Check report as read locally');
+
 export const deleteReports = createAction(
   '[Reports] Delete reports', props<{reportsId: string[]}>());
 
