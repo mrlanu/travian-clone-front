@@ -10,7 +10,7 @@
   </div>
   <hr>
   <div fxLayout>
-    <div fxLayoutAlign="start center" fxFlex>{{currentBrief?.received |  date:'short'}}</div>
+    <div fxLayoutAlign="start center" fxFlex>{{currentBrief?.received |  date: 'hh:mm:ss'}}</div>
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-secondary">
         <fa-icon [icon]="faFileZipper" size="1x" [styles]="faStyle"></fa-icon>

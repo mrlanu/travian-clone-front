@@ -45,7 +45,7 @@
     <!-- Received Column -->
     <ng-container matColumnDef="received">
       <th mat-header-cell *matHeaderCellDef> Received </th>
-      <td mat-cell *matCellDef="let report"> {{report.received | date:'short' }} </td>
+      <td mat-cell *matCellDef="let report"> {{report.received | date: 'hh:mm:ss' }} </td>
     </ng-container>
 
 
