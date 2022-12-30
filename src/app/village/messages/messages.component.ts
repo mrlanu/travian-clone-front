@@ -3,6 +3,8 @@ import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TabsetComponent} from "ngx-bootstrap/tabs";
+import {messagesSelector} from "./store/messages.selectors";
+import {fetchMessages, fetchSentMessages} from "./store/messages.actions";
 
 export interface MessageBrief {
   id: string;
@@ -43,6 +45,10 @@ export class MessagesComponent {
     if (this.staticTabs?.tabs[tabId]) {
       this.staticTabs.tabs[tabId].active = true;
     }
+    setTimeout(()=>{
+      this.store.dispatch(fetchSentMessages());
+      this.store.dispatch(fetchMessages());
+    }, 200)
   }
 
   messageSelected(messageId: string){
