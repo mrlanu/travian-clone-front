@@ -33,9 +33,13 @@ export const reportsReducer = createReducer(
   on(ReportsActions.setReportsAmount, (state, { amount }) => (
     { ...state, newReportsAmount: amount }
   )),
-  /*on(ReportsActions.subtractReportsCount, (state, {amount}) => (
-    { ...state, newReportsAmount: state.newReportsAmount + amount }
+  on(ReportsActions.subtractReportsCount, (state, {amount}) => (
+    { ...state, newReportsAmount: state.newReportsAmount - amount }
   )),
+  on(ReportsActions.checkReportAsReadLocally, state => (
+    { ...state, currentReport: {...state.currentReport!, read: true} }
+  )),
+  /*
   on(ReportsActions.addReportsCount, (state, {amount}) => (
     { ...state, newReportsAmount: state.newReportsAmount + amount }
   )),*/

@@ -1,14 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {skip, take} from "rxjs/operators";
+import {take} from "rxjs/operators";
 import {VillageService} from "../../../services/village.service";
 import {BuildingView} from "../building-details.component";
 import {TabsetComponent} from "ngx-bootstrap/tabs";
 import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../../store/app.reducer";
-import {combatGroupsSelector, settlementSelector} from "../../store/settlement.selectors";
+import {settlementSelector} from "../../store/settlement.selectors";
 import {CombatGroup} from "./combat-group/combat-group.component";
-import {fetchCombatGroups, fetchSettlement} from "../../store/settlement.actions";
+import {fetchSettlement} from "../../store/settlement.actions";
 
 export class CombatGroupSendingRequest {
   constructor(public targetSettlementId: string,
@@ -76,22 +76,24 @@ export class RallyPointComponent implements OnInit {
               private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
-    this.store.select(settlementSelector).pipe(skip(1)).subscribe(settlement => {
+    this.store.select(settlementSelector).subscribe(settlement => {
       this.getRallyPointBuildingFromCurrentVillage();
+      this.militaryUnitList = settlement?.combatGroupByLocation;
     });
-    this.store.dispatch(fetchSettlement());
-    setTimeout(()=>{this.selectTab(this.route.snapshot.queryParams.tab)}, 100);
-    this.store.select(combatGroupsSelector).subscribe(groups => {
-      this.militaryUnitList = groups;
-    });
+    const tab = this.route.snapshot.queryParams.tab;
+    tab ? setTimeout(()=>{this.selectTab(tab)}, 100) : this.getAllCombatGroups();
+  }
+
+  onManagementSelected(){
+    this.getAllCombatGroups();
   }
 
   onSendingSelect(){
-    this.getAllCombatGroups(false);
+    this.getAllCombatGroups();
   }
 
   onOverviewSelected(){
-    this.getAllCombatGroups(false);
+    this.getAllCombatGroups();
   }
 
   selectTab(tabId: number) {
@@ -101,7 +103,7 @@ export class RallyPointComponent implements OnInit {
   }
 
   onCountDone(){
-    this.getAllCombatGroups(false);
+    this.getAllCombatGroups();
   }
 
   private getRallyPointBuildingFromCurrentVillage() {
@@ -123,10 +125,11 @@ export class RallyPointComponent implements OnInit {
       });
   }
 
-  getAllCombatGroups(redirected: boolean) {
-    this.store.dispatch(fetchCombatGroups());
-      if (redirected) {
-        this.selectTab(1);
-      }
+  getAllCombatGroups() {
+    this.store.dispatch(fetchSettlement());
+  }
+
+  redirect(){
+    this.selectTab(1);
   }
 }

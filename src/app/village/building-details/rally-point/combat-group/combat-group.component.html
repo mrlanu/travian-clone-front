@@ -3,7 +3,9 @@
     <tbody>
     <tr>
       <td class="fw-bold">
-        <a href="/karte.php?d=46567">{{ militaryUnit.from.villageName }}</a>
+        <a href="/karte.php?d=46567">
+          {{ militaryUnit.mission === 'BACK' ? militaryUnit.to.villageName : militaryUnit.from.villageName}}
+        </a>
       </td>
       <td colspan="11" class="fw-bold" [ngStyle]="{'background-color': militaryUnit.mission === 'ATTACK' || militaryUnit.mission === 'RAID' ? '#ffcece':'#d8f1c8'}" style="text-align: center">
         <div *ngIf="militaryUnit.mission === 'ATTACK' || militaryUnit.mission === 'RAID'">
@@ -13,7 +15,7 @@
           {{ militaryUnit.from.playerName }} {{ militaryUnit.mission | lowercase }}ing {{ militaryUnit.to.villageName }}
         </div>
         <div *ngIf="militaryUnit.mission === 'BACK'">
-          {{ militaryUnit.mission | lowercase }} from {{ militaryUnit.to.villageName }}
+          {{ militaryUnit.mission | lowercase }} from {{ militaryUnit.from.villageName }}
         </div>
         <div *ngIf="militaryUnit.mission === 'HOME'">
           Own army

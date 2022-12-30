@@ -13,20 +13,12 @@ import {settlementSelector} from "./store/settlement.selectors";
 })
 export class VillageComponent implements OnInit, OnDestroy {
 
-  village: VillageView | undefined;
   componentSubs: Subscription[] = [];
 
   constructor(private villageService: VillageService, private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
-    this.componentSubs.push(
-      this.store.select(settlementSelector).subscribe(
-        settlement => this.village = settlement
-        /*(village: VillageView) => {
-          this.village = village;
-        }*/
-        )
-    );
+
   }
 
   ngOnDestroy(): void {

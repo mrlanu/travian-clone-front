@@ -8,6 +8,8 @@ import {ActionReducerMap} from "@ngrx/store";
 export interface AppState {
   auth: fromAuth.State;
   settlement: fromSettlement.State;
+  ui: fromSettlement.StateUI;
+  settlementsList: fromSettlement.StateAllSettlements;
   statistics: fromStatistics.State;
   messages: fromMessages.State;
   reports: fromReports.State;
@@ -16,6 +18,8 @@ export interface AppState {
 export const appReducer: ActionReducerMap<AppState> = {
   auth: fromAuth.authReducer,
   settlement: fromSettlement.settlementReducer,
+  ui: fromSettlement.stateUIReducer,
+  settlementsList: fromSettlement.settlementsListReducer,
   statistics: fromStatistics.statisticsReducer,
   messages: fromMessages.messagesReducer,
   reports: fromReports.reportsReducer,

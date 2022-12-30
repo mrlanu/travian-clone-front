@@ -1,13 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
-import {ActivatedRoute, Router} from "@angular/router";
-import {UiService} from "../../services/ui.service";
 import {Utils} from "../../shared/utils";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
-import {upgradeBuilding} from "../store/settlement.actions";
-import {settlementSelector} from "../store/settlement.selectors";
-import {take} from "rxjs/operators";
+import {redirectAfterBuilding, upgradeBuilding} from "../store/settlement.actions";
 
 export interface BuildingView {
   position: number;
@@ -35,8 +31,7 @@ export class BuildingDetailsComponent implements OnInit {
 
   componentSubs: Subscription[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router, private uiService: UiService,
-              private store: Store<fromAppStore.AppState>) { }
+  constructor(private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit(): void {
 
@@ -47,10 +42,8 @@ export class BuildingDetailsComponent implements OnInit {
   }
 
   onUpgradeClick(){
-    this.store.select(settlementSelector).pipe(take(1)).subscribe(value => {
-      this.store.dispatch(upgradeBuilding({position: this.buildingView.position}));
-      this.router.navigate(['/villages', value!.villageId, 'fields']);
-    });
+    this.store.dispatch(upgradeBuilding({position: this.buildingView.position}));
+    this.store.dispatch(redirectAfterBuilding());
 
     /*this.villageService.upgradeField(villageId, this.buildingView.position!).subscribe(resp => {
       this.store.dispatch(fetchSettlement({id: villageId}));

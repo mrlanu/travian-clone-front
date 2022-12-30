@@ -19,6 +19,9 @@ export const openReport = createAction(
 export const readReports = createAction(
   '[Reports] Read reports', props<{reportsId: string[]}>());
 
+export const checkReportAsReadLocally = createAction(
+  '[Reports] Check report as read locally');
+
 export const deleteReports = createAction(
   '[Reports] Delete reports', props<{reportsId: string[]}>());
 
@@ -27,9 +30,9 @@ export const editedReports = createAction(
 
 /*export const addReportsCount = createAction(
   '[Reports] Add reports count', props<{amount: number}>());
-
+*/
 export const subtractReportsCount = createAction(
-  '[Reports] Subtract reports count', props<{amount: number}>())*/
+  '[Reports] Subtract reports count', props<{amount: number}>())
 
 export const countNewReports = createAction(
   '[Reports] Count new reports');

@@ -33,11 +33,17 @@ export const buildNewBuilding = createAction(
 export const upgradeBuilding = createAction(
   '[Settlement] Upgrade building', props<{ position: number }>());
 
+export const redirectAfterBuilding = createAction(
+  '[Settlement] Redirect after building');
+
 export const deleteBuildEvent = createAction(
   '[Settlement] Delete build event', props<{ eventId: string }>());
 
 export const updateName = createAction(
   '[Settlement] Update name', props<{ newName: string}>());
+
+export const nameUpdated = createAction(
+  '[Settlement] Name updated', props<{ settlement: VillageView}>());
 
 export const fetchAvailableBuildings = createAction(
   '[Settlement] Fetch available buildings');
@@ -76,6 +82,6 @@ export const confirmTroopsSending = createAction(
   '[Settlement] Confirm troops sending', props<{ contract: CombatGroupSendingContract}>());
 
 export const troopsSent = createAction(
-  '[Settlement] Is troops sent', props<{ result: boolean}>());
+  '[UI] Troops has been sent', props<{ result: boolean}>());
 
 export const errorSettlement = createAction('[Settlement] Error', props<{ error: string }>());

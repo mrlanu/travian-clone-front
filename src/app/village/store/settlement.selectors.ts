@@ -27,15 +27,16 @@ export const settlementSelector = createSelector(
         // PHALANX -> Phalanx
         homeLegion.set(capitalizeFirstLater(key), value);
       }
-      for(const [key, value] of Object.entries(village.movements)){
+      for(const [key, value] of Object.entries(village.movementsBrief)){
         movements.set(key, new TroopMovementsBrief(value.count, value.timeToArrive));
       }
 
-      return  new VillageView(village.villageId, village.accountId, village.nation, village.name,
+      let s = new VillageView(village.villageId, village.accountId, village.nation, village.name,
         village.x, village.y, village.villageType, village.population, village.culture, village.approval,
         village.buildings, storage, village.warehouseCapacity, village.granaryCapacity, homeLegion,
-        village.homeUnits, producePerHour, village.eventsList, village.unitOrders, movements
+        village.homeUnits, producePerHour, village.eventsList, village.unitOrders, movements, village.combatGroupByLocation
       );
+      return s;
     } else {
       return undefined;
     }
@@ -53,8 +54,8 @@ export const settlementIdSelector = createSelector(
 );
 
 export const settlementsListSelector = createSelector(
-  settlement,
-  (state: fromSettlement.State) => state.allSettlements
+  (state: fromApp.AppState) => state.settlementsList,
+  (state: fromSettlement.StateAllSettlements) => state.allSettlements
 );
 
 export const availableBuildingsSelector = createSelector(
@@ -76,17 +77,12 @@ export const researchedUnitsSelector = createSelector(
   }
 );
 
-export const combatGroupsSelector = createSelector(
-  settlement,
-  (state: fromSettlement.State) => state.combatGroups
-);
-
 export const sendingContractSelector = createSelector(
   settlement,
   (state: fromSettlement.State) => state.sendingContract
 );
 
 export const isTroopsSentSelector = createSelector(
-  settlement,
-  (state: fromSettlement.State) => state.isTroopsSent
+  (state: fromApp.AppState) => state.ui,
+  (state: fromSettlement.StateUI) => state.troopsSentDone
 );
