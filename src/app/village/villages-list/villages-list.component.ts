@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
 import {settlementsListSelector} from "../store/settlement.selectors";
+import {fetchSettlementFirstTime} from "../store/settlement.actions";
 
 
 @Component({
@@ -42,6 +43,7 @@ export class VillagesListComponent implements OnInit, OnDestroy {
 
   onVillageSelect(villageId: string){
     const lastWord = this.router.url.split('/')[3];
+    this.store.dispatch(fetchSettlementFirstTime({id: villageId}));
     this.router.navigate(['/villages', villageId, lastWord]);
   }
 

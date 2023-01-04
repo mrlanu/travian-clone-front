@@ -33,7 +33,10 @@
           <fa-icon [icon]="faEdit" size="1x" [styles]="faStyle"></fa-icon>
         </div>
       </div>
-      <div class="approval" fxFlexAlign="end">Approval: {{ village?.approval }} %</div>
+      <div class="approval" fxLayout fxLayoutAlign="space-between center">
+        <div>Population: {{ village?.population }}</div>
+        <div>Approval: {{ village?.approval }} %</div>
+      </div>
     </div>
   </div>
 </div>
