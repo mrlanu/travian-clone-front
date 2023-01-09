@@ -175,7 +175,7 @@ export class SettlementEffects {
       exhaustMap(([action, settlementId]) =>
         this.httpClient
           .post<VillageView>(`${environment.baseUrl}/villages/${settlementId}/military`,
-            {'unitType': action.unitType, 'amount': action.amount})
+            {'unit': action.unit, 'amount': action.amount})
           .pipe(map((settlement) =>
               SettlementActions.setSettlement({settlement})),
             catchError(error => of(SettlementActions.errorSettlement({error})))

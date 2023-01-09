@@ -58,7 +58,7 @@ export const setResearchedUnits = createAction(
   '[Settlement] Set researched units', props<{ units: CombatUnit[]}>());
 
 export const orderCombatUnits = createAction(
-  '[Settlement] Order combat units', props<{ unitType: string; amount: number}>());
+  '[Settlement] Order combat units', props<{ unit: number; amount: number}>());
 
 export const fetchCombatGroups = createAction(
   '[Settlement] Fetch combat groups');

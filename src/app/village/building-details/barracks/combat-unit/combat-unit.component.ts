@@ -50,7 +50,7 @@ export class CombatUnitComponent implements OnInit, OnDestroy {
 
   orderUnits(amount: string){
     this.amountInput!.nativeElement.value = '';
-    this.store.dispatch(orderCombatUnits({unitType: 'PHALANX', amount: +amount}))
+    this.store.dispatch(orderCombatUnits({unit: 0, amount: +amount})) // unit 0 is Phalanx
   }
 
   private calculateMaxUnits(storage: number[]) {
