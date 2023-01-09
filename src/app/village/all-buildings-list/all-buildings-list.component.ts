@@ -11,7 +11,7 @@ export class Building {
               public kind: string,
               public type: string,
               public description: string,
-              public cost: Map<string, number>,
+              public cost: number[],
               public time: number,
               public requirements: { name: string, level: number, exist: boolean }[],
               public available: boolean) {}

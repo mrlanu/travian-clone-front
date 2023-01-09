@@ -45,20 +45,20 @@ export class StorageComponent implements OnInit, OnDestroy {
           });
           this.intervalList = [];
 
-          this.wood = Math.trunc(v!.storage.get('WOOD')!);
-          this.woodProgress = Math.floor(v!.storage.get('WOOD')! * 100 / v!.warehouseCapacity)
+          this.wood = Math.trunc(v!.storage[0]!);
+          this.woodProgress = Math.floor(v!.storage[0]! * 100 / v!.warehouseCapacity)
           this.intervalList.push(this.startTimer('WOOD', Math.trunc(3600000 / v!.producePerHour.get('WOOD')!)));
 
-          this.clay = Math.trunc(v!.storage.get('CLAY')!);
-          this.clayProgress = Math.floor(v!.storage.get('CLAY')! * 100 / v!.warehouseCapacity)
+          this.clay = Math.trunc(v!.storage[1]!);
+          this.clayProgress = Math.floor(v!.storage[1]! * 100 / v!.warehouseCapacity)
           this.intervalList.push(this.startTimer('CLAY', Math.trunc(3600000 / v!.producePerHour.get('CLAY')!)));
 
-          this.iron = Math.trunc(v!.storage.get('IRON')!);
-          this.ironProgress = Math.floor(v!.storage.get('IRON')! * 100 / v!.warehouseCapacity)
+          this.iron = Math.trunc(v!.storage[2]!);
+          this.ironProgress = Math.floor(v!.storage[2]! * 100 / v!.warehouseCapacity)
           this.intervalList.push(this.startTimer('IRON', Math.trunc(3600000 / v!.producePerHour.get('IRON')!)));
 
-          this.crop = Math.trunc(v!.storage.get('CROP')!);
-          this.cropProgress = Math.floor(v!.storage.get('CROP')! * 100 / v!.granaryCapacity)
+          this.crop = Math.trunc(v!.storage[3]!);
+          this.cropProgress = Math.floor(v!.storage[3]! * 100 / v!.granaryCapacity)
           this.intervalList.push(this.startTimer('CROP', Math.trunc(3600000 / v!.producePerHour.get('CROP')!)));
 
           this.warehouseCapacity = v!.warehouseCapacity;

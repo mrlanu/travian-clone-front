@@ -15,7 +15,7 @@ export interface BuildingView {
   maxLevel: number;
   description: string;
   timeToNextLevel: number;
-  resourcesToNextLevel: Map<string, number>;
+  resourcesToNextLevel: number[];
   capacity: number;
   timeReduction: number;
 }

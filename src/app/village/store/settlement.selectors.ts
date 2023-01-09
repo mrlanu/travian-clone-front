@@ -13,15 +13,11 @@ export const settlementSelector = createSelector(
     if (state.current) {
       let village = state.current;
       let producePerHour = new Map<string, number>();
-      let storage = new Map<string, number>();
       let homeLegion = new Map<string, number>();
       let movements = new Map<string, TroopMovementsBrief>();
 
       for(const [key, value] of Object.entries(village.producePerHour)){
         producePerHour.set(key, value);
-      }
-      for(const [key, value] of Object.entries(village.storage)){
-        storage.set(key, value);
       }
       for(const [key, value] of Object.entries(village.homeLegion)){
         // PHALANX -> Phalanx
@@ -33,7 +29,7 @@ export const settlementSelector = createSelector(
 
       let s = new VillageView(village.villageId, village.accountId, village.nation, village.name,
         village.x, village.y, village.villageType, village.population, village.culture, village.approval,
-        village.buildings, storage, village.warehouseCapacity, village.granaryCapacity, homeLegion,
+        village.buildings, village.storage, village.warehouseCapacity, village.granaryCapacity, homeLegion,
         village.homeUnits, producePerHour, village.eventsList, village.unitOrders, movements, village.combatGroupByLocation
       );
       return s;
@@ -67,12 +63,8 @@ export const researchedUnitsSelector = createSelector(
   settlement,
   (state: fromSettlement.State) => {
     return state.researchedUnits.map(unit => {
-      let cost = new Map<string, number>();
-      for(const [key, value] of Object.entries(unit.cost)){
-        cost.set(key, value);
-      }
       return new CombatUnit(unit.name, unit.level, unit.attack, unit.defInfantry,
-        unit.defCavalry, unit.speed, unit.capacity, cost, unit.time, unit.description);
+        unit.defCavalry, unit.speed, unit.capacity, unit.cost, unit.time, unit.description);
     });
   }
 );

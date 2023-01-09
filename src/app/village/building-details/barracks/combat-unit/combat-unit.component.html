@@ -1,36 +1,36 @@
 <div class="card shadow text-center">
-  <div class="card-body">
-    <div>{{ unit?.name | uppercase }}  Level: {{ unit?.level}}  There are:  {{ amount? amount : 'no'}}  units</div>
+  <div class="card-body" *ngIf="unit">
+    <div>{{ unit.name | uppercase }}  Level: {{ unit.level}}  There are:  {{ amount? amount : 'no'}}  units</div>
     <hr>
     <div fxLayout fxLayoutAlign="center" fxLayoutGap="1rem">
       <div fxLayout>
         <i class="r r-wood"></i>
         <div>
-          {{ unit?.cost?.get('WOOD') }}
+          {{ unit.cost[0] }}
         </div>
       </div>
       <div fxLayout>
         <i class="r r-clay"></i>
         <div>
-          {{ unit?.cost?.get('CLAY') }}
+          {{ unit.cost[1] }}
         </div>
       </div>
       <div fxLayout>
         <i class="r r-iron"></i>
         <div>
-          {{ unit?.cost?.get('IRON') }}
+          {{ unit.cost[2] }}
         </div>
       </div>
       <div fxLayout>
         <i class="r r-crop"></i>
         <div>
-          {{ unit?.cost?.get('CROP') }}
+          {{ unit.cost[3] }}
         </div>
       </div>
       <div fxLayout>
         <i class="r r-clock"></i>
         <div>
-          {{ formatTime(unit?.time!) }}
+          {{ formatTime(unit.time!) }}
         </div>
       </div>
     </div>

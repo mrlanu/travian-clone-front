@@ -14,7 +14,7 @@ export class VillageView {
               public culture: number,
               public approval: number,
               public buildings: any[],
-              public storage: Map<string, number>,
+              public storage: number[],
               public warehouseCapacity: number,
               public granaryCapacity: number,
               public homeLegion: Map<string, number>,

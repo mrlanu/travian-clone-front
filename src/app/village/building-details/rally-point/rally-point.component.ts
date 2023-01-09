@@ -111,12 +111,6 @@ export class RallyPointComponent implements OnInit {
       village => {
         this.villageId = village?.villageId;
         this.buildingView = {...village!.buildings.find(f => f.name == "Rally-point")!};
-        let res = new Map<string, number>();
-        for (const [key, value] of Object.entries(this.buildingView!.resourcesToNextLevel)) {
-          res.set(key, value);
-        }
-        this.buildingView!.resourcesToNextLevel = res;
-
         this.homeLegion = {
           villageId: village!.villageId,
           units: [...village!.homeUnits],

@@ -13,12 +13,8 @@ export const reportSelector = createSelector(
   reports,
   (state: fromReports.State) => {
     if (state.currentReport){
-      let bounty = new Map<string, number>();
-      for(const [key, value] of Object.entries(state.currentReport.from.bounty)){
-        bounty.set(key, value);
-      }
       return {
-        ...state.currentReport, from: {...state.currentReport['from'], bounty: bounty}
+        ...state.currentReport
       }
     }else {
       return undefined;

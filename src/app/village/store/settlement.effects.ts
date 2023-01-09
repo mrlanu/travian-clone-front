@@ -227,14 +227,10 @@ export class SettlementEffects {
 
   private mapBuildings(buildingsList: Building[]): Building[] {
     return  buildingsList.map(b => {
-      let cost = new Map<string, number>();
-      for(const [key, value] of Object.entries(b.cost)){
-        cost.set(key, value);
-      }
       let req = b.requirements.map(r => {
         return {...r};
       });
-      return new Building(b.name, b.kind, b.type, b.description, cost, b.time, req, b.available);
+      return new Building(b.name, b.kind, b.type, b.description, b.cost, b.time, req, b.available);
     });
   }
 }

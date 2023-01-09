@@ -37,7 +37,7 @@ export interface ReportPlayer{
   nation: string;
   troops: number[];
   dead: null[];
-  bounty: Map<string, number>;
+  bounty: number[];
   carry: number;
 }
 

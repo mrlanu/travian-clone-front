@@ -15,7 +15,7 @@ export class CombatUnit {
     public defCavalry : number,
     public speed: number,
     public capacity: number,
-    public cost: Map<string, number>,
+    public cost: number[],
     public time: number,
     public description: string) {}
 }
@@ -53,10 +53,10 @@ export class CombatUnitComponent implements OnInit, OnDestroy {
     this.store.dispatch(orderCombatUnits({unitType: 'PHALANX', amount: +amount}))
   }
 
-  private calculateMaxUnits(storage: Map<string, number>) {
+  private calculateMaxUnits(storage: number[]) {
     let result = 1000000;
-    storage.forEach((value, key) => {
-      let tempResult = Math.trunc(value / this.unit!.cost.get(key)!);
+    storage.forEach((value, i) => {
+      let tempResult = Math.trunc(value / this.unit!.cost[i]!);
       if (tempResult < result){
         result = tempResult;
       }
