@@ -51,7 +51,10 @@
   </div>
   <app-table [reportPlayer]="report.from"></app-table>
 
-  <div fxLayout fxLayoutAlign="start" fxLayoutGap="1rem">
+  <div *ngIf="report.failed" fxLayout fxLayoutAlign="start" fxLayoutGap="1rem">
+    None of the attacker’s troops have returned.
+  </div>
+  <div *ngIf="!report.failed" fxLayout fxLayoutAlign="start" fxLayoutGap="1rem">
     <div class="me-3">
       Bounty
     </div>
@@ -106,6 +109,6 @@
       </button>
     </div>
   </div>
-  <app-table [reportPlayer]="report.to"></app-table>
+  <app-table [reportPlayer]="report.to" [hidden]="report.failed"></app-table>
 </div>
 

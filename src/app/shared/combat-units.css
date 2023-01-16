@@ -13,6 +13,11 @@
   background-repeat: no-repeat;
 }
 
+.unit-nature {
+  background-image: url(src/assets/img/nature.png);
+  background-repeat: no-repeat;
+}
+
 .u0 {
   background-position: 0 0;
 }

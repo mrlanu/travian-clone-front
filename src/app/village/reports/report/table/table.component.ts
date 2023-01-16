@@ -8,6 +8,7 @@ import {ReportPlayer} from "../report.component";
 })
 export class TableComponent implements OnInit{
   @Input() reportPlayer: ReportPlayer | undefined;
+  @Input() hidden: boolean = false;
   imgSrc = "../../../../../assets/img/x.gif";
 
   ngOnInit(): void {

@@ -61,7 +61,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
       u7: new UntypedFormControl({value: 0, disabled: true}),
       u8: new UntypedFormControl({value: 0, disabled: true}),
       u9: new UntypedFormControl({value: 0, disabled: true}),
-      u10: new UntypedFormControl({value: 0, disabled: true}),
+      //u10: new UntypedFormControl({value: 0, disabled: true}),
       firstTarget: new UntypedFormControl({value: '99', disabled: true}),
       secondTarget: new UntypedFormControl({value: '99', disabled: true}),
     });
@@ -86,7 +86,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
     this.attackForm.controls.u7.enable();
     this.attackForm.controls.u8.enable();
     this.attackForm.controls.u9.enable();
-    this.attackForm.controls.u10.enable();
+    //this.attackForm.controls.u10.enable();
   }
 
   onChangeTarget(targetNumber: number, event: any) {
@@ -97,7 +97,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
   onAddWave() {
     const troops = [+this.attackForm.value.u0, +this.attackForm.value.u1, +this.attackForm.value.u2, +this.attackForm.value.u3,
       +this.attackForm.value.u4, +this.attackForm.value.u5, +this.attackForm.value.u6, +this.attackForm.value.u7,
-      +this.attackForm.value.u8, +this.attackForm.value.u9, +this.attackForm.value.u10];
+      +this.attackForm.value.u8, +this.attackForm.value.u9, /*+this.attackForm.value.u10*/];
 
     const summ = troops.reduce((a, b) => a + b, 0);
     if (summ === 0) {
@@ -119,10 +119,10 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
     this.homeLegion.units[7] = +this.homeLegion.units[7] - +this.attackForm.value.u7;
     this.homeLegion.units[8] = +this.homeLegion.units[8] - +this.attackForm.value.u8;
     this.homeLegion.units[9] = +this.homeLegion.units[9] - +this.attackForm.value.u9;
-    this.homeLegion.units[10] = +this.homeLegion.units[10] - +this.attackForm.value.u10;
+    //HERO this.homeLegion.units[10] = +this.homeLegion.units[10] - +this.attackForm.value.u10;
 
     this.attackForm.patchValue(
-      {u0: 0, u1: 0, u2: 0, u3: 0, u4: 0, u5: 0, u6: 0, u7: 0, u8: 0, u9: 0, u10: 0,
+      {u0: 0, u1: 0, u2: 0, u3: 0, u4: 0, u5: 0, u6: 0, u7: 0, u8: 0, u9: 0, //u10: 0,
         firstTarget: '99', secondTarget: '99'}
     );
 
@@ -140,7 +140,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
     this.homeLegion.units[7] = +this.homeLegion.units[7] + this.attack.waves[i].troops[7];
     this.homeLegion.units[8] = +this.homeLegion.units[8] + this.attack.waves[i].troops[8];
     this.homeLegion.units[9] = +this.homeLegion.units[9] + this.attack.waves[i].troops[9];
-    this.homeLegion.units[10] = +this.homeLegion.units[10] + this.attack.waves[i].troops[10];
+    //this.homeLegion.units[10] = +this.homeLegion.units[10] + this.attack.waves[i].troops[10];
     this.attack.waves.splice(i, 1);
   }
 
@@ -208,7 +208,7 @@ export class TroopsSendComponent implements OnInit, OnDestroy {
       u7: 0,
       u8: 0,
       u9: 0,
-      u10: 0,
+      //u10: 0,
       firstTarget: '99',
       secondTarget: '99',
     });

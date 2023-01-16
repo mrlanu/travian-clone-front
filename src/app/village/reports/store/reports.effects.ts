@@ -10,6 +10,7 @@ import * as fromAppStore from "../../../store/app.reducer";
 import {userSelector} from "../../../auth/store/auth.selectors";
 import {settlementIdSelector} from "../../store/settlement.selectors";
 import {ReportBrief} from "../reports-list/reports-list.component";
+import {Report} from "../report/report.component";
 
 @Injectable()
 export class ReportsEffects {
@@ -42,7 +43,7 @@ export class ReportsEffects {
       ofType(ReportsActions.fetchReport),
       exhaustMap(action =>
         this.httpClient
-          .get<any>(`${environment.baseUrl}/reports/${action.reportId}`)
+          .get<Report>(`${environment.baseUrl}/reports/${action.reportId}`)
           .pipe(map((report) =>
               ReportsActions.setReport({report})),
             catchError(error => of(ReportsActions.errorReports({error})))

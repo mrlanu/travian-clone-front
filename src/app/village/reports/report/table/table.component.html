@@ -14,14 +14,14 @@
         <th>
           <img class="unit troops-count" alt="u-0" [src]="imgSrc">
         </th>
-        <td class="unit-icon" style="width: 8.2%" *ngFor="let u of reportPlayer!.troops"> {{ u }} </td>
+        <td class="unit-icon" style="width: 8.2%" *ngFor="let u of reportPlayer!.troops"> {{ hidden ? '?' : u }} </td>
       </tr>
 
       <tr>
         <th>
           <img class="unit troops-dead" alt="u-0" [src]="imgSrc">
         </th>
-        <td class="unit-icon" style="width: 8.2%" *ngFor="let u of reportPlayer!.dead"> {{ u }} </td>
+        <td class="unit-icon" style="width: 8.2%" *ngFor="let u of reportPlayer!.dead"> {{ hidden ? '?' : u }} </td>
       </tr>
 
       <!--should be uncommented when the feature with catch troops will be implemented-->
