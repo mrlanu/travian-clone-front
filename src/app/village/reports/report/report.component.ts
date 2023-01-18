@@ -74,7 +74,6 @@ export class ReportComponent implements OnInit, OnDestroy{
       this.reportBriefsList = [...reports];
     }));
     this.componentSubs.push(this.store.select(reportSelector).pipe(skip(1)).subscribe(report => {
-      console.log('Report', report);
       let sum = 0;
       this.report = report;
       report?.from.bounty.forEach(value => sum += value);

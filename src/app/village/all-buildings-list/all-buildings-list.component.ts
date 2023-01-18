@@ -8,7 +8,7 @@ import {fetchAvailableBuildings} from "../store/settlement.actions";
 
 export class Building {
   constructor(public name: string,
-              public kind: string,
+              public buildingID: string,
               public type: string,
               public description: string,
               public cost: number[],

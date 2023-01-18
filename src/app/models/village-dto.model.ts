@@ -19,7 +19,7 @@ export class VillageView {
               public granaryCapacity: number,
               public homeLegion: Map<string, number>,
               public homeUnits: number[],
-              public producePerHour: Map<string, number>,
+              public producePerHour: number[],
               public eventsList: EventView[],
               public unitOrders: OrderCombatUnit[],
               public movementsBrief: Map<string, TroopMovementsBrief>,

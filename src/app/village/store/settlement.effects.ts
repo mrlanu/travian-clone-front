@@ -62,7 +62,7 @@ export class SettlementEffects {
       ofType(SettlementActions.buildNewBuilding),
       withLatestFrom(this.store.select(settlementIdSelector)),
       exhaustMap(([action, settlementId]) => {
-        let params = new HttpParams().set('kind', action.kind);
+        let params = new HttpParams().set('buildingID', action.id);
         return this.httpClient
           .put<VillageView>(`${environment.baseUrl}/villages/${settlementId}/buildings/${action.position}/new`,
             {}, {params})
@@ -230,7 +230,7 @@ export class SettlementEffects {
       let req = b.requirements.map(r => {
         return {...r};
       });
-      return new Building(b.name, b.kind, b.type, b.description, b.cost, b.time, req, b.available);
+      return new Building(b.name, b.buildingID, b.type, b.description, b.cost, b.time, req, b.available);
     });
   }
 }

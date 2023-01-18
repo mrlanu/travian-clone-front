@@ -7,7 +7,6 @@ import {BuildingView} from "../building-details/building-details.component";
 import {Store} from "@ngrx/store";
 import * as fromAppStore from "../../store/app.reducer";
 import {settlementSelector} from "../store/settlement.selectors";
-import {fetchSettlement} from "../store/settlement.actions";
 
 @Component({
   selector: 'app-buildings',

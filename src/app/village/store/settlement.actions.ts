@@ -28,7 +28,7 @@ export const setSettlementsList = createAction(
   '[Settlement] Set settlements list', props<{ list: ShortVillageInfo[] }>());
 
 export const buildNewBuilding = createAction(
-  '[Settlement] New building', props<{ position: number; kind: string }>());
+  '[Settlement] New building', props<{ position: number; id: string }>());
 
 export const upgradeBuilding = createAction(
   '[Settlement] Upgrade building', props<{ position: number }>());

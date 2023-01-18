@@ -32,10 +32,10 @@ export class ProducePerHourComponent implements OnInit, OnDestroy {
   }
 
   private assignResources() {
-    this.wood = this.village?.producePerHour.get('WOOD')!;
-    this.clay = this.village?.producePerHour.get('CLAY')!;
-    this.iron = this.village?.producePerHour.get('IRON')!;
-    this.crop = this.village?.producePerHour.get('CROP')!;
+    this.wood = this.village!.producePerHour[0];
+    this.clay = this.village!.producePerHour[1];
+    this.iron = this.village!.producePerHour[2];
+    this.crop = this.village!.producePerHour[3];
   }
 
   ngOnDestroy() {

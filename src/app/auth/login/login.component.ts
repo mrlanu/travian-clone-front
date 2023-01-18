@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit, OnDestroy {
               private store: Store<fromAppStore.AppState>) { }
 
   ngOnInit() {
-    console.log('Login init');
     this.componentSubs.push(this.authService.isLoadingChanged
       .subscribe(result => {
         this.isLoading = result;
@@ -50,7 +49,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       if (list.length > 0){
         //when that list of settlements arrived fetching the firs settlement from there
         this.store.dispatch(fetchSettlementFirstTime({id: list[0].villageId}));
-        console.log('First time');
       }
     }));
 
@@ -75,7 +73,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('Login destroyed');
     this.componentSubs.forEach(subs => {
       subs.unsubscribe();
     });

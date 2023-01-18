@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {VillageView} from "../../models/village-dto.model";
 import {VillageService} from "../../services/village.service";
 import {Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
@@ -37,7 +36,7 @@ export class StorageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.componentSubs.push(this.store.select(settlementSelector)
       .subscribe(v => {
-          this.negativeCrop = v?.producePerHour.get('CROP')! < 0;
+          this.negativeCrop = v!.producePerHour[3] < 0;
           let type: 'success' | 'info' | 'warning' | 'danger';
 
           this.intervalList.forEach(i => {
@@ -47,19 +46,19 @@ export class StorageComponent implements OnInit, OnDestroy {
 
           this.wood = Math.trunc(v!.storage[0]!);
           this.woodProgress = Math.floor(v!.storage[0]! * 100 / v!.warehouseCapacity)
-          this.intervalList.push(this.startTimer('WOOD', Math.trunc(3600000 / v!.producePerHour.get('WOOD')!)));
+          this.intervalList.push(this.startTimer('WOOD', Math.trunc(3600000 / v!.producePerHour[0])));
 
           this.clay = Math.trunc(v!.storage[1]!);
           this.clayProgress = Math.floor(v!.storage[1]! * 100 / v!.warehouseCapacity)
-          this.intervalList.push(this.startTimer('CLAY', Math.trunc(3600000 / v!.producePerHour.get('CLAY')!)));
+          this.intervalList.push(this.startTimer('CLAY', Math.trunc(3600000 / v!.producePerHour[1])));
 
           this.iron = Math.trunc(v!.storage[2]!);
           this.ironProgress = Math.floor(v!.storage[2]! * 100 / v!.warehouseCapacity)
-          this.intervalList.push(this.startTimer('IRON', Math.trunc(3600000 / v!.producePerHour.get('IRON')!)));
+          this.intervalList.push(this.startTimer('IRON', Math.trunc(3600000 / v!.producePerHour[2])));
 
           this.crop = Math.trunc(v!.storage[3]!);
           this.cropProgress = Math.floor(v!.storage[3]! * 100 / v!.granaryCapacity)
-          this.intervalList.push(this.startTimer('CROP', Math.trunc(3600000 / v!.producePerHour.get('CROP')!)));
+          this.intervalList.push(this.startTimer('CROP', Math.trunc(3600000 / v!.producePerHour[3])));
 
           this.warehouseCapacity = v!.warehouseCapacity;
           this.granaryCapacity = v!.granaryCapacity;

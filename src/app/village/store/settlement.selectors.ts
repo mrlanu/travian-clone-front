@@ -12,13 +12,8 @@ export const settlementSelector = createSelector(
   (state: fromSettlement.State) => {
     if (state.current) {
       let village = state.current;
-      let producePerHour = new Map<string, number>();
       let homeLegion = new Map<string, number>();
       let movements = new Map<string, TroopMovementsBrief>();
-
-      for(const [key, value] of Object.entries(village.producePerHour)){
-        producePerHour.set(key, value);
-      }
       for(const [key, value] of Object.entries(village.homeLegion)){
         // PHALANX -> Phalanx
         homeLegion.set(capitalizeFirstLater(key), value);
@@ -30,7 +25,7 @@ export const settlementSelector = createSelector(
       let s = new VillageView(village.villageId, village.accountId, village.nation, village.name,
         village.x, village.y, village.villageType, village.population, village.culture, village.approval,
         village.buildings, village.storage, village.warehouseCapacity, village.granaryCapacity, homeLegion,
-        village.homeUnits, producePerHour, village.eventsList, village.unitOrders, movements, village.combatGroupByLocation
+        village.homeUnits, village.producePerHour, village.eventsList, village.unitOrders, movements, village.combatGroupByLocation
       );
       return s;
     } else {

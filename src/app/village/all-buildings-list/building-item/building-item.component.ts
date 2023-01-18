@@ -23,10 +23,10 @@ export class BuildingItemComponent implements OnInit {
     return Utils.formatTime(timeSeconds);
   }
 
-  onBuildingSelect(kind: string){
+  onBuildingSelect(buildingID: string){
     const selectedPosition = this.route.snapshot.params['position'];
     const villageId = this.route.parent!.snapshot.params['village-id'];
-    this.store.dispatch(buildNewBuilding({position: selectedPosition, kind}));
+    this.store.dispatch(buildNewBuilding({position: selectedPosition, id: buildingID}));
     this.router.navigate(['/villages', villageId, 'buildings']);
   }
 
